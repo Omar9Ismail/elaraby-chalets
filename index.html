@@ -567,17 +567,16 @@
         <div class="panel-grid-2">
           <div>
             <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; margin-bottom:12px;">
-              <div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إضافة موظف / سيلز جديد:</div>
+              <div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إضافة موظف / سيلز جديد (لون تلقائي مختلف):</div>
               <div class="row-2" style="margin-bottom:6px;">
                 <input type="text" id="newUserFullName" class="form-control" placeholder="اسم الموظف">
                 <input type="text" id="newUserLogin" class="form-control" placeholder="اسم الدخول (sara)" dir="ltr">
               </div>
-              <div class="row-3">
-                <input type="text" id="newUserPass" class="form-control" placeholder="الباسورد" dir="ltr">
-                <select id="newUserRole" class="form-control"><option value="sales">سيلز</option><option value="admin">مدير</option></select>
+              <div class="row-2">
+                <input type="text" id="newUserPass" class="form-control" value="1234" placeholder="الباسورد" dir="ltr">
                 <div style="display:flex; gap:6px; align-items:center;">
-                  <input type="color" id="newUserColor" value="#0284c7" style="width:40px; height:34px; border:none;">
-                  <button type="button" class="btn-submit" style="margin-top:0;" onclick="addSystemUser()">✅ إضافة</button>
+                  <select id="newUserRole" class="form-control"><option value="sales">سيلز</option><option value="admin">مدير</option></select>
+                  <button type="button" class="btn-submit" style="margin-top:0; white-space:nowrap;" onclick="addSystemUser()">✅ إضافة</button>
                 </div>
               </div>
             </div>
@@ -761,6 +760,24 @@
     var tempCatPhotos = [], currentGalleryPhotos = [], currentGalleryChalet = null;
     var isDraggingGrid = false, dragChaletId = null, dragStartDay = null, dragEndDay = null;
     var heartbeatInterval = null, cloudPollInterval = null, currentOpenedPermitPhotos = [], chaletCoverCache = {};
+
+    var AUTO_USER_COLORS = [
+      "#0284c7", "#0d9488", "#9333ea", "#ea580c", "#db2777",
+      "#4f46e5", "#16a34a", "#b45309", "#0891b2", "#be123c",
+      "#65a30d", "#7c3aed", "#c2410c", "#0f766e", "#1d4ed8"
+    ];
+
+    function pickNextDistinctUserColor(excludeIdx) {
+      var used = new Set(
+        (appDB.users || [])
+          .filter((_, idx) => idx !== excludeIdx)
+          .map(u => String(u.color || "").toLowerCase())
+      );
+      var free = AUTO_USER_COLORS.find(c => !used.has(c.toLowerCase()));
+      if (free) return free;
+      var h = Math.floor(Math.random() * 360);
+      return `hsl(${h}, 72%, 42%)`;
+    }
 
     var defaultDB = {
       chalets: [
@@ -2032,11 +2049,14 @@
 
       var uDiv = document.getElementById('usersManageList');
       if (uDiv) {
-        uDiv.innerHTML = (appDB.users || []).map((u, i) => `
-          <div style="display:grid; grid-template-columns:1.2fr 0.9fr 0.8fr auto auto; gap:6px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:7px; border-radius:8px;">
-            <input type="text" id="uFN_${i}" class="form-control" value="${u.fullName}">
-            <input type="text" id="uP_${i}" class="form-control" value="${u.password}" dir="ltr">
+        uDiv.innerHTML = `<div style="font-size:11.5px; font-weight:800; color:var(--primary); margin-bottom:6px;">📋 كل اليوزرات والأسامي الحالية (${(appDB.users || []).length}):</div>` +
+          (appDB.users || []).map((u, i) => `
+          <div style="display:grid; grid-template-columns:1.1fr 0.9fr 0.75fr 0.8fr auto auto auto; gap:5px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:6px; border-radius:8px; border-right:4px solid ${u.color || '#0d9488'};">
+            <input type="text" id="uFN_${i}" class="form-control" value="${u.fullName}" placeholder="الاسم">
+            <input type="text" id="uUN_${i}" class="form-control" value="${u.username}" placeholder="اليوزر" dir="ltr">
+            <input type="text" id="uP_${i}" class="form-control" value="${u.password}" placeholder="الباسورد" dir="ltr">
             <select id="uR_${i}" class="form-control"><option value="sales" ${u.role==='sales'?'selected':''}>سيلز</option><option value="admin" ${u.role==='admin'?'selected':''}>مدير</option></select>
+            <button type="button" class="btn-hdr" style="background:#d97706;" title="ريست الباسورد إلى 1234" onclick="resetUserPasswordTo1234(${i})">🔄 1234</button>
             <button type="button" class="btn-hdr" style="background:var(--primary);" onclick="saveUserRow(${i})">حفظ</button>
             ${u.username !== 'admin' ? `<button type="button" class="btn-hdr" style="background:#dc2626;" onclick="deleteSystemUser(${i})">🗑️</button>` : `<span>👑</span>`}
           </div>
@@ -2052,9 +2072,66 @@
     function saveChaletRow(i) { if (!currentUser || currentUser.role !== 'admin') return; appDB.chalets[i].name = document.getElementById('chName_'+i).value.trim(); appDB.chalets[i].weekdayPrice = parseFloat(document.getElementById('chWd_'+i).value) || 0; appDB.chalets[i].weekendPrice = parseFloat(document.getElementById('chWe_'+i).value) || 0; appDB.chalets[i].securityPhone = document.getElementById('chSec_'+i).value.trim(); saveDB(); refreshAllUI(); showToast("✅ تم الحفظ!"); }
     function renameEntireVillage() { if (!currentUser || currentUser.role !== 'admin') return; var oldName = document.getElementById('renameVillageSelect').value, newName = document.getElementById('renameVillageNewInp').value.trim(); if (!oldName || !newName || oldName === newName) return; appDB.chalets.forEach(c => { if (c.village === oldName) c.village = newName; }); appDB.bookings.forEach(b => { if (b.village === oldName) b.village = newName; }); sortAndGroupChaletsByVillage(); saveDB(); refreshAllUI(); showToast(`✅ تم تغيير الاسم إلى (${newName})!`); }
     function deleteEntireVillage() { if (!currentUser || currentUser.role !== 'admin') return; var v = document.getElementById('renameVillageSelect').value; if (!v || !confirm(`حذف قرية (${v}) بالكامل؟`)) return; appDB.chalets = appDB.chalets.filter(c => c.village !== v); saveDB(); refreshAllUI(); }
-    function saveUserRow(i) { if (!currentUser || currentUser.role !== 'admin') return; appDB.users[i].fullName = document.getElementById('uFN_'+i).value.trim(); appDB.users[i].password = document.getElementById('uP_'+i).value.trim(); appDB.users[i].role = document.getElementById('uR_'+i).value; saveDB(); refreshAllUI(); showToast("✅ تم حفظ التعديلات!"); }
+
+    function saveUserRow(i) {
+      if (!currentUser || currentUser.role !== 'admin') return;
+      var u = appDB.users[i]; if (!u) return;
+      var newFN = document.getElementById('uFN_'+i).value.trim();
+      var newUN = document.getElementById('uUN_'+i).value.trim().toLowerCase();
+      var newP = document.getElementById('uP_'+i).value.trim();
+      var newR = document.getElementById('uR_'+i).value;
+      if (!newFN || !newUN || !newP) { alert("⚠️ الاسم واليوزر والباسورد مطلوبين!"); return; }
+      if (u.username === 'admin' && newUN !== 'admin') { alert("⚠️ لا يمكن تغيير اسم دخول الحساب الرئيسي (admin)!"); return; }
+      var dup = (appDB.users || []).some((other, idx) => idx !== i && String(other.username || "").toLowerCase() === newUN);
+      if (dup) { alert(`❌ خطأ: اسم الدخول (${newUN}) مستخدم بالفعل ليوزر آخر!`); return; }
+
+      var oldFullName = u.fullName;
+      u.fullName = newFN;
+      u.username = newUN;
+      u.password = newP;
+      u.role = newR;
+      if (!u.color) u.color = pickNextDistinctUserColor(i);
+      if (currentUser.username === u.username) currentUser = u;
+      if (oldFullName !== newFN) {
+        (appDB.bookings || []).forEach(b => { if (b.agentName === oldFullName) b.agentName = newFN; });
+      }
+      logAuditAction(`تعديل بيانات اليوزر (${newFN} / ${newUN})`);
+      saveDB(); refreshAllUI();
+      showToast("✅ تم حفظ التعديلات!");
+    }
+
+    function resetUserPasswordTo1234(i) {
+      if (!currentUser || currentUser.role !== 'admin') return;
+      var u = appDB.users[i]; if (!u) return;
+      if (!confirm(`إعادة تعيين باسورد (${u.fullName} - ${u.username}) إلى 1234؟`)) return;
+      u.password = "1234";
+      if (currentUser.username === u.username) currentUser.password = "1234";
+      logAuditAction(`🔄 ريست باسورد (${u.fullName}) إلى 1234`);
+      saveDB(); refreshAllUI();
+      showToast(`✅ تم إعادة الباسورد لـ 1234 (${u.fullName})`);
+    }
+
     function deleteSystemUser(i) { if (!currentUser || currentUser.role !== 'admin') return; var u = appDB.users[i]; if (!u || u.username === 'admin' || !confirm(`حذف (${u.fullName})؟`)) return; appDB.users.splice(i, 1); saveDB(); refreshAllUI(); }
-    function addSystemUser() { if (!currentUser || currentUser.role !== 'admin') return; var fullName = document.getElementById('newUserFullName').value.trim(), username = document.getElementById('newUserLogin').value.trim().toLowerCase(), password = document.getElementById('newUserPass').value.trim(), role = document.getElementById('newUserRole').value, color = document.getElementById('newUserColor').value; if (!fullName || !username || !password) return; var g = appDB.globalCommConfig || { type: 'pct', val: 3 }; appDB.users.push({ username, password, fullName, role, color, commType: g.type, commVal: g.val, active: true }); saveDB(); refreshAllUI(); }
+
+    function addSystemUser() {
+      if (!currentUser || currentUser.role !== 'admin') return;
+      var fullName = document.getElementById('newUserFullName').value.trim();
+      var username = document.getElementById('newUserLogin').value.trim().toLowerCase();
+      var password = document.getElementById('newUserPass').value.trim() || "1234";
+      var role = document.getElementById('newUserRole').value;
+      if (!fullName || !username) { alert("⚠️ اكتب اسم الموظف واسم الدخول!"); return; }
+      var dup = (appDB.users || []).some(u => String(u.username || "").toLowerCase() === username);
+      if (dup) { alert(`❌ خطأ: اسم الدخول (${username}) مكرر وموجود بالفعل!`); return; }
+      var color = pickNextDistinctUserColor(-1);
+      var g = appDB.globalCommConfig || { type: 'pct', val: 3 };
+      appDB.users.push({ username, password, fullName, role, color, commType: g.type, commVal: g.val, active: true });
+      logAuditAction(`➕ إضافة يوزر جديد (${fullName} - ${username})`);
+      saveDB(); refreshAllUI();
+      document.getElementById('newUserFullName').value = '';
+      document.getElementById('newUserLogin').value = '';
+      document.getElementById('newUserPass').value = '1234';
+      showToast(`✅ تم إضافة (${fullName}) بلون تلقائي مميز!`);
+    }
 
     function startGridDrag(v, cId, d) { isDraggingGrid = true; dragChaletId = cId; dragStartDay = d; dragEndDay = d; highlightDraggedCells(); }
     function moveGridDrag(cId, d) { if (isDraggingGrid && cId===dragChaletId) { dragEndDay = d; highlightDraggedCells(); } }
