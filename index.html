@@ -62,6 +62,14 @@
       justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold);
       position: sticky; top: 0; z-index: 95;
     }
+	
+	.collapsible-top-zone {
+  position: sticky;
+  top: 0;
+  z-index: 95;
+  background: var(--bg-app);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
 
     .top-header {
       background: var(--header-bg); color: #ffffff; padding: 6px 14px;
@@ -951,7 +959,7 @@
             <img src="${APP_LOGO_SRC}" style="height:28px; background:#000; padding:2px; border-radius:4px;">
             <span>شركة العربي للاستثمار العقاري</span>
           </span>
-          <span dir="ltr">fb.com/Elaraby.estate • 01008743750</span>
+          <span dir="ltr">fb.com/Elaraby.estate • </span>
         </div>
       `;
     }
@@ -1759,89 +1767,8 @@
         : '<div style="padding:20px;grid-column:1/-1;text-align:center;">لسه مفيش صور مرفوعة للشاليه ده.</div>';
     }
 
-    function downloadSingleBlobImage(fileName, dataUrl) {
-      try {
-        var parts = dataUrl.split(',');
-        var mime = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
-        var bstr = atob(parts[1]);
-        var n = bstr.length, u8arr = new Uint8Array(n);
-        while (n--) u8arr[n] = bstr.charCodeAt(n);
-        var blob = new Blob([u8arr], { type: mime });
-        var blobUrl = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(blobUrl);
-        }, 2000);
-      } catch (e) {
-        triggerUniversalImageDownload(fileName, dataUrl);
-      }
-    }
 
-    function downloadAllCurrentChaletPhotos() {
-      if (!currentGalleryPhotos.length || !currentGalleryChalet) {
-        alert("⚠️ مفيش صور للتحميل!");
-        return;
-      }
-      var c = currentGalleryChalet;
-      var safeName = `${c.village}-${c.name}`.replace(/[^\w\u0600-\u06FF-]/g, '_');
-      showToast(`📥 جاري بدء تحميل ${currentGalleryPhotos.length} صورة...`);
-
-      currentGalleryPhotos.forEach((src, i) => {
-        setTimeout(() => {
-          var ext = src.indexOf('image/png') !== -1 ? 'png' : 'jpg';
-          downloadSingleBlobImage(`${safeName}-${i + 1}.${ext}`, src);
-        }, i * 650);
-      });
-    }
-
-    async function shareCurrentChaletPhotos(platform) {
-      if (!currentGalleryChalet) return;
-      var c = currentGalleryChalet;
-      var shareTxt = `🏖️ *${c.village} - ${c.name}*\n` +
-        (c.desc ? `📋 ${c.desc}\n` : '') +
-        (c.price ? `💰 السعر: ${c.price}\n` : '') +
-        `📞 للتواصل والحجز: 01008743750\n` +
-        `🌐 شركة العربي للاستثمار العقاري: fb.com/Elaraby.estate`;
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(shareTxt).catch(() => {});
-      }
-
-      var isMobile = /Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
-      if (isMobile && navigator.share && currentGalleryPhotos.length && navigator.canShare) {
-        try {
-          var files = [];
-          for (var i = 0; i < currentGalleryPhotos.length; i++) {
-            var res = await fetch(currentGalleryPhotos[i]);
-            var blob = await res.blob();
-            var ext = blob.type.indexOf('png') !== -1 ? 'png' : 'jpg';
-            files.push(new File([blob], `${c.name}-${i + 1}.${ext}`, { type: blob.type || 'image/jpeg' }));
-          }
-          if (navigator.canShare({ files })) {
-            await navigator.share({ title: `${c.village} - ${c.name}`, text: shareTxt, files });
-            return;
-          }
-        } catch (err) {}
-      }
-
-      if (platform === 'whatsapp') {
-        var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTxt)}`;
-        var win = window.open(waUrl, '_blank', 'noopener,noreferrer');
-        if (!win) window.location.href = waUrl;
-        showToast("💬 تم فتح واتساب ونسخ الرسالة — حمّل الصور وارفقها في الشات");
-      } else {
-        var fbUrl = 'https://www.messenger.com/';
-        var mWin = window.open(fbUrl, '_blank', 'noopener,noreferrer');
-        if (!mWin) window.location.href = fbUrl;
-        showToast("💙 تم فتح ماسنجر ونسخ الرسالة");
-      }
-    }
-
+function downloadSingleBlobImage
     // الصيانة والأعطال
     function addMaintenanceTicket() {
       var chaletId = document.getElementById('maintChaletSel').value, cObj = appDB.chalets.find(c => c.id === chaletId);
