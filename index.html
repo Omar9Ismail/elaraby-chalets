@@ -1584,60 +1584,108 @@
       html2canvas(w.firstElementChild, { scale: 2, width: 560, windowWidth: 600, useCORS: true, backgroundColor: '#ffffff' }).then(c => { w.innerHTML = ''; triggerUniversalImageDownload(`ايصال-${b.clientName}.png`, c.toDataURL('image/png')); });
     }
 	// دمج اللوجو والفوتر تلقائياً على صور الشاليهات باستخدام APP_LOGO_SRC المضمون
+   // رسم الفوتر واللوجو والواتر مارك بشكل ديناميكي متناسق مع أبعاد الصورة
     function brandChaletPhotoWithLogoAndFooter(file) {
       return new Promise(resolve => {
         var r = new FileReader();
         r.onload = ev => {
           var img = new Image();
           img.onload = () => {
-            var maxW = 1080, scale = Math.min(1, maxW / img.width);
-            var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
-            var footerH = Math.max(48, Math.round(h * 0.085));
+            // مقياس ديناميكي يعتمد على أصغر بُعد في الصورة عشان يناسب الصور الطولية والعرضية والمربعة
+            var minSide = Math.min(img.width, img.height);
+            var targetMax = 1080;
+            var scale = Math.min(1, targetMax / Math.max(img.width, img.height));
+            var w = Math.max(400, Math.round(img.width * scale));
+            var h = Math.max(300, Math.round(img.height * scale));
+            var dynMin = Math.min(w, h);
+
+            // ارتفاع فوتر ديناميكي متناسب مع حجم الصورة
+            var footerH = Math.max(44, Math.min(90, Math.round(dynMin * 0.085)));
             var canvas = document.createElement('canvas');
-            canvas.width = w; canvas.height = h + footerH;
+            canvas.width = w;
+            canvas.height = h + footerH;
             var ctx = canvas.getContext('2d');
+
+            // رسم صورة الشاليه الأساسية
             ctx.drawImage(img, 0, 0, w, h);
 
+            // الفوتر السفلي: مساحة فاضية يمين وشمال + النص في المنتصف فقط (بدون رقم تليفون)
             ctx.fillStyle = "rgba(11, 25, 44, 0.92)";
             ctx.fillRect(0, h, w, footerH);
             ctx.fillStyle = "#d4af37";
-            ctx.fillRect(0, h, w, 3);
+            ctx.fillRect(0, h, w, Math.max(2, Math.round(footerH * 0.05)));
+
+            var footerText = "شركة العربي للاستثمار العقاري • fb.com/Elaraby.estate";
+            var fontSize = Math.max(12, Math.min(26, Math.round(footerH * 0.38)));
+            // تصغير الخط تلقائياً لو عرض الصورة ضيق عشان يفضل في مساحة وسطية مريحة بسيب يمين وشمال
+            ctx.font = `800 ${fontSize}px Cairo, Tahoma, sans-serif`;
+            var maxTextWidth = w * 0.68;
+            while (ctx.measureText(footerText).width > maxTextWidth && fontSize > 10) {
+              fontSize -= 1;
+              ctx.font = `800 ${fontSize}px Cairo, Tahoma, sans-serif`;
+            }
 
             ctx.fillStyle = "#fef08a";
-            ctx.font = `bold ${Math.max(15, Math.round(footerH * 0.42))}px Cairo, Tahoma, sans-serif`;
-            ctx.textAlign = "right";
+            ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText("شركة العربي للاستثمار العقاري • fb.com/Elaraby.estate", w - 16, h + footerH / 2);
-
-            ctx.fillStyle = "#ffffff";
-            ctx.textAlign = "left";
-            ctx.fillText("01008743750", 16, h + footerH / 2);
+            ctx.fillText(footerText, w / 2, h + footerH / 2 + 1);
 
             var finishWithLogo = () => {
               var logoImg = new Image();
               logoImg.onload = () => {
+                var ratio = logoImg.height / (logoImg.width || 1);
+
+                // 1) واتر مارك في المنتصف بحجم متناسق مع الصورة أو أصغر شوية (26% من أقل بُعد)
                 ctx.save();
-                ctx.globalAlpha = 0.22;
-                var lw = Math.round(w * 0.32);
-                var lh = Math.round(lw * (logoImg.height / (logoImg.width || 1)));
-                ctx.drawImage(logoImg, (w - lw) / 2, (h - lh) / 2, lw, lh);
-                ctx.globalAlpha = 0.88;
-                var cornerW = Math.round(w * 0.16);
-                var cornerH = Math.round(cornerW * (logoImg.height / (logoImg.width || 1)));
-                ctx.fillStyle = "rgba(0,0,0,0.7)";
-                ctx.fillRect(14, 14, cornerW + 10, cornerH + 10);
-                ctx.drawImage(logoImg, 19, 19, cornerW, cornerH);
+                ctx.globalAlpha = 0.20;
+                var wmW = Math.round(dynMin * 0.26);
+                var wmH = Math.round(wmW * ratio);
+                ctx.drawImage(logoImg, (w - wmW) / 2, (h - wmH) / 2, wmW, wmH);
                 ctx.restore();
-                resolve(canvas.toDataURL('image/jpeg', 0.84));
+
+                // 2) اللوجو على اليمين (أعلى يمين الصورة) بحجم ديناميكي
+                ctx.save();
+                ctx.globalAlpha = 0.92;
+                var pad = Math.max(10, Math.round(dynMin * 0.02));
+                var rightLogoW = Math.max(54, Math.min(130, Math.round(dynMin * 0.14)));
+                var rightLogoH = Math.round(rightLogoW * ratio);
+                var boxPad = Math.max(4, Math.round(rightLogoW * 0.06));
+                var boxW = rightLogoW + boxPad * 2;
+                var boxH = rightLogoH + boxPad * 2;
+                var rightX = w - pad - boxW;
+                var topY = pad;
+
+                ctx.fillStyle = "rgba(0, 0, 0, 0.68)";
+                ctx.beginPath();
+                if (ctx.roundRect) {
+                  ctx.roundRect(rightX, topY, boxW, boxH, 8);
+                } else {
+                  ctx.rect(rightX, topY, boxW, boxH);
+                }
+                ctx.fill();
+
+                ctx.strokeStyle = "rgba(212, 175, 55, 0.75)";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.drawImage(logoImg, rightX + boxPad, topY + boxPad, rightLogoW, rightLogoH);
+                ctx.restore();
+
+                resolve(canvas.toDataURL('image/jpeg', 0.85));
               };
-              logoImg.onerror = () => resolve(canvas.toDataURL('image/jpeg', 0.84));
+              logoImg.onerror = () => resolve(canvas.toDataURL('image/jpeg', 0.85));
               logoImg.src = APP_LOGO_SRC;
             };
 
             if (!APP_LOGO_SRC.startsWith('data:image')) {
               fetch(APP_LOGO_SRC).then(res => res.blob()).then(b => {
                 var fr = new FileReader();
-                fr.onloadend = () => { if (typeof fr.result === 'string') APP_LOGO_SRC = fr.result; finishWithLogo(); };
+                fr.onloadend = () => {
+                  if (typeof fr.result === 'string' && fr.result.startsWith('data:image')) {
+                    APP_LOGO_SRC = fr.result;
+                  }
+                  finishWithLogo();
+                };
                 fr.readAsDataURL(b);
               }).catch(finishWithLogo);
             } else {
@@ -1649,7 +1697,6 @@
         r.readAsDataURL(file);
       });
     }
-
     async function onSelectCatVillage() { var v = document.getElementById('catVillageSelect').value, sel = document.getElementById('catChaletSelect'); if (!sel) return; sel.innerHTML = appDB.chalets.filter(c=>c.village===v).map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); loadSelectedChaletCatalog(); }
     async function loadSelectedChaletCatalog() {
       var c = appDB.chalets.find(x=>x.id===document.getElementById('catChaletSelect').value); if (!c) return;
@@ -1712,26 +1759,68 @@
         : '<div style="padding:20px;grid-column:1/-1;text-align:center;">لسه مفيش صور مرفوعة للشاليه ده.</div>';
     }
 
+    function downloadSingleBlobImage(fileName, dataUrl) {
+      try {
+        var parts = dataUrl.split(',');
+        var mime = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
+        var bstr = atob(parts[1]);
+        var n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) u8arr[n] = bstr.charCodeAt(n);
+        var blob = new Blob([u8arr], { type: mime });
+        var blobUrl = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+        }, 2000);
+      } catch (e) {
+        triggerUniversalImageDownload(fileName, dataUrl);
+      }
+    }
+
     function downloadAllCurrentChaletPhotos() {
-      if (!currentGalleryPhotos.length || !currentGalleryChalet) { alert("⚠️ مفيش صور للتحميل!"); return; }
+      if (!currentGalleryPhotos.length || !currentGalleryChalet) {
+        alert("⚠️ مفيش صور للتحميل!");
+        return;
+      }
+      var c = currentGalleryChalet;
+      var safeName = `${c.village}-${c.name}`.replace(/[^\w\u0600-\u06FF-]/g, '_');
+      showToast(`📥 جاري بدء تحميل ${currentGalleryPhotos.length} صورة...`);
+
       currentGalleryPhotos.forEach((src, i) => {
-        setTimeout(() => { triggerUniversalImageDownload(`${currentGalleryChalet.village}-${currentGalleryChalet.name}-${i+1}.jpg`, src); }, i * 400);
+        setTimeout(() => {
+          var ext = src.indexOf('image/png') !== -1 ? 'png' : 'jpg';
+          downloadSingleBlobImage(`${safeName}-${i + 1}.${ext}`, src);
+        }, i * 650);
       });
-      showToast(`📥 جاري تحميل ${currentGalleryPhotos.length} صورة باللوجو والفوتر!`);
     }
 
     async function shareCurrentChaletPhotos(platform) {
       if (!currentGalleryChalet) return;
       var c = currentGalleryChalet;
-      var shareTxt = `🏖️ *${c.village} - ${c.name}*\n${c.desc ? '📋 ' + c.desc + '\n' : ''}${c.price ? '💰 السعر: ' + c.price + '\n' : ''}📞 للتواصل والحجز: 01008743750\n🌐 شركة العربي للاستثمار العقاري: fb.com/Elaraby.estate`;
+      var shareTxt = `🏖️ *${c.village} - ${c.name}*\n` +
+        (c.desc ? `📋 ${c.desc}\n` : '') +
+        (c.price ? `💰 السعر: ${c.price}\n` : '') +
+        `📞 للتواصل والحجز: 01008743750\n` +
+        `🌐 شركة العربي للاستثمار العقاري: fb.com/Elaraby.estate`;
 
-      if (navigator.share && currentGalleryPhotos.length && navigator.canShare) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareTxt).catch(() => {});
+      }
+
+      var isMobile = /Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
+      if (isMobile && navigator.share && currentGalleryPhotos.length && navigator.canShare) {
         try {
           var files = [];
           for (var i = 0; i < currentGalleryPhotos.length; i++) {
             var res = await fetch(currentGalleryPhotos[i]);
             var blob = await res.blob();
-            files.push(new File([blob], `${c.name}-${i+1}.jpg`, { type: 'image/jpeg' }));
+            var ext = blob.type.indexOf('png') !== -1 ? 'png' : 'jpg';
+            files.push(new File([blob], `${c.name}-${i + 1}.${ext}`, { type: blob.type || 'image/jpeg' }));
           }
           if (navigator.canShare({ files })) {
             await navigator.share({ title: `${c.village} - ${c.name}`, text: shareTxt, files });
@@ -1740,17 +1829,17 @@
         } catch (err) {}
       }
 
-      if (window.pywebview && window.pywebview.api && currentGalleryPhotos.length) {
-        await window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentGalleryPhotos, shareTxt, "");
-        if (platform === 'messenger') window.open('https://www.messenger.com/', '_blank');
-        showToast("✅ تم نسخ الصور للحافظة! اعمل لصق (Ctrl+V) في الشات");
-        return;
+      if (platform === 'whatsapp') {
+        var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTxt)}`;
+        var win = window.open(waUrl, '_blank', 'noopener,noreferrer');
+        if (!win) window.location.href = waUrl;
+        showToast("💬 تم فتح واتساب ونسخ الرسالة — حمّل الصور وارفقها في الشات");
+      } else {
+        var fbUrl = 'https://www.messenger.com/';
+        var mWin = window.open(fbUrl, '_blank', 'noopener,noreferrer');
+        if (!mWin) window.location.href = fbUrl;
+        showToast("💙 تم فتح ماسنجر ونسخ الرسالة");
       }
-
-      if (navigator.clipboard) navigator.clipboard.writeText(shareTxt).catch(()=>{});
-      if (platform === 'whatsapp') window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareTxt)}`, '_blank');
-      else window.open('https://www.messenger.com/', '_blank');
-      showToast("📋 تم نسخ تفاصيل الشاليه! (لإرسال الصور مباشرة اضغط تحميل الكل)");
     }
 
     // الصيانة والأعطال
