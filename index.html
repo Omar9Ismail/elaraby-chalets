@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Elaraby Pro - نظام إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
+  <title>Elaraby Pro - سيستم إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
@@ -31,6 +31,14 @@
       background: var(--bg-app); color: var(--text-main);
     }
     h1, h2, h3, .brand-title, .btn-submit, .tab-btn { font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif; }
+
+    /* إشعار عائم أنيق */
+    .toast-banner {
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+      background: #0f766e; color: #fff; border: 2px solid var(--gold);
+      padding: 10px 22px; border-radius: 12px; font-weight: 900; font-size: 13.5px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35); z-index: 20000; display: none;
+    }
 
     /* شاشة البداية (5 ثواني) */
     .splash-overlay {
@@ -97,8 +105,7 @@
     }
     [data-theme="dark"] .alerts-banner { background: #292011; color: #fde68a; }
 
-    /* المسرح الرئيسي وإصلاح سكرول الديسكتوب */
-    .main-stage { padding: 6px 14px 36px; width: 100%; }
+    .main-stage { padding: 6px 14px 38px; width: 100%; }
     .grid-toolbar {
       background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px;
       padding: 6px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
@@ -108,7 +115,7 @@
     .agent-pill { padding: 4px 9px; border-radius: 16px; border: 1.5px solid transparent; font-size: 11px; font-weight: 800; cursor: pointer; color: #fff; opacity: 0.72; }
     .agent-pill.selected { opacity: 1; border-color: var(--gold); transform: scale(1.04); }
 
-    /* حاوية الكاليندر بارتفاع صريح يضمن ظهور شريط التمرير الرأسي والأفقي في الديسكتوب */
+    /* جدول الحجوزات */
     .grid-workspace { display: flex; gap: 10px; position: relative; width: 100%; }
     .sheet-box {
       flex: 1; height: calc(100vh - 215px); min-height: 420px;
@@ -145,7 +152,7 @@
     .booked-cell.merged-mid { border-top: none !important; border-bottom: none !important; }
     .booked-cell.merged-bot { border-top: none !important; }
 
-    .side-drawer { width: 345px; max-height: calc(100vh - 215px); background: var(--bg-surface); border: 2px solid var(--primary); border-radius: 12px; display: none; flex-direction: column; overflow-y: auto; flex-shrink: 0; z-index: 30; }
+    .side-drawer { width: 355px; max-height: calc(100vh - 215px); background: var(--bg-surface); border: 2px solid var(--primary); border-radius: 12px; display: none; flex-direction: column; overflow-y: auto; flex-shrink: 0; z-index: 30; }
     .drawer-hdr { background: var(--header-bg); color: #fff; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px solid var(--gold); }
     .drawer-body { padding: 10px 12px; font-size: 12px; }
     .d-sec { font-size: 11px; font-weight: 800; color: var(--primary); background: var(--bg-subtle); padding: 4px 8px; border-radius: 6px; margin: 8px 0 6px; border-right: 3px solid var(--primary); }
@@ -162,7 +169,7 @@
     .btn-submit { width: 100%; padding: 10px; background: var(--primary); color: #ffffff; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer; margin-top: 8px; }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(9,13,22,0.82); z-index: 200; align-items: center; justify-content: center; padding: 14px; }
-    .modal-box { background: var(--bg-surface); color: var(--text-main); border: 1.5px solid var(--border-color); border-radius: 14px; max-width: 600px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 16px; }
+    .modal-box { background: var(--bg-surface); color: var(--text-main); border: 1.5px solid var(--border-color); border-radius: 14px; max-width: 620px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 16px; }
 
     .dev-footer {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
@@ -174,8 +181,15 @@
 
     .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
     .cat-card { background: var(--bg-surface); border: 1.5px solid var(--border-color); border-radius: 12px; overflow: hidden; }
-    .cat-cover { width: 100%; height: 185px; background: #000; cursor: pointer; }
+    .cat-cover { width: 100%; height: 185px; background: #000; cursor: pointer; position: relative; }
     .cat-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+    .ledger-row-card {
+      border: 1.5px solid var(--border-color); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      cursor: pointer; transition: 0.15s; background: var(--bg-surface);
+    }
+    .ledger-row-card:hover { border-color: var(--primary); background: var(--bg-subtle); }
 
     .mobile-bottom-bar { display: none; }
     #offscreenExportWrapper { position: fixed; top: -99999px; left: -99999px; background: #ffffff; color: #0f172a; z-index: -1; }
@@ -198,14 +212,17 @@
 </head>
 <body>
 
-  <!-- شاشة البداية الديناميكية (5 ثواني) -->
+  <!-- إشعار تأكيد الحفظ السريع -->
+  <div id="toastBanner" class="toast-banner">✅ تم الحجز والتخزين بنجاح!</div>
+
+  <!-- شاشة البداية (5 ثواني) -->
   <div id="splashScreen" class="splash-overlay">
     <div class="splash-logo-wrap"><img class="app-logo-img" src="Elaraby.png" style="max-width:100%;max-height:100%;object-fit:contain;"></div>
-    <div style="font-size:21px; font-weight:900; color:#fef08a;">Elaraby Pro • نظام إدارة الحجوزات والخزينة</div>
+    <div style="font-size:21px; font-weight:900; color:#fef08a;">Elaraby Pro • سيستم إدارة الحجوزات والخزينة</div>
     <div style="font-size:12.5px; color:#cbd5e1; margin-top:4px;">شركة العربي للاستثمار العقاري والسياحي • العين السخنة</div>
     <div class="splash-progress-bar"><div class="splash-progress-fill"></div></div>
     <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(212,175,55,0.45); border-radius:12px; padding:12px 18px; margin-top:8px;">
-      <div style="font-size:13px; font-weight:900; color:#fef08a;">💻 تم إنشاء وتطوير النظام بواسطة: المهندس عمر إسماعيل</div>
+      <div style="font-size:13px; font-weight:900; color:#fef08a;">💻 تصميم وتطوير: م. عمر إسماعيل</div>
       <div style="font-size:11.5px; color:#e2e8f0; margin-top:4px;" dir="ltr">🌐 fb.com/Omar9ismail &nbsp;|&nbsp; 📞 01008743750</div>
     </div>
   </div>
@@ -217,10 +234,10 @@
         <img class="app-logo-img" src="Elaraby.png" style="max-width:100%;max-height:100%;">
       </div>
       <div style="font-size:18px; font-weight:900; color:#0b192c;">شركة العربي للاستثمار العقاري</div>
-      <div style="font-size:11.5px; color:#64748b; margin-bottom:12px;" id="cloudInitBadge">جاري الاتصال بالسحابة...</div>
-      <div class="form-group" style="text-align:right;"><label style="color:#334155;">👤 اسم المستخدم:</label><input type="text" id="loginUsername" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
-      <div class="form-group" style="text-align:right;"><label style="color:#334155;">🔑 كلمة المرور:</label><input type="password" id="loginPassword" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
-      <button type="button" class="btn-submit" onclick="handleLogin()">🔓 دخول للنظام</button>
+      <div style="font-size:11.5px; color:#64748b; margin-bottom:12px;" id="cloudInitBadge">جاري الاتصال بالسيرفر...</div>
+      <div class="form-group" style="text-align:right;"><label style="color:#334155;">👤 اسم الدخول:</label><input type="text" id="loginUsername" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
+      <div class="form-group" style="text-align:right;"><label style="color:#334155;">🔑 الباسورد:</label><input type="password" id="loginPassword" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
+      <button type="button" class="btn-submit" onclick="handleLogin()">🔓 دخول السيستم</button>
       <div id="loginErrorMsg" style="color:#dc2626; font-size:11.5px; font-weight:800; margin-top:8px; display:none;"></div>
       <div style="margin-top:12px; padding-top:8px; border-top:1px solid #e2e8f0; font-size:10.5px; color:#64748b;">
         تطوير: <b>عمر إسماعيل</b> • <span dir="ltr">fb.com/Omar9ismail</span> • <span dir="ltr">01008743750</span>
@@ -228,11 +245,11 @@
     </div>
   </div>
 
-  <!-- شريط تحكم الموبايل لإخفاء/إظهار القائمة العلوية الكبيرة بضغطة واحدة -->
+  <!-- شريط تحكم الموبايل لإخفاء/إظهار القائمة العلوية -->
   <div class="mobile-collapse-bar">
     <span style="font-size:12px; font-weight:900;">🏢 Elaraby Pro</span>
     <button type="button" id="btnToggleMobileHeader" onclick="toggleMobileTopZone()" style="background:#d97706; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-family:inherit; font-size:11px; font-weight:800; cursor:pointer;">
-      🔼 إخفاء القائمة العلوية لتكبير الجدول
+      🔼 إخفاء القائمة اللي فوق لتكبير الجدول
     </button>
   </div>
 
@@ -243,44 +260,44 @@
         <div class="brand-logo"><img class="app-logo-img" src="Elaraby.png" alt="Logo"></div>
         <div>
           <div class="brand-title">Elaraby Pro • شركة العربي للاستثمار العقاري</div>
-          <div class="brand-sub" id="dbSyncStatus">متصل بالسحابة ✓</div>
+          <div class="brand-sub" id="dbSyncStatus">متصل أونلاين ✓</div>
         </div>
       </div>
 
-      <div id="onlineRadarPill" class="online-pill admin-only" style="display:none;">🟢 المتصلون: <span id="onlineUsersListText">...</span></div>
+      <div id="onlineRadarPill" class="online-pill admin-only" style="display:none;">🟢 فاتحين دلوقتي: <span id="onlineUsersListText">...</span></div>
 
       <div class="header-actions">
-        <input type="text" id="globalQuickSearch" class="global-search-inp" placeholder="🔎 بحث سريع [Ctrl+K]" oninput="handleGlobalQuickSearch(this.value)">
+        <input type="text" id="globalQuickSearch" class="global-search-inp" placeholder="🔎 دور باسم العميل أو رقمه" oninput="handleGlobalQuickSearch(this.value)">
         <button class="btn-hdr" style="background:#334155;" onclick="toggleDarkMode()" id="btnThemeToggle">🌙</button>
         <span id="currentUserBadge" style="background:rgba(212,175,55,0.2); border:1px solid var(--gold); padding:4px 9px; border-radius:7px; font-size:11px; font-weight:800; color:#fef08a;">👤 ...</span>
-        <button class="btn-hdr" style="background:#475569;" onclick="openChangeMyPasswordModal()">🔑 الباسورد</button>
-        <button class="btn-hdr admin-only" style="background:#059669;" onclick="exportToExcelCSV()">📊 Excel</button>
-        <button class="btn-hdr admin-only desktop-only" style="background:#2563eb;" onclick="downloadEncryptedBackup()">🔐 نسخة</button>
-        <button class="btn-hdr admin-only desktop-only" style="background:#7c3aed;" onclick="restoreEncryptedBackup()">📂 استعادة</button>
+        <button class="btn-hdr" style="background:#475569;" onclick="openChangeMyPasswordModal()">🔑 تغيير الباسورد</button>
+        <button class="btn-hdr admin-only" style="background:#059669;" onclick="exportToExcelCSV()">📊 شيت Excel</button>
+        <button class="btn-hdr admin-only desktop-only" style="background:#2563eb;" onclick="downloadEncryptedBackup()">🔐 حفظ نسخة</button>
+        <button class="btn-hdr admin-only desktop-only" style="background:#7c3aed;" onclick="restoreEncryptedBackup()">📂 استرجاع نسخة</button>
         <button class="btn-hdr" style="background:#dc2626;" onclick="handleLogout()">🚪 خروج</button>
       </div>
     </header>
 
     <nav class="top-nav-bar">
       <div class="nav-group">
-        <button id="tabGrid" class="tab-btn active" onclick="switchView('grid')">📅 الكاليندر</button>
-        <button id="tabNewBook" class="tab-btn gold-tab" onclick="openQuickBookingModal()">➕ حجز / هولد جديد</button>
-        <button id="tabCatalog" class="tab-btn" onclick="switchView('catalog')">🖼️ الكتالوج</button>
-        <button id="tabAvail" class="tab-btn" onclick="switchView('avail')">🔍 المتاح</button>
-        <button id="tabWaitlist" class="tab-btn" onclick="switchView('waitlist')">📋 قائمة الانتظار <span id="wlBadgeCount" style="background:#dc2626;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
-        <button id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 السجل والتصاريح</button>
+        <button id="tabGrid" class="tab-btn active" onclick="switchView('grid')">📅 جدول الحجوزات</button>
+        <button id="tabNewBook" class="tab-btn gold-tab" onclick="openQuickBookingModal()">➕ حجز جديد</button>
+        <button id="tabCatalog" class="tab-btn" onclick="switchView('catalog')">🖼️ صور الشاليهات</button>
+        <button id="tabAvail" class="tab-btn" onclick="switchView('avail')">🔍 إيه المتاح؟</button>
+        <button id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 الحجوزات والبطايق</button>
+        <button id="tabMaint" class="tab-btn" onclick="switchView('maint')">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
         <button id="tabMyComm" class="tab-btn sales-only" style="display:none;" onclick="switchView('mycomm')">💵 عمولاتي</button>
         <button id="tabTreasury" class="tab-btn admin-only" onclick="switchView('treasury')">💰 الخزينة والملاك</button>
-        <button id="tabAudit" class="tab-btn admin-only" onclick="switchView('audit')">🛡️ الرقابة</button>
+        <button id="tabAudit" class="tab-btn admin-only" onclick="switchView('audit')">🛡️ سجل الحركات</button>
         <button id="tabSettings" class="tab-btn admin-only" onclick="switchView('settings')">⚙️ الإعدادات</button>
       </div>
     </nav>
 
     <div class="kpi-strip">
-      <div class="kpi-card"><div><div class="kpi-lbl">📊 إشغال الشهر</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">⏳ الهولد النشط</div><div class="kpi-val" style="color:#d97706;" id="kpiHolds">0</div></div><span>⏱️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">🪪 دخول قريب بدون بطاقة</div><div class="kpi-val" style="color:#dc2626;" id="kpiMissingIds">0</div></div><span>🛡️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">💰 متبقي تحصيل اليوم</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
+      <div class="kpi-card"><div><div class="kpi-lbl">📊 نسبة الشغل الشهر ده</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
+      <div class="kpi-card"><div><div class="kpi-lbl">⏳ حجوزات هولد مؤقتة</div><div class="kpi-val" style="color:#d97706;" id="kpiHolds">0</div></div><span>⏱️</span></div>
+      <div class="kpi-card"><div><div class="kpi-lbl">🪪 دخول قريب من غير بطاقة</div><div class="kpi-val" style="color:#dc2626;" id="kpiMissingIds">0</div></div><span>🛡️</span></div>
+      <div class="kpi-card"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
     </div>
 
     <div id="urgentAlertsBar" class="alerts-banner"></div>
@@ -288,7 +305,7 @@
 
   <!-- المسرح الرئيسي -->
   <main class="main-stage">
-    <!-- 1. الكاليندر -->
+    <!-- 1. جدول الحجوزات -->
     <div id="viewGrid">
       <div class="grid-toolbar">
         <div class="toolbar-left">
@@ -302,7 +319,7 @@
           </select>
           <select id="gridVillageFilter" class="ctrl-select" onchange="renderCalendarGrid()"></select>
           <button type="button" class="btn-hdr" style="background:#f59e0b; color:#0f172a; font-weight:900;" onclick="scrollToTodayRow()">📍 النهاردة</button>
-          <button type="button" id="btnExportGridImg" class="btn-hdr" style="background:#0d9488;" onclick="exportCurrentGridAsA4Image()">📸 تصدير الجدول كامل بالعرض</button>
+          <button type="button" id="btnExportGridImg" class="btn-hdr" style="background:#0d9488;" onclick="exportCurrentGridAsA4Image()">📸 حفظ الجدول صورة كاملة</button>
         </div>
         <div class="toolbar-right" id="agentFilterPills"></div>
       </div>
@@ -322,77 +339,88 @@
       </div>
     </div>
 
-    <!-- 2. الكتالوج -->
+    <!-- 2. صور الشاليهات (باللوجو والفوتر + تحميل ومشاركة واتساب وماسنجر) -->
     <div id="viewCatalog" class="panel-container">
       <div class="grid-toolbar">
         <div class="toolbar-left">
           <select id="catViewVillageFilter" class="ctrl-select" onchange="renderCatalogCards()"></select>
-          <input type="text" id="catViewSearch" class="form-control" style="width:220px;" placeholder="🔎 بحث بالمواصفات..." oninput="renderCatalogCards()">
+          <input type="text" id="catViewSearch" class="form-control" style="width:220px;" placeholder="🔎 دور باسم الشاليه أو مواصفاته..." oninput="renderCatalogCards()">
         </div>
         <button class="btn-hdr admin-only" style="background:#0284c7;" onclick="document.getElementById('catEditorModal').style.display='flex'; onSelectCatVillage();">➕ إضافة / تعديل صور شاليه</button>
       </div>
       <div class="catalog-grid" id="catalogCardsContainer"></div>
     </div>
 
-    <!-- 3. المتاح -->
+    <!-- 3. إيه المتاح؟ -->
     <div id="viewAvail" class="panel-container">
       <div class="panel-grid-2">
         <div class="box-card">
-          <h3 style="margin:0 0 10px; font-size:15px; color:var(--primary);">🔍 فحص الشاليهات المتاحة</h3>
+          <h3 style="margin:0 0 10px; font-size:15px; color:var(--primary);">🔍 شوف الشاليهات الفاضية</h3>
           <div class="form-group"><label>القرية:</label><select id="checkVillage" class="form-control"></select></div>
           <div class="row-2">
             <div class="form-group"><label>تاريخ الدخول:</label><input type="date" id="checkStart" class="form-control"></div>
-            <div class="form-group"><label>تاريخ المغادرة صباحاً:</label><input type="date" id="checkEnd" class="form-control"></div>
+            <div class="form-group"><label>تاريخ الخروج الصبح:</label><input type="date" id="checkEnd" class="form-control"></div>
           </div>
-          <button class="btn-submit" onclick="checkAllAvailableChalets()">🔍 عرض المتاح وتجهيز رسالة واتساب</button>
+          <button class="btn-submit" onclick="checkAllAvailableChalets()">🔍 عرض الفاضي وتجهيز رسالة واتساب</button>
           <div id="waAvailCopyBox" style="display:none; margin-top:10px;">
             <textarea id="waAvailText" class="form-control" rows="6" style="font-size:11px;"></textarea>
-            <button type="button" class="btn-submit" style="background:#16a34a;" onclick="navigator.clipboard.writeText(document.getElementById('waAvailText').value); alert('✅ تم نسخ قائمة المتاح!');">📋 نسخ الرسالة للواتساب</button>
+            <button type="button" class="btn-submit" style="background:#16a34a;" onclick="navigator.clipboard.writeText(document.getElementById('waAvailText').value); showToast('✅ تم نسخ الرسالة!');">📋 نسخ الرسالة للواتساب</button>
           </div>
         </div>
         <div class="box-card" id="availResult"></div>
       </div>
     </div>
 
-    <!-- 4. قائمة الانتظار -->
-    <div id="viewWaitlist" class="panel-container">
-      <div class="panel-grid-2">
-        <div class="box-card">
-          <h3 style="margin:0 0 10px; font-size:15px; color:var(--primary);">📋 إضافة عميل لقائمة الانتظار</h3>
-          <div class="form-group"><label>اسم العميل *</label><input type="text" id="wlClientName" class="form-control"></div>
-          <div class="form-group"><label>رقم الهاتف *</label><input type="text" id="wlClientPhone" class="form-control" dir="ltr"></div>
-          <div class="form-group"><label>القرية المطلوبة *</label><select id="wlVillage" class="form-control"></select></div>
-          <div class="row-2">
-            <div class="form-group"><label>من تاريخ *</label><input type="date" id="wlStart" class="form-control"></div>
-            <div class="form-group"><label>إلى تاريخ *</label><input type="date" id="wlEnd" class="form-control"></div>
-          </div>
-          <button class="btn-submit" onclick="addToWaitlist()">➕ تسجيل في قائمة الانتظار</button>
-        </div>
-        <div class="box-card"><h3 style="margin:0 0 10px;">⏳ العملاء المنتظرون حالياً</h3><div id="waitlistContainer"></div></div>
-      </div>
-    </div>
-
-    <!-- 5. السجل والتصاريح -->
+    <!-- 4. الحجوزات والبطايق (مع بطاقة معاينة كاملة عند الوقوف/الضغط + خصوصية السيلز) -->
     <div id="viewLedger" class="panel-container">
       <div class="grid-toolbar">
         <div class="toolbar-left">
           <select id="ledgerVillageFilter" class="ctrl-select" onchange="renderLedgerList()"></select>
           <select id="ledgerPermitFilter" class="ctrl-select" onchange="renderLedgerList()">
-            <option value="all">كل حالات التصاريح</option>
-            <option value="missing">🔴 بدون بطاقات</option>
-            <option value="ready">🟡 تم الرفع وجاهز للإرسال</option>
-            <option value="sent">🟢 تم إرسال التصريح للأمن</option>
+            <option value="all">كل الحجوزات</option>
+            <option value="missing">🔴 لسه من غير بطايق</option>
+            <option value="ready">🟡 البطايق اترفعت وجاهزة</option>
+            <option value="sent">🟢 اتبعتت للأمن خلاص</option>
           </select>
-          <input type="text" id="ledgerSearchInput" class="form-control" style="width:210px;" placeholder="🔎 اسم العميل / الهاتف..." oninput="renderLedgerList()">
+          <input type="text" id="ledgerSearchInput" class="form-control" style="width:210px;" placeholder="🔎 اسم العميل أو رقمه..." oninput="renderLedgerList()">
         </div>
       </div>
-      <div id="ledgerListContainer" class="box-card"></div>
+      <div class="grid-workspace">
+        <div id="ledgerListContainer" class="box-card" style="flex:1;"></div>
+        <aside id="ledgerDetailCard" class="side-drawer" style="display:none;">
+          <div class="drawer-hdr">
+            <div><div style="font-size:13px; font-weight:900; color:#fef08a;" id="ldcTitle">بطاقة الحجز</div><div style="font-size:10px; color:#cbd5e1;" id="ldcSubId">#INV-000</div></div>
+            <button onclick="document.getElementById('ledgerDetailCard').style.display='none'" style="background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:6px;padding:3px 8px;cursor:pointer;">✖</button>
+          </div>
+          <div class="drawer-body" id="ldcContent"></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- 5. الصيانة والأعطال -->
+    <div id="viewMaint" class="panel-container">
+      <div class="panel-grid-2">
+        <div class="box-card">
+          <h3 style="margin:0 0 10px; font-size:15px; color:#d97706;">🔧 تسجيل عطل أو صيانة في شاليه</h3>
+          <div class="form-group"><label>الشاليه *</label><select id="maintChaletSel" class="form-control"></select></div>
+          <div class="form-group"><label>المشكلة إيه؟ *</label><input type="text" id="maintDescInp" class="form-control" placeholder="مثلاً: التكييف محتاج شحن / تغيير قلب خلاط"></div>
+          <div class="row-2">
+            <div class="form-group"><label>الأهمية</label><select id="maintPriorityInp" class="form-control"><option value="مستعجل">🔴 مستعجل (فيه نزيل)</option><option value="عادي">🟡 عادي</option></select></div>
+            <div class="form-group"><label>التكلفة المتوقعة (ج.م)</label><input type="number" id="maintCostInp" class="form-control" value="0" min="0"></div>
+          </div>
+          <button class="btn-submit" style="background:#d97706;" onclick="addMaintenanceTicket()">➕ تسجيل العطل</button>
+        </div>
+        <div class="box-card">
+          <h3 style="margin:0 0 10px;">🛠️ الأعطال المسجلة</h3>
+          <div id="maintTicketsContainer"></div>
+        </div>
+      </div>
     </div>
 
     <!-- 6. كشف عمولات السيلز -->
     <div id="viewMycomm" class="panel-container">
       <div class="box-card" style="max-width:800px; margin:0 auto;">
-        <h3 style="margin:0 0 10px; color:var(--primary);">💵 كشف مبيعاتي وعمولاتي المستحقة</h3>
+        <h3 style="margin:0 0 10px; color:var(--primary);">💵 شغلي وعمولاتي</h3>
         <div id="myCommContent"></div>
       </div>
     </div>
@@ -401,9 +429,9 @@
     <div id="viewTreasury" class="panel-container admin-only">
       <div class="grid-toolbar">
         <div class="toolbar-left">
-          <button class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')">💰 الجرد والعمولات ومصادر العملاء</button>
-          <button class="tab-btn" id="trTabOwner" onclick="switchTreasurySub('owner')">📑 كشف حساب مالك شاليه (A4)</button>
-          <button class="tab-btn" id="trTabExp" onclick="switchTreasurySub('exp')">💸 مصروفات التشغيل والصيانة</button>
+          <button class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')">💰 الجرد والعمولات وإيراد كل قرية</button>
+          <button class="tab-btn" id="trTabOwner" onclick="switchTreasurySub('owner')">📑 كشف حساب مالك شاليه</button>
+          <button class="tab-btn" id="trTabExp" onclick="switchTreasurySub('exp')">💸 مصاريف الشاليهات والمكتب</button>
         </div>
       </div>
 
@@ -411,9 +439,10 @@
         <div class="grid-toolbar">
           <div class="toolbar-left">
             <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="tStartDate" class="ctrl-select">
-            <label style="font-size:12px;font-weight:800;">إلى:</label><input type="date" id="tEndDate" class="ctrl-select">
-            <button class="btn-hdr" style="background:var(--primary);" onclick="calculateTreasury()">💰 تحديث الجرد</button>
-            <button class="btn-hdr" style="background:#059669;" onclick="exportTreasuryAsA4Image()">📸 تصدير جرد الخزينة</button>
+            <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="tEndDate" class="ctrl-select">
+            <button class="btn-hdr" style="background:var(--primary);" onclick="calculateTreasury()">💰 احسب الجرد</button>
+            <button class="btn-hdr" style="background:#059669;" onclick="exportTreasuryAsA4Image()">📸 حفظ صورة</button>
+            <button class="btn-hdr" style="background:#334155;" onclick="printElementClean('treasuryCaptureArea')">🖨️ طباعة / PDF</button>
           </div>
         </div>
         <div id="treasuryReportArea"></div>
@@ -422,19 +451,22 @@
       <div id="trSubOwner" style="display:none;">
         <div class="panel-grid-2">
           <div class="box-card">
-            <h3 style="margin:0 0 10px; color:var(--primary);">📑 إصدار كشف حساب مالك شاليه</h3>
-            <div class="form-group"><label>اختر القرية:</label><select id="ownVillageSel" class="form-control" onchange="onSelectOwnerVillage()"></select></div>
-            <div class="form-group"><label>اختر الشاليه:</label><select id="ownChaletSel" class="form-control"></select></div>
+            <h3 style="margin:0 0 10px; color:var(--primary);">📑 كشف حساب مالك شاليه</h3>
+            <div class="form-group"><label>اختار القرية:</label><select id="ownVillageSel" class="form-control" onchange="onSelectOwnerVillage()"></select></div>
+            <div class="form-group"><label>اختار الشاليه:</label><select id="ownChaletSel" class="form-control"></select></div>
             <div class="row-2">
               <div class="form-group"><label>من تاريخ:</label><input type="date" id="ownStartDate" class="form-control"></div>
-              <div class="form-group"><label>إلى تاريخ:</label><input type="date" id="ownEndDate" class="form-control"></div>
+              <div class="form-group"><label>لحد تاريخ:</label><input type="date" id="ownEndDate" class="form-control"></div>
             </div>
             <div class="row-2">
-              <div class="form-group"><label>نسبة إدارة شركة العربي (%):</label><input type="number" id="ownFeePct" class="form-control" value="15"></div>
-              <div class="form-group"><label>خصم صيانة/نظافة إضافي:</label><input type="number" id="ownExtraDeduct" class="form-control" value="0"></div>
+              <div class="form-group"><label>نسبة المكتب (%):</label><input type="number" id="ownFeePct" class="form-control" value="15"></div>
+              <div class="form-group"><label>خصم نظافة/صيانة زيادة:</label><input type="number" id="ownExtraDeduct" class="form-control" value="0"></div>
             </div>
-            <button class="btn-submit" onclick="generateOwnerStatement()">📊 معاينة كشف حساب المالك</button>
-            <button type="button" class="btn-submit" style="background:#059669;" onclick="exportOwnerStatementA4()">📸 تصدير كشف المالك</button>
+            <button class="btn-submit" onclick="generateOwnerStatement()">📊 عرض كشف المالك</button>
+            <div class="row-2" style="margin-top:6px;">
+              <button type="button" class="btn-submit" style="background:#059669;margin-top:0;" onclick="exportOwnerStatementA4()">📸 حفظ صورة</button>
+              <button type="button" class="btn-submit" style="background:#334155;margin-top:0;" onclick="printElementClean('ownerA4Card')">🖨️ طباعة / PDF</button>
+            </div>
           </div>
           <div class="box-card" id="ownerStatementPreview"></div>
         </div>
@@ -445,64 +477,62 @@
           <div class="box-card">
             <h3 style="margin:0 0 10px; color:#dc2626;">💸 تسجيل مصروف</h3>
             <div class="form-group"><label>التاريخ:</label><input type="date" id="expDate" class="form-control"></div>
-            <div class="form-group"><label>تابع لشاليه:</label><select id="expChaletSel" class="form-control"></select></div>
-            <div class="form-group"><label>بيان المصروف:</label><input type="text" id="expDesc" class="form-control"></div>
+            <div class="form-group"><label>تبع شاليه إيه؟:</label><select id="expChaletSel" class="form-control"></select></div>
+            <div class="form-group"><label>اتصرف في إيه؟:</label><input type="text" id="expDesc" class="form-control"></div>
             <div class="form-group"><label>المبلغ (ج.م):</label><input type="number" id="expAmount" class="form-control"></div>
-            <button class="btn-submit" style="background:#dc2626;" onclick="addExpense()">💾 تسجيل المصروف</button>
+            <button class="btn-submit" style="background:#dc2626;" onclick="addExpense()">💾 حفظ المصروف</button>
           </div>
           <div class="box-card" id="expensesListContainer"></div>
         </div>
       </div>
     </div>
 
-    <!-- 8. الرقابة -->
+    <!-- 8. سجل الحركات -->
     <div id="viewAudit" class="panel-container admin-only">
-      <div class="box-card" style="max-width:850px; margin:0 auto;"><h3 style="margin:0 0 10px;">🛡️ سجل الرقابة والحركات</h3><div id="auditLogContainer"></div></div>
+      <div class="box-card" style="max-width:850px; margin:0 auto;"><h3 style="margin:0 0 10px;">🛡️ سجل كل الحركات على السيستم</h3><div id="auditLogContainer"></div></div>
     </div>
-	<!-- 9. الإعدادات الشاملة (تجميع الشاليهات تحت قريتها + التعديل الجماعي للأسعار) -->
+	<!-- 9. الإعدادات المبسطة في 3 أقسام واضحة -->
     <div id="viewSettings" class="panel-container admin-only">
       <div class="grid-toolbar">
         <div class="toolbar-left">
-          <button class="tab-btn active" id="setTabChalets" onclick="switchSetSub('chalets')">🏡 القرى والشاليهات والأسعار الجماعية</button>
-          <button class="tab-btn" id="setTabUsers" onclick="switchSetSub('users')">🔐 إدارة السيلز واليوزرات والعمولات</button>
-          <button class="tab-btn" id="setTabGmail" onclick="switchSetSub('gmail')">📧 Gmail</button>
+          <button class="tab-btn active" id="setTabChalets" onclick="switchSetSub('chalets')">1️⃣ القرى والشاليهات والأسعار</button>
+          <button class="tab-btn" id="setTabComm" onclick="switchSetSub('comm')">2️⃣ عمولات السيلز والقرى</button>
+          <button class="tab-btn" id="setTabUsers" onclick="switchSetSub('users')">3️⃣ الموظفين واللوكيشن</button>
         </div>
       </div>
 
+      <!-- القسم 1: القرى والشاليهات والأسعار -->
       <div id="setSubChalets" class="box-card">
         <div class="row-3" style="margin-bottom:12px;">
-          <!-- 1. إضافة شاليه في نفس القرية -->
           <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
-            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">➕ إضافة شاليه (يتجمع تلقائياً تحت قريته):</div>
+            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">➕ إضافة شاليه جديد:</div>
             <div class="row-2" style="margin-bottom:6px;">
               <select id="existingVillageSelect" class="form-control" onchange="if(this.value!=='__new__') document.getElementById('newVillageInp').value=this.value;"></select>
               <input type="text" id="newVillageInp" class="form-control" placeholder="أو اكتب اسم قرية جديدة">
             </div>
             <div class="row-2">
               <input type="text" id="newChaletInp" class="form-control" placeholder="اسم الشاليه الجديد">
-              <button class="btn-submit" style="margin-top:0;" onclick="addChalet()">➕ إضافة الشاليه</button>
+              <button class="btn-submit" style="margin-top:0;" onclick="addChalet()">➕ إضافة</button>
             </div>
           </div>
 
-          <!-- 2. تعديل جماعي لأسعار شاليهات محددة أو قرية بالكامل -->
           <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1.5px solid var(--primary);">
-            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">💰 تعديل جماعي لأسعار الشاليهات المحددة:</div>
+            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">💰 تعديل سعر مجموعة شاليهات مع بعض:</div>
             <div class="row-2" style="margin-bottom:6px;">
-              <input type="number" id="bulkWeekdayInp" class="form-control" placeholder="سعر وسط الأسبوع الجديد">
-              <input type="number" id="bulkWeekendInp" class="form-control" placeholder="سعر الويك إند الجديد">
+              <input type="number" id="bulkWeekdayInp" class="form-control" placeholder="سعر وسط الأسبوع">
+              <input type="number" id="bulkWeekendInp" class="form-control" placeholder="سعر الويك إند">
             </div>
             <div class="row-2">
-              <button type="button" class="btn-submit" style="margin-top:0; background:#334155;" onclick="toggleSelectAllChaletsBulk()">☑️ تحديد / إلغاء الكل</button>
-              <button type="button" class="btn-submit" style="margin-top:0; background:#0d9488;" onclick="applyBulkPricesToSelected()">✅ تطبيق على المحدد</button>
+              <button type="button" class="btn-submit" style="margin-top:0; background:#334155;" onclick="toggleSelectAllChaletsBulk()">☑️ تحديد الكل</button>
+              <button type="button" class="btn-submit" style="margin-top:0; background:#0d9488;" onclick="applyBulkPricesToSelected()">✅ تطبيق السعر</button>
             </div>
           </div>
 
-          <!-- 3. تعديل اسم قرية بالكامل -->
           <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
-            <div style="font-weight:800; font-size:12px; color:#b45309; margin-bottom:6px;">✏️ تعديل اسم قرية بالكامل أو حذفها:</div>
+            <div style="font-weight:800; font-size:12px; color:#b45309; margin-bottom:6px;">✏️ تغيير اسم قرية أو حذفها:</div>
             <div class="row-2" style="margin-bottom:6px;">
               <select id="renameVillageSelect" class="form-control" onchange="document.getElementById('renameVillageNewInp').value=this.value;"></select>
-              <input type="text" id="renameVillageNewInp" class="form-control" placeholder="الاسم الجديد للقرية">
+              <input type="text" id="renameVillageNewInp" class="form-control" placeholder="الاسم الجديد">
             </div>
             <div class="row-2">
               <button class="btn-submit" style="margin-top:0; background:#d97706;" onclick="renameEntireVillage()">💾 حفظ الاسم</button>
@@ -510,41 +540,65 @@
             </div>
           </div>
         </div>
-
-        <!-- قائمة الشاليهات مجمعة حسب القرية -->
         <div id="chaletsManageList"></div>
       </div>
 
-      <div id="setSubUsers" class="box-card" style="display:none;">
-        <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; margin-bottom:12px;">
-          <div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إنشاء حساب جديد وتحديد نظام عمولته:</div>
-          <div class="row-3" style="margin-bottom:6px;">
-            <input type="text" id="newUserFullName" class="form-control" placeholder="الاسم الكامل">
-            <input type="text" id="newUserLogin" class="form-control" placeholder="اليوزر (sara)" dir="ltr">
-            <input type="text" id="newUserPass" class="form-control" placeholder="الباسورد (1234)" dir="ltr">
-          </div>
-          <div class="row-3">
-            <select id="newUserRole" class="form-control"><option value="sales">سيلز</option><option value="admin">أدمن</option></select>
-            <select id="newUserCommType" class="form-control">
-              <option value="pct">نسبة مئوية (%) من الحجز</option>
-              <option value="per_night">مبلغ ثابت (ج.م) لكل ليلة</option>
-              <option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
-            </select>
-            <div style="display:flex; gap:6px; align-items:center;">
-              <input type="number" id="newUserCommVal" class="form-control" placeholder="قيمة العمولة" value="3">
-              <input type="color" id="newUserColor" value="#0284c7" style="width:40px; height:34px; border:none;">
-              <button class="btn-submit" style="margin-top:0;" onclick="addSystemUser()">✅ إنشاء</button>
+      <!-- القسم 2: العمولات السهلة (توحيد الكل + عمولة خاصة لكل قرية) -->
+      <div id="setSubComm" class="box-card" style="display:none;">
+        <div class="panel-grid-2">
+          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1.5px solid var(--primary);">
+            <h4 style="margin:0 0 8px; color:var(--primary);">⚡ توحيد العمولة على كل السيلز بضغطة واحدة</h4>
+            <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 8px;">لو كل السيلز بياخدوا نفس النسبة أو نفس المبلغ، ظبطها هنا وهتتطبق عليهم كلهم فوراً:</p>
+            <div class="form-group">
+              <label>طريقة حساب العمولة:</label>
+              <select id="globalCommTypeInp" class="form-control">
+                <option value="pct">نسبة مئوية (%) من إجمالي الحجز</option>
+                <option value="per_night">مبلغ ثابت (ج.م) على كل ليلة</option>
+                <option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
+              </select>
             </div>
+            <div class="form-group">
+              <label>قيمة العمولة (مثلاً 3 لو 3% أو 100 لو 100 جنيه):</label>
+              <input type="number" id="globalCommValInp" class="form-control" value="3">
+            </div>
+            <button class="btn-submit" onclick="applyGlobalCommissionToAllSales()">✅ تطبيق العمولة دي على كل السيلز</button>
+          </div>
+
+          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+            <h4 style="margin:0 0 8px; color:#b45309;">🏖️ عمولة مخصصة لكل قرية لوحدها (اختياري)</h4>
+            <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 8px;">لو قرية معينة ليها عمولة مختلفة عن الباقي (بالنسبة % أو بالليلة أو بالحجز)، حددها هنا:</p>
+            <div id="villageCommissionsList"></div>
           </div>
         </div>
-        <div id="usersManageList"></div>
       </div>
 
-      <div id="setSubGmail" class="box-card" style="display:none; max-width:500px;">
-        <div class="form-group"><label>بريد Gmail المُرسل:</label><input type="email" id="gmailSenderInp" class="form-control" dir="ltr"></div>
-        <div class="form-group"><label>كلمة مرور التطبيقات (App Password):</label><input type="password" id="gmailAppPassInp" class="form-control" dir="ltr"></div>
-        <div class="form-group"><label>البريد المستلم للإشعارات:</label><input type="email" id="gmailRecipientInp" class="form-control" dir="ltr"></div>
-        <button class="btn-submit" style="background:#2563eb;" onclick="saveGmailSettings()">💾 حفظ إعدادات Gmail</button>
+      <!-- القسم 3: الموظفين واللوكيشن -->
+      <div id="setSubUsers" class="box-card" style="display:none;">
+        <div class="panel-grid-2">
+          <div>
+            <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; margin-bottom:12px;">
+              <div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إضافة موظف / سيلز جديد:</div>
+              <div class="row-2" style="margin-bottom:6px;">
+                <input type="text" id="newUserFullName" class="form-control" placeholder="اسم الموظف">
+                <input type="text" id="newUserLogin" class="form-control" placeholder="اسم الدخول (sara)" dir="ltr">
+              </div>
+              <div class="row-3">
+                <input type="text" id="newUserPass" class="form-control" placeholder="الباسورد" dir="ltr">
+                <select id="newUserRole" class="form-control"><option value="sales">سيلز</option><option value="admin">مدير</option></select>
+                <div style="display:flex; gap:6px; align-items:center;">
+                  <input type="color" id="newUserColor" value="#0284c7" style="width:40px; height:34px; border:none;">
+                  <button class="btn-submit" style="margin-top:0;" onclick="addSystemUser()">✅ إضافة</button>
+                </div>
+              </div>
+            </div>
+            <div id="usersManageList"></div>
+          </div>
+
+          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+            <h4 style="margin:0 0 8px; color:var(--primary);">📍 لوكيشن وتعليمات الدخول لكل قرية</h4>
+            <div id="villageLocationsList"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -561,36 +615,36 @@
   <!-- شريط الموبايل السفلي -->
   <div class="mobile-bottom-bar">
     <button class="mob-nav-btn" onclick="switchView('grid')"><span>📅</span><span>الجدول</span></button>
-    <button class="mob-nav-btn" onclick="openQuickBookingModal()"><span>➕</span><span>حجز/هولد</span></button>
+    <button class="mob-nav-btn" onclick="openQuickBookingModal()"><span>➕</span><span>حجز جديد</span></button>
+    <button class="mob-nav-btn" onclick="switchView('catalog')"><span>🖼️</span><span>الصور</span></button>
     <button class="mob-nav-btn" onclick="switchView('avail')"><span>🔍</span><span>المتاح</span></button>
-    <button class="mob-nav-btn" onclick="switchView('catalog')"><span>🖼️</span><span>الكتالوج</span></button>
-    <button class="mob-nav-btn" onclick="switchView('ledger')"><span>📑</span><span>السجل</span></button>
+    <button class="mob-nav-btn" onclick="switchView('ledger')"><span>📑</span><span>الحجوزات</span></button>
   </div>
 
-  <!-- مودال تغيير كلمة المرور -->
+  <!-- مودال تغيير الباسورد -->
   <div id="changePassModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box" style="max-width:380px;">
       <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-        <b style="color:var(--primary);">🔑 تغيير كلمة المرور الخاصة بك</b>
+        <b style="color:var(--primary);">🔑 تغيير الباسورد بتاعك</b>
         <button onclick="document.getElementById('changePassModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;">✖</button>
       </div>
-      <div class="form-group"><label>كلمة المرور الحالية:</label><input type="password" id="oldMyPassInp" class="form-control" dir="ltr"></div>
-      <div class="form-group"><label>كلمة المرور الجديدة:</label><input type="text" id="newMyPassInp" class="form-control" dir="ltr"></div>
-      <button class="btn-submit" onclick="submitMyPasswordChange()">✅ حفظ كلمة المرور الجديدة</button>
+      <div class="form-group"><label>الباسورد القديم:</label><input type="password" id="oldMyPassInp" class="form-control" dir="ltr"></div>
+      <div class="form-group"><label>الباسورد الجديد:</label><input type="text" id="newMyPassInp" class="form-control" dir="ltr"></div>
+      <button class="btn-submit" onclick="submitMyPasswordChange()">✅ حفظ الباسورد الجديد</button>
     </div>
   </div>
 
-  <!-- مودال الحجز السريع / الهولد -->
+  <!-- مودال تسجيل حجز جديد (نظيف ومباشر وبدون تأمين) -->
   <div id="bookingModal" class="modal-overlay" onclick="if(event.target===this) closeBookingModal()">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
-        <b id="bookingModalTitle" style="font-size:15px; color:var(--primary);">➕ تسكين حجز مؤكد أو هولد مبدئي</b>
+        <b id="bookingModalTitle" style="font-size:15px; color:var(--primary);">➕ تسجيل حجز جديد أو هولد</b>
         <button onclick="closeBookingModal()" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;">✖</button>
       </div>
       <form id="bookingForm" onsubmit="submitBooking(event)">
         <input type="hidden" id="editingBookingId" value="">
         <div class="row-2" style="background:var(--bg-subtle); padding:8px; border-radius:9px; margin-bottom:8px;">
-          <div class="form-group" style="margin-bottom:0;"><label>📌 حالة الحجز *</label><select id="bookingStatusType" class="form-control" onchange="toggleHoldOptions()"><option value="confirmed">🔒 حجز مؤكد</option><option value="hold">⏳ هولد بمؤقت</option></select></div>
+          <div class="form-group" style="margin-bottom:0;"><label>📌 نوع الحجز *</label><select id="bookingStatusType" class="form-control" onchange="toggleHoldOptions()"><option value="confirmed">🔒 حجز مؤكد</option><option value="hold">⏳ هولد مؤقت</option></select></div>
           <div class="form-group" id="holdDurationBox" style="margin-bottom:0; display:none;"><label>⏱️ مدة الهولد *</label><select id="holdHours" class="form-control"><option value="1">ساعة</option><option value="2" selected>ساعتين</option><option value="4">4 ساعات</option><option value="6">6 ساعات</option><option value="12">12 ساعة</option></select></div>
         </div>
         <div class="row-2">
@@ -599,25 +653,42 @@
         </div>
         <div class="row-2">
           <div class="form-group"><label>👤 السيلز المسؤول *</label><select id="agentName" class="form-control" required></select></div>
-          <div class="form-group"><label>📣 مصدر العميل *</label><select id="leadSource" class="form-control"><option value="إعلان فيسبوك / إنستجرام">إعلان فيسبوك / إنستجرام</option><option value="جروبات وبوستات فيسبوك">جروبات وبوستات فيسبوك</option><option value="عميل سابق / ترشيح">عميل سابق / ترشيح</option><option value="بروكر / وسيط">بروكر / وسيط</option><option value="اتصال مباشر / واتساب">اتصال مباشر / واتساب</option></select></div>
+          <div class="form-group"><label>📣 العميل جاي منين؟</label><select id="leadSource" class="form-control"><option value="إعلان فيسبوك / إنستجرام">إعلان فيسبوك / إنستجرام</option><option value="جروبات فيسبوك">جروبات فيسبوك</option><option value="عميل قديم / ترشيح">عميل قديم / ترشيح</option><option value="بروكر / وسيط">بروكر / وسيط</option><option value="تليفون / واتساب">تليفون / واتساب</option></select></div>
         </div>
         <div class="row-2">
           <div class="form-group"><label>اسم العميل *</label><input type="text" id="clientName" class="form-control" required></div>
-          <div class="form-group"><label>رقم الهاتف *</label><input type="text" id="clientPhone" class="form-control" dir="ltr" required></div>
+          <div class="form-group"><label>رقم تليفونه *</label><input type="text" id="clientPhone" class="form-control" dir="ltr" required></div>
         </div>
-        <div class="row-2">
-          <div class="form-group"><label>📅 الدخول *</label><input type="date" id="startDate" class="form-control" onchange="recalculateTotals()" required></div>
-          <div class="form-group"><label>📅 المغادرة صباحاً *</label><input type="date" id="endDate" class="form-control" onchange="recalculateTotals()" required></div>
-        </div>
+
         <div class="row-3">
-          <div class="form-group"><label>💰 سعر الليلة *</label><input type="number" id="unitPrice" class="form-control" min="0" oninput="recalculateTotals()" required></div>
-          <div class="form-group"><label>💵 العربون *</label><input type="number" id="deposit" class="form-control" min="0" value="0" oninput="recalculateTotals()" required></div>
-          <div class="form-group"><label>💳 الوسيلة</label><select id="paymentMethod" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="نقدي / كاش">نقدي / كاش</option></select></div>
+          <div class="form-group">
+            <label>📆 نظام الإيجار *</label>
+            <select id="rentPeriodType" class="form-control" onchange="onRentPeriodTypeChange()">
+              <option value="daily">يومي (بالليلة)</option>
+              <option value="monthly">شهري (بالشهر)</option>
+            </select>
+          </div>
+          <div class="form-group"><label>📅 تاريخ الدخول *</label><input type="date" id="startDate" class="form-control" onchange="onStartOrMonthsChange()" required></div>
+          <div class="form-group" id="monthsCountBox" style="display:none;"><label>🔢 عدد الشهور *</label><input type="number" id="monthsCount" class="form-control" value="1" min="1" max="24" oninput="onStartOrMonthsChange()"></div>
+          <div class="form-group" id="endDateBox"><label>📅 الخروج الصبح *</label><input type="date" id="endDate" class="form-control" onchange="recalculateTotals()" required></div>
         </div>
+
+        <div class="row-3">
+          <div class="form-group"><label id="unitPriceLabel">💰 سعر الليلة *</label><input type="number" id="unitPrice" class="form-control" min="0" oninput="recalculateTotals()" required></div>
+          <div class="form-group">
+            <label style="display:flex; justify-content:space-between; align-items:center;">
+              <span>💵 المدفوع *</span>
+              <button type="button" onclick="payFullBookingAmount()" style="background:#16a34a; color:#fff; border:none; border-radius:4px; padding:1px 6px; font-size:10px; font-weight:800; cursor:pointer;">✅ دفع المبلغ كله</button>
+            </label>
+            <input type="number" id="deposit" class="form-control" min="0" value="0" oninput="recalculateTotals()" required>
+          </div>
+          <div class="form-group"><label>💳 طريقة الدفع</label><select id="paymentMethod" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
+        </div>
+
         <div style="background:var(--bg-subtle); padding:8px 12px; border-radius:8px; display:flex; justify-content:space-between; font-size:12px; font-weight:800;">
-          <span>المدة: <b id="calcDuration">1 ليلة</b></span><span>الإجمالي: <b id="calcTotal">0 ج.م</b></span><span style="color:#dc2626;">المتبقي: <b id="calcRemaining">0 ج.م</b></span>
+          <span>المدة: <b id="calcDuration">1 ليلة</b></span><span>الإجمالي: <b id="calcTotal">0 ج.م</b></span><span style="color:#dc2626;">الباقي: <b id="calcRemaining">0 ج.م</b></span>
         </div>
-        <button type="submit" class="btn-submit">✅ تأكيد وتسكين الحجز</button>
+        <button type="submit" class="btn-submit">✅ تأكيد وحفظ الحجز</button>
       </form>
     </div>
   </div>
@@ -626,23 +697,23 @@
   <div id="permitModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
-        <b style="font-size:14.5px; color:var(--primary);">🪪 خطوات رفع البطاقات وإرسال تصريح الأمن الوطني</b>
+        <b style="font-size:14.5px; color:var(--primary);">🪪 صور البطايق وتصريح الأمن</b>
         <button onclick="document.getElementById('permitModal').style.display='none'" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;">✖</button>
       </div>
       <input type="hidden" id="permitBookingId">
       <div id="permitInfoSummary" style="background:var(--bg-subtle); padding:8px 10px; border-radius:8px; font-size:11.5px; margin-bottom:10px;"></div>
       <div style="border:1.5px dashed var(--primary); border-radius:10px; padding:10px; margin-bottom:10px; background:var(--bg-subtle);">
-        <div style="font-weight:900; font-size:12px; color:var(--primary); margin-bottom:6px;">الخطوة 1️⃣: رفع صور البطاقات وحفظها على السيستم</div>
+        <div style="font-weight:900; font-size:12px; color:var(--primary); margin-bottom:6px;">1️⃣ ارفع صور البطايق على السيستم:</div>
         <input type="file" id="permitFileInput" accept="image/*" multiple style="display:none;" onchange="uploadIdPhotosToSystem(event)">
-        <button type="button" class="btn-submit" style="margin-top:0; background:#0284c7;" onclick="document.getElementById('permitFileInput').click()">📤 اختيار صور البطاقات من الجهاز أو الموبايل ورفعها للسيستم</button>
+        <button type="button" class="btn-submit" style="margin-top:0; background:#0284c7;" onclick="document.getElementById('permitFileInput').click()">📤 اختيار صور البطايق ورفعها</button>
         <div id="permitUploadStatusMsg" style="display:none; margin-top:7px; padding:6px 10px; border-radius:6px; background:#dcfce7; color:#15803d; font-size:11.5px; font-weight:800; text-align:center;"></div>
       </div>
       <div id="permitPhotosGallery" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:240px; overflow-y:auto; margin-bottom:10px;"></div>
       <div style="border-top:1px solid var(--border-color); padding-top:10px;">
-        <div style="font-weight:900; font-size:12px; margin-bottom:6px;">الخطوة 2️⃣: إرسال ملف التصريح للأمن الوطني</div>
+        <div style="font-weight:900; font-size:12px; margin-bottom:6px;">2️⃣ ابعت التصريح للأمن:</div>
         <div class="row-2">
-          <button type="button" class="btn-submit" style="background:#16a34a; margin-top:0;" onclick="sendSecurityPermitWhatsApp()">🛡️ إرسال التصريح للأمن (واتساب)</button>
-          <button type="button" class="btn-submit" style="background:#334155; margin-top:0;" onclick="markPermitAsSentOnly()">✅ تم الإرسال يدوياً (تحديث لـ 🟢)</button>
+          <button type="button" class="btn-submit" style="background:#16a34a; margin-top:0;" onclick="sendSecurityPermitWhatsApp()">🛡️ إرسال للأمن واتساب</button>
+          <button type="button" class="btn-submit" style="background:#334155; margin-top:0;" onclick="markPermitAsSentOnly()">✅ اتبعت خلاص (خليه 🟢)</button>
         </div>
       </div>
     </div>
@@ -651,11 +722,11 @@
   <!-- مودالات إضافية -->
   <div id="settleModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box" style="max-width:400px;">
-      <b style="font-size:15px; color:var(--primary);">💰 تحصيل الدفعة المتبقية</b>
+      <b style="font-size:15px; color:var(--primary);">💰 تحصيل باقي الحساب</b>
       <input type="hidden" id="settleBookingId">
       <div id="settleInfoBox" style="margin:10px 0; font-size:12px;"></div>
-      <div class="form-group"><label>المبلغ المحصّل الآن:</label><input type="number" id="settleAmountInp" class="form-control"></div>
-      <div class="form-group"><label>وسيلة الدفع:</label><select id="settleMethodInp" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="نقدي / كاش">نقدي / كاش</option></select></div>
+      <div class="form-group"><label>المبلغ اللي ادفع دلوقتي:</label><input type="number" id="settleAmountInp" class="form-control"></div>
+      <div class="form-group"><label>طريقة الدفع:</label><select id="settleMethodInp" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
       <div class="row-2">
         <button class="btn-submit" style="background:#16a34a;" onclick="confirmSettleRemaining()">✅ تأكيد</button>
         <button class="btn-submit" style="background:#64748b;" onclick="document.getElementById('settleModal').style.display='none'">إلغاء</button>
@@ -665,25 +736,34 @@
 
   <div id="catEditorModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><b>🖼️ تحديث صور ومواصفات الشاليه</b><button onclick="document.getElementById('catEditorModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;">✖</button></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><b>🖼️ إضافة / تعديل صور ومواصفات شاليه (تُختم باللوجو تلقائياً)</b><button onclick="document.getElementById('catEditorModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;">✖</button></div>
       <div class="row-2">
         <div class="form-group"><label>القرية:</label><select id="catVillageSelect" class="form-control" onchange="onSelectCatVillage()"></select></div>
         <div class="form-group"><label>الشاليه:</label><select id="catChaletSelect" class="form-control" onchange="loadSelectedChaletCatalog()"></select></div>
       </div>
       <div class="row-2">
-        <div class="form-group"><label>السعر الاسترشادي:</label><input type="text" id="catPriceInp" class="form-control"></div>
+        <div class="form-group"><label>السعر التقريبي:</label><input type="text" id="catPriceInp" class="form-control"></div>
         <div class="form-group"><label>رقم التواصل:</label><input type="text" id="catPhoneInp" class="form-control" value="01008743750" dir="ltr"></div>
       </div>
       <div class="form-group"><label>المواصفات:</label><textarea id="catDescInp" class="form-control" rows="3"></textarea></div>
-      <div class="form-group"><label>رفع صور الشاليه:</label><input type="file" accept="image/*" multiple class="form-control" onchange="handleCatPhotosUpload(event)"></div>
+      <div class="form-group"><label>اختار صور الشاليه (سيتم وضع اللوجو والفوتر عليها تلقائياً):</label><input type="file" accept="image/*" multiple class="form-control" onchange="handleCatPhotosUpload(event)"></div>
       <div id="catPendingThumbs" style="display:flex; gap:5px; flex-wrap:wrap; margin:6px 0;"></div>
-      <button class="btn-submit" onclick="saveChaletCatalogData()">💾 حفظ البيانات والصور</button>
+      <button class="btn-submit" onclick="saveChaletCatalogData()">💾 حفظ الصور المختومة والبيانات</button>
     </div>
   </div>
 
+  <!-- معرض صور الشاليه باللوجو والفوتر + تحميل الكل ومشاركة واتساب وماسنجر -->
   <div id="galleryModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box" style="max-width:780px;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><b id="modalChaletTitle"></b><button onclick="document.getElementById('galleryModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:4px 9px;">✖</button></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
+        <b id="modalChaletTitle" style="font-size:15px; color:var(--primary);"></b>
+        <button onclick="document.getElementById('galleryModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:4px 9px;cursor:pointer;">✖</button>
+      </div>
+      <div class="row-3" style="margin-bottom:10px;">
+        <button type="button" class="btn-submit" style="margin-top:0; background:#0284c7;" onclick="downloadAllCurrentChaletPhotos()">📥 تحميل كل الصور باللوجو</button>
+        <button type="button" class="btn-submit" style="margin-top:0; background:#16a34a;" onclick="shareCurrentChaletPhotos('whatsapp')">💬 مشاركة على واتساب</button>
+        <button type="button" class="btn-submit" style="margin-top:0; background:#2563eb;" onclick="shareCurrentChaletPhotos('messenger')">💙 مشاركة على ماسنجر</button>
+      </div>
       <div id="modalImagesList" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"></div>
     </div>
   </div>
@@ -691,38 +771,60 @@
   <div id="offscreenExportWrapper"></div>
   <script>
     var FIREBASE_URL = "https://elaraby-chalets-default-rtdb.europe-west1.firebasedatabase.app";
-    var DB_KEY = "ELARABY_CLOUD_DB_V7";
+    var DB_KEY = "ELARABY_CLOUD_DB_V10";
     var APP_LOGO_SRC = "Elaraby.png";
-    var currentUser = null, pinnedDrawerBookingId = null, selectedAgentFilter = "all";
-    var tempCatPhotos = [], isDraggingGrid = false, dragChaletId = null, dragStartDay = null, dragEndDay = null;
-    var heartbeatInterval = null, cloudPollInterval = null;
+    var currentUser = null, pinnedDrawerBookingId = null, pinnedLedgerBookingId = null, selectedAgentFilter = "all";
+    var tempCatPhotos = [], currentGalleryPhotos = [], currentGalleryChalet = null;
+    var isDraggingGrid = false, dragChaletId = null, dragStartDay = null, dragEndDay = null;
+    var heartbeatInterval = null, cloudPollInterval = null, currentOpenedPermitPhotos = [], chaletCoverCache = {};
 
     var defaultDB = {
       chalets: [
-        { id: "sb_1", village: "ساندبيتش أ", name: "الأرضي الكبير", weekdayPrice: 2500, weekendPrice: 3200, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "sb_2", village: "ساندبيتش أ", name: "الأرضي الصغير", weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "sb_3", village: "ساندبيتش أ", name: "التاني الكبير", weekdayPrice: 2400, weekendPrice: 3000, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "sb_4", village: "ساندبيتش أ", name: "التاني الصغير", weekdayPrice: 1900, weekendPrice: 2500, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "sb_5", village: "ساندبيتش أ", name: "التالت الكبير", weekdayPrice: 2300, weekendPrice: 2900, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "sb_6", village: "ساندبيتش أ", name: "التالت الصغير", weekdayPrice: 1800, weekendPrice: 2400, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "pl_1", village: "بالميرا", name: "شاليه 54-6", weekdayPrice: 2200, weekendPrice: 2800, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "pl_2", village: "بالميرا", name: "شاليه 54-7", weekdayPrice: 2200, weekendPrice: 2800, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] },
-        { id: "pl_3", village: "بالميرا", name: "شاليه 35-4", weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] }
+        { id: "sb_1", village: "ساندبيتش أ", name: "الأرضي الكبير", weekdayPrice: 2500, weekendPrice: 3200, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "sb_2", village: "ساندبيتش أ", name: "الأرضي الصغير", weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "sb_3", village: "ساندبيتش أ", name: "التاني الكبير", weekdayPrice: 2400, weekendPrice: 3000, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "sb_4", village: "ساندبيتش أ", name: "التاني الصغير", weekdayPrice: 1900, weekendPrice: 2500, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "sb_5", village: "ساندبيتش أ", name: "التالت الكبير", weekdayPrice: 2300, weekendPrice: 2900, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "sb_6", village: "ساندبيتش أ", name: "التالت الصغير", weekdayPrice: 1800, weekendPrice: 2400, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "pl_1", village: "بالميرا", name: "شاليه 54-6", weekdayPrice: 2200, weekendPrice: 2800, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "pl_2", village: "بالميرا", name: "شاليه 54-7", weekdayPrice: 2200, weekendPrice: 2800, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 },
+        { id: "pl_3", village: "بالميرا", name: "شاليه 35-4", weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 }
       ],
+      villageLocations: {
+        "ساندبيتش أ": { mapsUrl: "", gateNotes: "الدخول من البوابة الرئيسية بالبطاقة الشخصية وتصريح الأمن." },
+        "بالميرا": { mapsUrl: "", gateNotes: "الدخول من بوابة الملاك والمستأجرين بتصريح الأمن." }
+      },
+      villageCommissions: {},
+      globalCommConfig: { type: "pct", val: 3 },
       users: [
-        { username: "admin", password: "1234", fullName: "عمر إسماعيل", role: "admin", color: "#2563eb", commType: "pct", commVal: 0, canSeeAllPhones: true, active: true },
-        { username: "malak", password: "1234", fullName: "ملك مجدي", role: "sales", color: "#0d9488", commType: "pct", commVal: 3, canSeeAllPhones: false, active: true },
-        { username: "rawan", password: "1234", fullName: "روان محمد", role: "sales", color: "#9333ea", commType: "pct", commVal: 3, canSeeAllPhones: false, active: true },
-        { username: "mayada", password: "1234", fullName: "مياده فوزي", role: "sales", color: "#ea580c", commType: "pct", commVal: 3, canSeeAllPhones: false, active: true },
-        { username: "afnan", password: "1234", fullName: "أفنان أحمد", role: "sales", color: "#db2777", commType: "pct", commVal: 3, canSeeAllPhones: false, active: true }
+        { username: "admin", password: "1234", fullName: "عمر إسماعيل", role: "admin", color: "#2563eb", commType: "pct", commVal: 0, active: true },
+        { username: "malak", password: "1234", fullName: "ملك مجدي", role: "sales", color: "#0d9488", commType: "pct", commVal: 3, active: true },
+        { username: "rawan", password: "1234", fullName: "روان محمد", role: "sales", color: "#9333ea", commType: "pct", commVal: 3, active: true },
+        { username: "mayada", password: "1234", fullName: "مياده فوزي", role: "sales", color: "#ea580c", commType: "pct", commVal: 3, active: true },
+        { username: "afnan", password: "1234", fullName: "أفنان أحمد", role: "sales", color: "#db2777", commType: "pct", commVal: 3, active: true }
       ],
-      bookings: [], waitlist: [], expenses: [], auditLog: [], passwordAlerts: [],
-      gmailConfig: { sender: "", appPassword: "", recipient: "" }
+      bookings: [], expenses: [], maintenanceTickets: [], auditLog: [], passwordAlerts: []
     };
 
     var appDB = (function() { try { var c = localStorage.getItem(DB_KEY); return c ? JSON.parse(c) : defaultDB; } catch (e) { return defaultDB; } })();
 
-    // ترتيب وتجميع الشاليهات دائماً تحت نفس القرية
+    function showToast(msg) {
+      var t = document.getElementById('toastBanner');
+      if (!t) return;
+      t.innerText = msg; t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    // إخفاء أرقام التليفونات لغير الأدمن وصاحب الحجز (يظهر أول 3 أرقام بس مثل 010********)
+    function maskPhoneForViewer(b) {
+      if (!b || !b.clientPhone) return "";
+      if (currentUser && (currentUser.role === 'admin' || currentUser.fullName === b.agentName || currentUser.fullName === b.createdBy)) {
+        return b.clientPhone;
+      }
+      var clean = String(b.clientPhone).trim();
+      return clean.slice(0, 3) + "********";
+    }
+
     function sortAndGroupChaletsByVillage() {
       var order = [], grouped = [];
       (appDB.chalets || []).forEach(c => { if (!order.includes(c.village)) order.push(c.village); });
@@ -731,10 +833,9 @@
     }
 
     function toggleMobileTopZone() {
-      var zone = document.getElementById('collapsibleTopZone');
-      var btn = document.getElementById('btnToggleMobileHeader');
+      var zone = document.getElementById('collapsibleTopZone'), btn = document.getElementById('btnToggleMobileHeader');
       var collapsed = zone.classList.toggle('collapsed-mobile');
-      btn.innerText = collapsed ? "🔽 إظهار القائمة العلوية" : "🔼 إخفاء القائمة العلوية لتكبير الجدول";
+      btn.innerText = collapsed ? "🔽 إظهار القائمة اللي فوق" : "🔼 إخفاء القائمة اللي فوق لتكبير الجدول";
     }
 
     function formatLocalDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -749,9 +850,13 @@
     }
 
     function calculateUserCommission(userObj, bookingObj) {
-      if (!userObj) return 0;
-      var type = userObj.commType || 'pct', val = parseFloat(userObj.commVal) || 0;
+      if (!userObj || userObj.role === 'admin') return 0;
+      var vRule = (appDB.villageCommissions && appDB.villageCommissions[bookingObj.village]) || null;
+      var useVillageRule = vRule && vRule.type && vRule.type !== 'default' && (parseFloat(vRule.val) > 0);
+      var type = useVillageRule ? vRule.type : (userObj.commType || 'pct');
+      var val = useVillageRule ? (parseFloat(vRule.val) || 0) : (parseFloat(userObj.commVal) || 0);
       var nights = getStayNights(bookingObj.startDate, bookingObj.endDate).length;
+
       if (type === 'pct') return Math.round(bookingObj.total * (val / 100));
       if (type === 'per_night') return Math.round(nights * val);
       if (type === 'fixed_booking') return Math.round(val);
@@ -760,11 +865,18 @@
 
     function triggerUniversalImageDownload(fileName, dataUrl) {
       if (window.pywebview && window.pywebview.api) {
-        window.pywebview.api.save_base64_image(fileName, dataUrl).then(r => { if (r && r.success) alert("✅ تم حفظ الصورة في:\n" + r.path); });
+        window.pywebview.api.save_base64_image(fileName, dataUrl).then(r => { if (r && r.success) showToast("✅ تم حفظ الصورة: " + fileName); });
       } else {
         var a = document.createElement('a'); a.href = dataUrl; a.download = fileName;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
       }
+    }
+
+    function printElementClean(elId) {
+      var el = document.getElementById(elId); if (!el) return;
+      var w = window.open('', '_blank', 'width=900,height=700');
+      w.document.write(`<html dir="rtl" lang="ar"><head><title>طباعة - شركة العربي</title><style>body{font-family:Tahoma,sans-serif;direction:rtl;margin:15px;}@media print{body{margin:0;}}</style></head><body>${el.outerHTML}</body></html>`);
+      w.document.close(); w.focus(); setTimeout(() => { w.print(); }, 400);
     }
 
     function getMultiWatermarkHTML() {
@@ -782,7 +894,7 @@
             <img src="${APP_LOGO_SRC}" style="height:28px; background:#000; padding:2px; border-radius:4px;">
             <span>شركة العربي للاستثمار العقاري</span>
           </span>
-          <span dir="ltr">fb.com/Elaraby.estate</span>
+          <span dir="ltr">fb.com/Elaraby.estate • 01008743750</span>
         </div>
       `;
     }
@@ -791,7 +903,7 @@
       if (!appDB.auditLog) appDB.auditLog = [];
       var who = currentUser ? `${currentUser.fullName}` : "النظام";
       appDB.auditLog.unshift({ time: `${formatLocalDate(new Date())} ${new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}`, user: who, action: actionText });
-      if (appDB.auditLog.length > 60) appDB.auditLog.length = 60;
+      if (appDB.auditLog.length > 80) appDB.auditLog.length = 80;
     }
 
     function toggleDarkMode() {
@@ -803,22 +915,29 @@
 
     async function syncFromCloud(silent) {
       try {
-        var res = await fetch(`${FIREBASE_URL}/elaraby_system_v7.json`);
-        if (res.ok) {
-          var data = await res.json();
+        var [coreRes, booksRes] = await Promise.all([
+          fetch(`${FIREBASE_URL}/elaraby_system_v10_core.json`),
+          fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings.json`)
+        ]);
+        if (coreRes.ok) {
+          var data = await coreRes.json();
+          var booksMap = booksRes.ok ? await booksRes.json() : null;
           if (data && data.chalets) {
             appDB = data;
-            if (!appDB.bookings) appDB.bookings = [];
-            if (!appDB.waitlist) appDB.waitlist = [];
+            appDB.bookings = booksMap ? Object.values(booksMap).filter(Boolean) : [];
             if (!appDB.expenses) appDB.expenses = [];
+            if (!appDB.maintenanceTickets) appDB.maintenanceTickets = [];
+            if (!appDB.villageLocations) appDB.villageLocations = defaultDB.villageLocations;
+            if (!appDB.villageCommissions) appDB.villageCommissions = {};
+            if (!appDB.globalCommConfig) appDB.globalCommConfig = { type: "pct", val: 3 };
             if (!appDB.auditLog) appDB.auditLog = [];
             if (!appDB.passwordAlerts) appDB.passwordAlerts = [];
             if (!appDB.users || !appDB.users.length) appDB.users = defaultDB.users;
             sortAndGroupChaletsByVillage();
             saveLocalCache();
             if (currentUser) refreshAllUI();
-            var b = document.getElementById('cloudInitBadge'); if (b) b.innerText = "✅ متصل بسحابة شركة العربي وجاهز للدخول";
-            var st = document.getElementById('dbSyncStatus'); if (st) st.innerText = `متزامن أونلاين (${appDB.bookings.length} حجز) • ${new Date().toLocaleTimeString('ar-EG')}`;
+            var b = document.getElementById('cloudInitBadge'); if (b) b.innerText = "✅ متصل بالسيرفر وجاهز للدخول";
+            var st = document.getElementById('dbSyncStatus'); if (st) st.innerText = `متصل أونلاين (${appDB.bookings.length} حجز) • ${new Date().toLocaleTimeString('ar-EG')}`;
           } else { await pushToCloud(); }
         }
       } catch (e) { if (!silent && document.getElementById('cloudInitBadge')) document.getElementById('cloudInitBadge').innerText = "⚠️ وضع الأوفلاين"; }
@@ -830,16 +949,37 @@
       try { localStorage.setItem(DB_KEY, s); } catch (e) {}
       if (window.pywebview && window.pywebview.api) window.pywebview.api.save_data(s);
     }
+
+    async function saveSingleBookingCloud(bookingObj) {
+      saveLocalCache();
+      try { await fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings/${bookingObj.id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(bookingObj) }); } catch (e) {}
+    }
+
+    async function deleteSingleBookingCloud(bId) {
+      saveLocalCache();
+      try {
+        await fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings/${bId}.json`, { method: "DELETE" });
+        await fetch(`${FIREBASE_URL}/elaraby_v8_photos/bookings/${bId}.json`, { method: "DELETE" });
+      } catch (e) {}
+    }
+
     async function pushToCloud() {
       saveLocalCache();
-      try { await fetch(`${FIREBASE_URL}/elaraby_system_v7.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(appDB) }); } catch (e) {}
+      var coreCopy = Object.assign({}, appDB); delete coreCopy.bookings;
+      var booksObj = {}; (appDB.bookings || []).forEach(b => { booksObj[b.id] = b; });
+      try {
+        await Promise.all([
+          fetch(`${FIREBASE_URL}/elaraby_system_v10_core.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(coreCopy) }),
+          fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(booksObj) })
+        ]);
+      } catch (e) {}
     }
     function saveDB() { pushToCloud(); }
 
     function handleLogin() {
       var u = document.getElementById('loginUsername').value.trim().toLowerCase(), p = document.getElementById('loginPassword').value.trim();
       var found = (appDB.users || []).find(x => x.username.toLowerCase() === u && x.password === p);
-      if (!found || !found.active) { document.getElementById('loginErrorMsg').style.display='block'; document.getElementById('loginErrorMsg').innerText="❌ بيانات الدخول غير صحيحة"; return; }
+      if (!found || !found.active) { document.getElementById('loginErrorMsg').style.display='block'; document.getElementById('loginErrorMsg').innerText="❌ اسم الدخول أو الباسورد غلط"; return; }
       currentUser = found;
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('currentUserBadge').innerText = `👤 ${currentUser.fullName}`;
@@ -856,7 +996,7 @@
       document.querySelectorAll('.desktop-only').forEach(el => el.style.display = (isDesktop && (isAdmin || !el.classList.contains('admin-only'))) ? '' : 'none');
     }
     function startHeartbeat() {
-      var dev = (window.pywebview && window.pywebview.api) ? "💻 PC" : "📱 موبايل";
+      var dev = (window.pywebview && window.pywebview.api) ? "💻 كمبيوتر" : "📱 موبايل";
       function beat() {
         if (!currentUser) return;
         fetch(`${FIREBASE_URL}/online_presence/${currentUser.username}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ fullName: currentUser.fullName, device: dev, lastSeen: Date.now() }) }).catch(()=>{});
@@ -864,7 +1004,7 @@
           fetch(`${FIREBASE_URL}/online_presence.json`).then(r=>r.json()).then(d => {
             var el = document.getElementById('onlineUsersListText'); if (!d || !el) return;
             var active = Object.values(d).filter(x => x && (Date.now()-x.lastSeen)<65000).map(x => `${x.fullName} (${x.device})`);
-            el.innerText = active.length ? active.join(' | ') : 'أنت فقط';
+            el.innerText = active.length ? active.join(' | ') : 'أنت لوحدك';
           }).catch(()=>{});
         }
       }
@@ -875,17 +1015,17 @@
     function submitMyPasswordChange() {
       if (!currentUser) return;
       var oldP = document.getElementById('oldMyPassInp').value.trim(), newP = document.getElementById('newMyPassInp').value.trim();
-      if (oldP !== currentUser.password) { alert("❌ كلمة المرور الحالية غير صحيحة!"); return; }
-      if (newP.length < 3) { alert("⚠️ كلمة المرور الجديدة قصيرة جداً!"); return; }
+      if (oldP !== currentUser.password) { alert("❌ الباسورد القديم غلط!"); return; }
+      if (newP.length < 3) { alert("⚠️ الباسورد الجديد قصير أوي!"); return; }
       var uObj = appDB.users.find(u => u.username === currentUser.username);
       if (uObj) {
         uObj.password = newP; currentUser.password = newP;
         var timeStr = `${formatLocalDate(new Date())} ${new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}`;
         if (!appDB.passwordAlerts) appDB.passwordAlerts = [];
         appDB.passwordAlerts.push({ id: 'pa_' + Date.now(), fullName: uObj.fullName, username: uObj.username, newPass: newP, time: timeStr });
-        logAuditAction(`🔑 قام (${uObj.fullName}) بتغيير كلمة المرور الخاصة به إلى (${newP})`);
+        logAuditAction(`🔑 (${uObj.fullName}) غيّر الباسورد بتاعه إلى (${newP})`);
         saveDB(); refreshAllUI(); document.getElementById('changePassModal').style.display = 'none';
-        alert("✅ تم تحديث كلمة المرور وإبلاغ الإدارة!");
+        showToast("✅ تم تغيير الباسورد بنجاح!");
       }
     }
     function dismissPasswordAlert(id) { appDB.passwordAlerts = (appDB.passwordAlerts || []).filter(a => a.id !== id); saveDB(); refreshAllUI(); }
@@ -894,7 +1034,7 @@
       setTimeout(() => { var sp = document.getElementById('splashScreen'); if (sp) { sp.style.opacity = '0'; setTimeout(() => sp.style.display = 'none', 600); } }, 5000);
       if (localStorage.getItem('ELARABY_THEME') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); document.getElementById('btnThemeToggle').innerText = '☀️'; }
       var today = formatLocalDate(new Date());
-      ['startDate','endDate','checkStart','checkEnd','wlStart','wlEnd','tStartDate','tEndDate','ownStartDate','ownEndDate','expDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = today; });
+      ['startDate','endDate','checkStart','checkEnd','tStartDate','tEndDate','ownStartDate','ownEndDate','expDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = today; });
       if (window.pywebview && window.pywebview.api) {
         window.pywebview.api.get_logo_base64().then(b64 => { if (b64 && b64.startsWith('data:image')) { APP_LOGO_SRC = b64; document.querySelectorAll('.app-logo-img').forEach(i => i.src = b64); } });
       }
@@ -903,33 +1043,35 @@
     };
 
     function switchView(v) {
-      ['viewGrid','viewCatalog','viewAvail','viewWaitlist','viewLedger','viewMycomm','viewTreasury','viewAudit','viewSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.style.display='none'; });
-      ['tabGrid','tabCatalog','tabAvail','tabWaitlist','tabLedger','tabMycomm','tabTreasury','tabAudit','tabSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.classList.remove('active'); });
+      ['viewGrid','viewCatalog','viewAvail','viewLedger','viewMaint','viewMycomm','viewTreasury','viewAudit','viewSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.style.display='none'; });
+      ['tabGrid','tabCatalog','tabAvail','tabLedger','tabMaint','tabMyComm','tabTreasury','tabAudit','tabSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.classList.remove('active'); });
       var t = document.getElementById('view' + v.charAt(0).toUpperCase() + v.slice(1)), b = document.getElementById('tab' + v.charAt(0).toUpperCase() + v.slice(1));
       if (t) t.style.display = 'block'; if (b) b.classList.add('active');
-      if (v==='catalog') renderCatalogCards(); if (v==='waitlist') renderWaitlist(); if (v==='ledger') renderLedgerList();
+      if (v==='catalog') renderCatalogCards(); if (v==='ledger') renderLedgerList(); if (v==='maint') renderMaintenanceTickets();
       if (v==='mycomm') renderMyCommissions(); if (v==='treasury') { calculateTreasury(); renderExpenses(); } if (v==='audit') renderAuditLog(); if (v==='settings') renderSettingsLists();
     }
 
-    function refreshAllUI() { populateDropdowns(); updateKPIsAndAlerts(); renderCalendarGrid(); renderCatalogCards(); renderWaitlist(); renderLedgerList(); renderSettingsLists(); loadGmailSettingsToUI(); }
+    function refreshAllUI() { populateDropdowns(); updateKPIsAndAlerts(); renderCalendarGrid(); renderCatalogCards(); renderLedgerList(); renderMaintenanceTickets(); renderSettingsLists(); }
 
     function updateKPIsAndAlerts() {
       var today = formatLocalDate(new Date()), tmr = new Date(); tmr.setDate(tmr.getDate()+1); var tomorrow = formatLocalDate(tmr), now = Date.now();
       var activeHolds = appDB.bookings.filter(b => b.status === 'hold'), expiredHolds = activeHolds.filter(b => b.holdExpiresAt && now > b.holdExpiresAt);
       var checkInsToday = appDB.bookings.filter(b => b.startDate === today);
-      var missingIdsSoon = appDB.bookings.filter(b => (b.startDate === today || b.startDate === tomorrow) && (!b.idPhotos || !b.idPhotos.length));
+      var missingIdsSoon = appDB.bookings.filter(b => (b.startDate === today || b.startDate === tomorrow) && (!b.idPhotoCount || b.idPhotoCount === 0));
+      var openMaint = (appDB.maintenanceTickets || []).filter(m => m.status === 'open');
       document.getElementById('kpiHolds').innerText = activeHolds.length;
       document.getElementById('kpiMissingIds').innerText = missingIdsSoon.length;
       document.getElementById('kpiTodayRem').innerText = checkInsToday.reduce((s,b)=>s+(b.remaining||0),0).toLocaleString() + ' ج.م';
-      document.getElementById('wlBadgeCount').innerText = (appDB.waitlist||[]).length;
+      var mb = document.getElementById('maintBadgeCount'); if (mb) mb.innerText = openMaint.length;
 
       var bar = document.getElementById('urgentAlertsBar'), alerts = [];
       if (currentUser && currentUser.role === 'admin' && (appDB.passwordAlerts || []).length) {
-        appDB.passwordAlerts.forEach(pa => { alerts.push(`🔑 <b>تغيير باسورد:</b> <b>${pa.fullName}</b> غيّر الباسورد إلى <code style="background:#fff;padding:1px 5px;border-radius:4px;color:#dc2626;">${pa.newPass}</code> (${pa.time}) <button onclick="dismissPasswordAlert('${pa.id}')" style="background:#0f172a;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">✔ علم</button>`); });
+        appDB.passwordAlerts.forEach(pa => { alerts.push(`🔑 <b>تغيير باسورد:</b> <b>${pa.fullName}</b> غيّر الباسورد إلى <code style="background:#fff;padding:1px 5px;border-radius:4px;color:#dc2626;">${pa.newPass}</code> (${pa.time}) <button onclick="dismissPasswordAlert('${pa.id}')" style="background:#0f172a;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">✔ تمام</button>`); });
       }
-      expiredHolds.forEach(h => alerts.push(`⏰ <b>انتهى الهولد:</b> ${h.village} (${h.chaletName}) - ${h.clientName} <button onclick="confirmHoldToBooking('${h.id}')" style="background:#16a34a;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">✅ تأكيد</button> <button onclick="releaseExpiredHold('${h.id}')" style="background:#dc2626;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">🗑️ فك</button>`));
-      if (checkInsToday.length) alerts.push(`📥 <b>دخول اليوم:</b> ${checkInsToday.map(b=>`${b.chaletName} (${b.clientName})`).join(' | ')}`);
-      if (missingIdsSoon.length) alerts.push(`🪪 <b>تنبيه بطاقات:</b> ${missingIdsSoon.length} حجز دخوله اليوم/غداً بدون بطاقات!`);
+      expiredHolds.forEach(h => alerts.push(`⏰ <b>وقت الهولد خلص:</b> ${h.village} (${h.chaletName}) - ${h.clientName} <button onclick="confirmHoldToBooking('${h.id}')" style="background:#16a34a;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">✅ تأكيد</button> <button onclick="releaseExpiredHold('${h.id}')" style="background:#dc2626;color:#fff;border:none;border-radius:4px;padding:2px 6px;cursor:pointer;">🗑️ فك</button>`));
+      if (checkInsToday.length) alerts.push(`📥 <b>دخول النهاردة:</b> ${checkInsToday.map(b=>`${b.chaletName} (${b.clientName})`).join(' | ')}`);
+      if (missingIdsSoon.length) alerts.push(`🪪 <b>تنبيه بطايق:</b> ${missingIdsSoon.length} حجز دخوله النهاردة أو بكرة ولسه من غير بطايق!`);
+      if (openMaint.length) alerts.push(`🔧 <b>أعطال مفتوحة:</b> ${openMaint.length} عطل لسه متقفلش`);
       bar.innerHTML = alerts.join(' &nbsp;••&nbsp; '); bar.style.display = alerts.length ? 'flex' : 'none';
     }
 
@@ -960,8 +1102,9 @@
         var nights = getStayNights(b.startDate, b.endDate);
         nights.forEach((dt, i) => {
           var mergeClass = nights.length===1 ? '' : (i===0 ? 'merged-top' : (i===nights.length-1 ? 'merged-bot' : 'merged-mid'));
-          var dot = b.permitStatus==='sent' ? '🟢' : ((b.idPhotos&&b.idPhotos.length) ? '🟡' : '🔴');
-          var lbl = i===0 ? `${b.status==='hold'?'⏳ هولد: ':dot+' '}${b.agentName.split(' ')[0]} - ${b.clientName} (${nights.length}ل)` : `⬇️ ${b.clientName}`;
+          var dot = b.permitStatus==='sent' ? '🟢' : ((b.idPhotoCount && b.idPhotoCount > 0) ? '🟡' : '🔴');
+          var periodTag = b.rentPeriodType === 'monthly' ? `شهري` : `${nights.length}ل`;
+          var lbl = i===0 ? `${b.status==='hold'?'⏳ هولد: ':dot+' '}${b.agentName.split(' ')[0]} - ${b.clientName} (${periodTag})` : `⬇️ ${b.clientName}`;
           bookingMap[b.chaletId + '_' + dt] = { text: lbl, color, booking: b, mergeClass };
         });
         if (b.endDate !== b.startDate) morningCheckoutMap[b.chaletId + '_' + b.endDate] = b.clientName;
@@ -981,7 +1124,7 @@
             var coPrefix = coName ? `📤 خروج ${coName} | ` : '';
             tbody += `<td class="booked-cell ${cell.mergeClass} ${holdCls} ${dim}" style="background:${cell.color};" onmouseenter="showQuickDrawer('${cell.booking.id}',false)" onclick="showQuickDrawer('${cell.booking.id}',true)">${coPrefix}${cell.text}</td>`;
           } else {
-            var coHint = coName ? `<span style="font-size:9.5px;color:#b45309;font-weight:800;">📤 مغادرة ${coName}</span>` : '';
+            var coHint = coName ? `<span style="font-size:9.5px;color:#b45309;font-weight:800;">📤 خروج ${coName}</span>` : '';
             tbody += `<td class="empty-cell" data-chalet="${c.id}" data-village="${c.village}" data-day="${dStr}" onmousedown="startGridDrag('${c.village}','${c.id}','${dStr}')" onmouseenter="moveGridDrag('${c.id}','${dStr}')" onmouseup="endGridDrag()">${coHint}</td>`;
           }
         });
@@ -993,16 +1136,13 @@
 
     function scrollToTodayRow() { var r = document.querySelector('tr.today-row'); if (r) r.scrollIntoView({ behavior:'smooth', block:'center' }); }
 
-    // تصدير الجدول الكامل بالعرض ديناميكياً بدون قص أي عمود
     function exportCurrentGridAsA4Image() {
       var vFilter = document.getElementById('gridVillageFilter').value;
       var visibleChalets = vFilter ? appDB.chalets.filter(c => c.village === vFilter) : appDB.chalets;
       var dynamicWidth = Math.max(1250, 220 + visibleChalets.length * 145);
 
       var table = document.getElementById('mainCalendarTable').cloneNode(true);
-      table.style.width = '100%';
-      table.style.tableLayout = 'auto';
-      table.style.fontSize = '11px';
+      table.style.width = '100%'; table.style.tableLayout = 'auto'; table.style.fontSize = '11px';
       table.querySelectorAll('.sticky-c1, .sticky-c2, thead').forEach(el => { el.style.position = 'static'; });
       table.querySelectorAll('th, td').forEach(el => { el.style.minWidth = '115px'; el.style.whiteSpace = 'nowrap'; });
 
@@ -1024,173 +1164,70 @@
       </div>`;
       w.querySelector('#gridTableTarget').appendChild(table);
 
-      html2canvas(w.firstElementChild, {
-        scale: 2,
-        width: dynamicWidth,
-        windowWidth: dynamicWidth + 50,
-        useCORS: true,
-        backgroundColor: '#ffffff'
-      }).then(c => {
+      html2canvas(w.firstElementChild, { scale: 2, width: dynamicWidth, windowWidth: dynamicWidth + 50, useCORS: true, backgroundColor: '#ffffff' }).then(c => {
         w.innerHTML = '';
         triggerUniversalImageDownload(`جدول-العربي-الكامل-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'));
       });
     }
+	// نظام الإيجار اليومي أو الشهري + زر الدفع الكامل
+    function onRentPeriodTypeChange() {
+      var type = document.getElementById('rentPeriodType').value;
+      var isMonthly = (type === 'monthly');
+      document.getElementById('monthsCountBox').style.display = isMonthly ? 'block' : 'none';
+      document.getElementById('endDateBox').style.display = isMonthly ? 'none' : 'block';
+      document.getElementById('unitPriceLabel').innerText = isMonthly ? '💰 إيجار الشهر (ج.م) *' : '💰 سعر الليلة (ج.م) *';
+      onStartOrMonthsChange();
+    }
 
-    // إدارة القرى والشاليهات المجمعة + التعديل الجماعي للأسعار
-    function switchSetSub(sub) { ['Chalets','Users','Gmail'].forEach(s => { document.getElementById('setSub'+s).style.display=(s.toLowerCase()===sub)?'block':'none'; document.getElementById('setTab'+s).classList.toggle('active', s.toLowerCase()===sub); }); }
+    function onStartOrMonthsChange() {
+      var type = document.getElementById('rentPeriodType').value;
+      var s = document.getElementById('startDate').value;
+      if (!s) return;
+      if (type === 'monthly') {
+        var months = Math.max(1, parseInt(document.getElementById('monthsCount').value, 10) || 1);
+        var d = parseLocalDate(s); d.setMonth(d.getMonth() + months);
+        document.getElementById('endDate').value = formatLocalDate(d);
+      } else { onSelectBookingChalet(); }
+      recalculateTotals();
+    }
 
-    function renderSettingsLists() {
-      sortAndGroupChaletsByVillage();
-      var villages = [...new Set(appDB.chalets.map(c => c.village))];
-      var exSel = document.getElementById('existingVillageSelect');
-      if (exSel) exSel.innerHTML = `<option value="__new__">-- اختر قرية موجودة لإضافة شاليه لها --</option>` + villages.map(v => `<option value="${v}">${v}</option>`).join('');
-      var renSel = document.getElementById('renameVillageSelect');
-      if (renSel) renSel.innerHTML = villages.map(v => `<option value="${v}">${v}</option>`).join('');
-
-      var cDiv = document.getElementById('chaletsManageList');
-      if (cDiv) {
-        cDiv.innerHTML = villages.map(v => {
-          var vChalets = appDB.chalets.map((c, idx) => ({ c, idx })).filter(x => x.c.village === v);
-          return `
-            <div style="border:1.5px solid var(--primary); border-radius:10px; padding:10px; margin-bottom:12px; background:var(--bg-surface);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px dashed var(--border-color);">
-                <b style="font-size:13.5px; color:var(--primary);">🏖️ قرية ${v} (${vChalets.length} شاليه)</b>
-                <button type="button" class="btn-hdr" style="background:#0284c7;" onclick="toggleVillageCheckboxes('${v}')">☑️ تحديد شاليهات ${v} بالكامل</button>
-              </div>
-              ${vChalets.map(({ c, idx }) => `
-                <div style="display:grid; grid-template-columns:30px 1.2fr 0.8fr 0.8fr 1fr auto auto; gap:6px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:6px; border-radius:8px;">
-                  <input type="checkbox" class="bulk-chalet-cb" data-village="${v}" data-idx="${idx}" style="width:17px; height:17px; cursor:pointer;">
-                  <input type="text" id="chName_${idx}" class="form-control" value="${c.name}" title="اسم الشاليه">
-                  <input type="number" id="chWd_${idx}" class="form-control" value="${c.weekdayPrice||2000}" title="سعر وسط الأسبوع">
-                  <input type="number" id="chWe_${idx}" class="form-control" value="${c.weekendPrice||2600}" title="سعر الويك إند">
-                  <input type="text" id="chSec_${idx}" class="form-control" value="${c.securityPhone||''}" placeholder="رقم الأمن" dir="ltr">
-                  <button class="btn-hdr" style="background:var(--primary);" onclick="saveChaletRow(${idx})">حفظ</button>
-                  <button class="btn-hdr" style="background:#dc2626;" onclick="if(confirm('حذف الشاليه؟')){appDB.chalets.splice(${idx},1);saveDB();refreshAllUI();}">✖</button>
-                </div>
-              `).join('')}
-            </div>
-          `;
-        }).join('');
+    function payFullBookingAmount() {
+      var type = document.getElementById('rentPeriodType').value;
+      var price = parseFloat(document.getElementById('unitPrice').value) || 0;
+      var total = 0;
+      if (type === 'monthly') {
+        total = price * Math.max(1, parseInt(document.getElementById('monthsCount').value, 10) || 1);
+      } else {
+        var s = document.getElementById('startDate').value, e = document.getElementById('endDate').value;
+        total = price * ((s && e) ? Math.max(1, getStayNights(s, e).length) : 1);
       }
+      document.getElementById('deposit').value = total;
+      recalculateTotals();
+    }
 
-      var uDiv = document.getElementById('usersManageList');
-      if (uDiv) {
-        uDiv.innerHTML = (appDB.users || []).map((u, i) => `
-          <div style="display:grid; grid-template-columns:1.2fr 0.9fr 0.8fr 1.1fr 0.7fr auto auto; gap:6px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:7px; border-radius:8px;">
-            <input type="text" id="uFN_${i}" class="form-control" value="${u.fullName}">
-            <input type="text" id="uP_${i}" class="form-control" value="${u.password}" dir="ltr">
-            <select id="uR_${i}" class="form-control"><option value="sales" ${u.role==='sales'?'selected':''}>سيلز</option><option value="admin" ${u.role==='admin'?'selected':''}>أدمن</option></select>
-            <select id="uCT_${i}" class="form-control">
-              <option value="pct" ${(u.commType||'pct')==='pct'?'selected':''}>نسبة %</option>
-              <option value="per_night" ${u.commType==='per_night'?'selected':''}>ثابت/ليلة</option>
-              <option value="fixed_booking" ${u.commType==='fixed_booking'?'selected':''}>ثابت/حجز</option>
-            </select>
-            <input type="number" id="uCV_${i}" class="form-control" value="${u.commVal||0}">
-            <button class="btn-hdr" style="background:var(--primary);" onclick="saveUserRow(${i})">حفظ</button>
-            ${u.username !== 'admin' ? `<button class="btn-hdr" style="background:#dc2626;" onclick="deleteSystemUser(${i})">🗑️ حذف</button>` : `<span>👑</span>`}
-          </div>
-        `).join('');
+    function recalculateTotals() {
+      var s = document.getElementById('startDate').value, e = document.getElementById('endDate').value; if (!s || !e) return;
+      var type = document.getElementById('rentPeriodType').value;
+      var price = parseFloat(document.getElementById('unitPrice').value) || 0;
+      var dep = parseFloat(document.getElementById('deposit').value) || 0;
+      var nights = Math.max(1, getStayNights(s, e).length);
+      var total = 0, durText = '';
+      if (type === 'monthly') {
+        var months = Math.max(1, parseInt(document.getElementById('monthsCount').value, 10) || 1);
+        total = price * months; durText = `${months} شهر (لحد ${e})`;
+      } else {
+        total = price * nights; durText = `${nights} ليلة`;
       }
+      document.getElementById('calcDuration').innerText = durText;
+      document.getElementById('calcTotal').innerText = total.toLocaleString() + ' ج.م';
+      document.getElementById('calcRemaining').innerText = Math.max(0, total - dep).toLocaleString() + ' ج.م';
     }
-
-    function toggleVillageCheckboxes(v) {
-      var boxes = Array.from(document.querySelectorAll(`.bulk-chalet-cb[data-village="${v}"]`));
-      var allChecked = boxes.every(b => b.checked);
-      boxes.forEach(b => b.checked = !allChecked);
-    }
-
-    function toggleSelectAllChaletsBulk() {
-      var boxes = Array.from(document.querySelectorAll('.bulk-chalet-cb'));
-      var allChecked = boxes.every(b => b.checked);
-      boxes.forEach(b => b.checked = !allChecked);
-    }
-
-    function applyBulkPricesToSelected() {
-      var checked = Array.from(document.querySelectorAll('.bulk-chalet-cb:checked'));
-      if (!checked.length) { alert("⚠️ حدد شاليه واحد على الأقل (أو اضغط تحديد قرية بالكامل)!"); return; }
-      var newWd = document.getElementById('bulkWeekdayInp').value;
-      var newWe = document.getElementById('bulkWeekendInp').value;
-      if (!newWd && !newWe) { alert("⚠️ اكتب سعر وسط الأسبوع أو سعر الويك إند الجديد!"); return; }
-
-      checked.forEach(cb => {
-        var idx = parseInt(cb.getAttribute('data-idx'), 10);
-        if (newWd !== "") appDB.chalets[idx].weekdayPrice = parseFloat(newWd) || 0;
-        if (newWe !== "") appDB.chalets[idx].weekendPrice = parseFloat(newWe) || 0;
-      });
-      logAuditAction(`تعديل جماعي للأسعار على (${checked.length}) شاليه`);
-      saveDB(); refreshAllUI();
-      alert(`✅ تم تحديث الأسعار بنجاح لـ (${checked.length}) شاليه!`);
-    }
-
-    function addChalet() {
-      var v = document.getElementById('newVillageInp').value.trim(), n = document.getElementById('newChaletInp').value.trim();
-      if (!v || !n) { alert("اختر القرية أو اكتب اسمها واكتب اسم الشاليه!"); return; }
-      appDB.chalets.push({ id: 'c_' + Date.now(), village: v, name: n, weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photos: [] });
-      sortAndGroupChaletsByVillage();
-      saveDB(); refreshAllUI(); document.getElementById('newChaletInp').value = '';
-    }
-
-    function saveChaletRow(i) {
-      appDB.chalets[i].name = document.getElementById('chName_'+i).value.trim();
-      appDB.chalets[i].weekdayPrice = parseFloat(document.getElementById('chWd_'+i).value) || 0;
-      appDB.chalets[i].weekendPrice = parseFloat(document.getElementById('chWe_'+i).value) || 0;
-      appDB.chalets[i].securityPhone = document.getElementById('chSec_'+i).value.trim();
-      saveDB(); refreshAllUI(); alert("✅ تم الحفظ!");
-    }
-
-    function renameEntireVillage() {
-      var oldName = document.getElementById('renameVillageSelect').value, newName = document.getElementById('renameVillageNewInp').value.trim();
-      if (!oldName || !newName || oldName === newName) return;
-      appDB.chalets.forEach(c => { if (c.village === oldName) c.village = newName; });
-      appDB.bookings.forEach(b => { if (b.village === oldName) b.village = newName; });
-      sortAndGroupChaletsByVillage(); saveDB(); refreshAllUI(); alert(`✅ تم تغيير الاسم إلى (${newName})!`);
-    }
-
-    function deleteEntireVillage() {
-      var v = document.getElementById('renameVillageSelect').value;
-      if (!v || !confirm(`تحذير: سيتم حذف قرية (${v}) بجميع شاليهاتها!`)) return;
-      appDB.chalets = appDB.chalets.filter(c => c.village !== v); saveDB(); refreshAllUI();
-    }
-
-    function saveUserRow(i) {
-      appDB.users[i].fullName = document.getElementById('uFN_'+i).value.trim();
-      appDB.users[i].password = document.getElementById('uP_'+i).value.trim();
-      appDB.users[i].role = document.getElementById('uR_'+i).value;
-      appDB.users[i].commType = document.getElementById('uCT_'+i).value;
-      appDB.users[i].commVal = parseFloat(document.getElementById('uCV_'+i).value) || 0;
-      saveDB(); refreshAllUI(); alert("✅ تم حفظ التعديلات!");
-    }
-    function deleteSystemUser(i) { var u = appDB.users[i]; if (!u || u.username === 'admin' || !confirm(`حذف حساب (${u.fullName})؟`)) return; appDB.users.splice(i, 1); saveDB(); refreshAllUI(); }
-    function addSystemUser() {
-      var fullName = document.getElementById('newUserFullName').value.trim(), username = document.getElementById('newUserLogin').value.trim().toLowerCase(), password = document.getElementById('newUserPass').value.trim();
-      var role = document.getElementById('newUserRole').value, commType = document.getElementById('newUserCommType').value, commVal = parseFloat(document.getElementById('newUserCommVal').value)||0, color = document.getElementById('newUserColor').value;
-      if (!fullName || !username || !password) return;
-      appDB.users.push({ username, password, fullName, role, color, commType, commVal, canSeeAllPhones: role==='admin', active: true });
-      saveDB(); refreshAllUI();
-    }
-
-    function startGridDrag(v, cId, d) { isDraggingGrid = true; dragChaletId = cId; dragStartDay = d; dragEndDay = d; highlightDraggedCells(); }
-    function moveGridDrag(cId, d) { if (isDraggingGrid && cId===dragChaletId) { dragEndDay = d; highlightDraggedCells(); } }
-    function highlightDraggedCells() {
-      document.querySelectorAll('.empty-cell.drag-selected').forEach(el => el.classList.remove('drag-selected'));
-      if (!dragStartDay || !dragEndDay) return;
-      var s = parseLocalDate(dragStartDay), e = parseLocalDate(dragEndDay); if (s > e) { var t = s; s = e; e = t; }
-      var c = new Date(s);
-      while (c <= e) { var cell = document.querySelector(`.empty-cell[data-chalet="${dragChaletId}"][data-day="${formatLocalDate(c)}"]`); if (cell) cell.classList.add('drag-selected'); c.setDate(c.getDate()+1); }
-    }
-    function endGridDrag() {
-      if (!isDraggingGrid) return; isDraggingGrid = false;
-      var s = parseLocalDate(dragStartDay), e = parseLocalDate(dragEndDay); if (s > e) { var t = s; s = e; e = t; }
-      var checkout = new Date(e); checkout.setDate(checkout.getDate()+1);
-      var cObj = appDB.chalets.find(c => c.id === dragChaletId);
-      document.querySelectorAll('.empty-cell.drag-selected').forEach(el => el.classList.remove('drag-selected'));
-      if (cObj) openQuickBookingModal(cObj.village, cObj.id, formatLocalDate(s), formatLocalDate(checkout));
-    }
-    window.addEventListener('mouseup', () => { if (isDraggingGrid) endGridDrag(); });
 
     function openQuickBookingModal(v, cId, sDate, eDate) {
-      document.getElementById('editingBookingId').value = ""; document.getElementById('bookingModalTitle').innerText = "➕ تسكين حجز مؤكد أو هولد مبدئي";
+      document.getElementById('editingBookingId').value = "";
+      document.getElementById('bookingModalTitle').innerText = "➕ تسجيل حجز جديد أو هولد";
       document.getElementById('bookingStatusType').value = "confirmed"; toggleHoldOptions();
+      document.getElementById('rentPeriodType').value = "daily"; onRentPeriodTypeChange();
       document.getElementById('clientName').value = ""; document.getElementById('clientPhone').value = ""; document.getElementById('deposit').value = 0;
       if (v) { document.getElementById('bookingVillageSelect').value = v; onSelectBookingVillage(); }
       if (cId) document.getElementById('chaletSelect').value = cId;
@@ -1202,6 +1239,7 @@
     function toggleHoldOptions() { document.getElementById('holdDurationBox').style.display = document.getElementById('bookingStatusType').value==='hold' ? 'block' : 'none'; }
 
     function onSelectBookingChalet() {
+      if (document.getElementById('rentPeriodType').value === 'monthly') return;
       var c = appDB.chalets.find(x => x.id === document.getElementById('chaletSelect').value); if (!c) return;
       var s = document.getElementById('startDate').value, e = document.getElementById('endDate').value;
       if (s && e) {
@@ -1211,14 +1249,7 @@
       }
       recalculateTotals();
     }
-    function recalculateTotals() {
-      var s = document.getElementById('startDate').value, e = document.getElementById('endDate').value; if (!s || !e) return;
-      var nights = getStayNights(s, e).length, price = parseFloat(document.getElementById('unitPrice').value)||0, dep = parseFloat(document.getElementById('deposit').value)||0;
-      var total = price * nights;
-      document.getElementById('calcDuration').innerText = nights + ' ليلة';
-      document.getElementById('calcTotal').innerText = total.toLocaleString() + ' ج.م';
-      document.getElementById('calcRemaining').innerText = Math.max(0, total - dep).toLocaleString() + ' ج.م';
-    }
+
     function canManageBooking(b) { if (!currentUser || !b) return false; if (currentUser.role === 'admin') return true; return currentUser.fullName === b.agentName || currentUser.fullName === b.createdBy; }
 
     function submitBooking(e) {
@@ -1227,29 +1258,45 @@
       var chaletObj = appDB.chalets.find(c => c.id === chaletId), statusType = document.getElementById('bookingStatusType').value;
       var holdHours = parseInt(document.getElementById('holdHours').value,10) || 2, agentName = document.getElementById('agentName').value;
       var leadSource = document.getElementById('leadSource').value, clientName = document.getElementById('clientName').value.trim(), clientPhone = document.getElementById('clientPhone').value.trim();
+      var rentPeriodType = document.getElementById('rentPeriodType').value, monthsCount = parseInt(document.getElementById('monthsCount').value, 10) || 1;
       var sDate = document.getElementById('startDate').value, eDate = document.getElementById('endDate').value;
-      if (parseLocalDate(eDate) < parseLocalDate(sDate)) { alert("تاريخ المغادرة يجب أن يكون بعد الدخول!"); return; }
+
+      if (parseLocalDate(eDate) < parseLocalDate(sDate)) { alert("تاريخ الخروج لازم يكون بعد الدخول!"); return; }
       var reqNights = getStayNights(sDate, eDate);
       var conflict = appDB.bookings.find(b => (!editingId || b.id !== editingId) && b.chaletId === chaletId && reqNights.some(d => getStayNights(b.startDate, b.endDate).includes(d)));
-      if (conflict) { alert(`⚠️ الشاليه مشغول لـ (${conflict.agentName} - ${conflict.clientName})`); return; }
+      if (conflict) { alert(`⚠️ الشاليه محجوز في الأيام دي لـ (${conflict.agentName} - ${conflict.clientName})`); return; }
+
       var price = parseFloat(document.getElementById('unitPrice').value)||0, dep = parseFloat(document.getElementById('deposit').value)||0;
-      var total = price * reqNights.length, rem = Math.max(0, total - dep), method = document.getElementById('paymentMethod').value;
+      var total = rentPeriodType === 'monthly' ? (price * monthsCount) : (price * reqNights.length);
+      var rem = Math.max(0, total - dep), method = document.getElementById('paymentMethod').value;
       var regDate = formatLocalDate(new Date()), actor = currentUser ? currentUser.fullName : agentName;
       var holdExpiresAt = statusType === 'hold' ? (Date.now() + holdHours * 3600000) : null;
+      var rentLabel = rentPeriodType === 'monthly' ? `${monthsCount} شهر` : `${reqNights.length} ليلة`;
 
       if (editingId) {
         var b = appDB.bookings.find(x => x.id === editingId);
         if (!canManageBooking(b)) return;
-        Object.assign(b, { status: statusType, holdExpiresAt, chaletId, village: chaletObj.village, chaletName: chaletObj.name, agentName, leadSource, clientName, clientPhone, startDate: sDate, endDate: eDate, rentType: `${reqNights.length} ليلة`, total, deposit: dep, remaining: rem, method });
+        Object.assign(b, { status: statusType, holdExpiresAt, chaletId, village: chaletObj.village, chaletName: chaletObj.name, agentName, leadSource, clientName, clientPhone, rentPeriodType, monthsCount, startDate: sDate, endDate: eDate, rentType: rentLabel, total, deposit: dep, remaining: rem, method });
         logAuditAction(`تعديل الحجز #${b.id} (${clientName})`);
+        saveSingleBookingCloud(b);
       } else {
-        var newB = { id: "INV-" + Math.floor(100000 + Math.random() * 900000), status: statusType, holdExpiresAt, regDate, createdBy: actor, createdAt: `${regDate} ${new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}`, chaletId, village: chaletObj.village, chaletName: chaletObj.name, agentName, leadSource, clientName, clientPhone, startDate: sDate, endDate: eDate, rentType: `${reqNights.length} ليلة`, total, deposit: dep, remaining: rem, method, idPhotos: [], permitStatus: 'missing' };
+        var newB = {
+          id: "INV-" + Math.floor(100000 + Math.random() * 900000), status: statusType, holdExpiresAt, regDate, createdBy: actor,
+          createdAt: `${regDate} ${new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}`,
+          chaletId, village: chaletObj.village, chaletName: chaletObj.name, agentName, leadSource, clientName, clientPhone,
+          rentPeriodType, monthsCount, startDate: sDate, endDate: eDate, rentType: rentLabel, total, deposit: dep, remaining: rem, method,
+          idPhotoCount: 0, permitStatus: 'missing'
+        };
         appDB.bookings.push(newB);
-        logAuditAction(`${statusType==='hold'?'هولد':'حجز مؤكد'} #${newB.id} (${clientName})`);
+        logAuditAction(`${statusType==='hold'?'هولد':'حجز مؤكد'} #${newB.id} (${clientName} - ${rentLabel})`);
+        saveSingleBookingCloud(newB);
       }
-      saveDB(); closeBookingModal(); refreshAllUI();
+      closeBookingModal();
+      refreshAllUI();
+      showToast("✅ تم الحجز والتخزين بنجاح!");
     }
 
+    // ضغط الصور العادية للبطايق
     function compressImageFile(file) {
       return new Promise(resolve => {
         var r = new FileReader(); r.onload = ev => {
@@ -1263,72 +1310,141 @@
       });
     }
 
-    function openPermitModal(bId) {
-      var b = appDB.bookings.find(x => x.id === bId); if (!b || !canManageBooking(b)) { alert("⛔ متاح لصاحب الحجز أو الأدمن فقط!"); return; }
+    async function fetchBookingPhotosCloud(bId) { try { var res = await fetch(`${FIREBASE_URL}/elaraby_v8_photos/bookings/${bId}.json`); if (res.ok) { var arr = await res.json(); return Array.isArray(arr) ? arr : []; } } catch (e) {} return []; }
+    async function saveBookingPhotosCloud(bId, photosArr) { try { await fetch(`${FIREBASE_URL}/elaraby_v8_photos/bookings/${bId}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(photosArr) }); } catch (e) {} }
+
+    async function openPermitModal(bId) {
+      var b = appDB.bookings.find(x => x.id === bId); if (!b || !canManageBooking(b)) { alert("⛔ متاح لصاحب الحجز أو المدير فقط!"); return; }
       document.getElementById('permitBookingId').value = b.id;
-      document.getElementById('permitInfoSummary').innerHTML = `<b>الوحدة:</b> ${b.village} - ${b.chaletName} | <b>العميل:</b> ${b.clientName} (${b.clientPhone})`;
-      var stMsg = document.getElementById('permitUploadStatusMsg');
-      if (b.idPhotos && b.idPhotos.length) { stMsg.style.display = 'block'; stMsg.innerText = `✅ محفوظ على السيستم (${b.idPhotos.length} صورة) وجاهز للإرسال للأمن.`; } else stMsg.style.display = 'none';
-      renderPermitGallery(b); document.getElementById('permitModal').style.display = 'flex';
+      document.getElementById('permitInfoSummary').innerHTML = `<b>الشاليه:</b> ${b.village} - ${b.chaletName} | <b>العميل:</b> ${b.clientName} (${b.clientPhone})`;
+      var stMsg = document.getElementById('permitUploadStatusMsg'); stMsg.style.display = 'block'; stMsg.style.background = '#fef3c7'; stMsg.innerText = "⏳ جاري تحميل الصور...";
+      document.getElementById('permitModal').style.display = 'flex';
+      currentOpenedPermitPhotos = await fetchBookingPhotosCloud(b.id);
+      b.idPhotoCount = currentOpenedPermitPhotos.length;
+      if (currentOpenedPermitPhotos.length) { stMsg.style.background = '#dcfce7'; stMsg.style.color = '#15803d'; stMsg.innerText = `✅ مرفوع (${currentOpenedPermitPhotos.length} صورة) وجاهز للأمن.`; } else stMsg.style.display = 'none';
+      renderPermitGallery(b.id);
     }
     async function uploadIdPhotosToSystem(e) {
       var files = Array.from(e.target.files); if (!files.length) return;
-      var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (!b || !canManageBooking(b)) return;
-      var stMsg = document.getElementById('permitUploadStatusMsg'); stMsg.style.display = 'block'; stMsg.style.background = '#fef3c7'; stMsg.innerText = `⏳ جاري الرفع والحفظ...`;
-      if (!b.idPhotos) b.idPhotos = [];
-      for (var f of files) b.idPhotos.push(await compressImageFile(f));
-      if (b.permitStatus !== 'sent') b.permitStatus = 'ready';
-      await pushToCloud(); stMsg.style.background = '#dcfce7'; stMsg.style.color = '#15803d'; stMsg.innerText = `✅ تم التحميل والحفظ على السيستم (${b.idPhotos.length} صورة)!`;
-      e.target.value = ""; renderPermitGallery(b); refreshAllUI();
+      var bId = document.getElementById('permitBookingId').value, b = appDB.bookings.find(x => x.id === bId); if (!b || !canManageBooking(b)) return;
+      var stMsg = document.getElementById('permitUploadStatusMsg'); stMsg.style.display = 'block'; stMsg.style.background = '#fef3c7'; stMsg.innerText = `⏳ جاري الرفع...`;
+      for (var f of files) currentOpenedPermitPhotos.push(await compressImageFile(f));
+      await saveBookingPhotosCloud(bId, currentOpenedPermitPhotos);
+      b.idPhotoCount = currentOpenedPermitPhotos.length; if (b.permitStatus !== 'sent') b.permitStatus = 'ready';
+      await saveSingleBookingCloud(b); stMsg.style.background = '#dcfce7'; stMsg.style.color = '#15803d'; stMsg.innerText = `✅ تم الرفع (${currentOpenedPermitPhotos.length} صورة)!`;
+      e.target.value = ""; renderPermitGallery(bId); refreshAllUI();
     }
-    function renderPermitGallery(b) {
-      var photos = b.idPhotos || [];
-      document.getElementById('permitPhotosGallery').innerHTML = photos.length ? photos.map((src, idx) => `<div style="position:relative;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;"><img src="${src}" style="width:100%;display:block;"><button onclick="removeIdPhoto('${b.id}',${idx})" style="position:absolute;top:4px;left:4px;background:#dc2626;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;">×</button></div>`).join('') : '<div style="grid-column:1/-1;text-align:center;padding:16px;">لا توجد صور مرفوعة بعد.</div>';
-    }
-    function removeIdPhoto(bId, idx) { var b = appDB.bookings.find(x => x.id === bId); if (!b) return; b.idPhotos.splice(idx, 1); if (!b.idPhotos.length) b.permitStatus = 'missing'; saveDB(); renderPermitGallery(b); refreshAllUI(); }
+    function renderPermitGallery(bId) { document.getElementById('permitPhotosGallery').innerHTML = currentOpenedPermitPhotos.length ? currentOpenedPermitPhotos.map((src, idx) => `<div style="position:relative;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;"><img src="${src}" style="width:100%;display:block;"><button onclick="removeIdPhoto('${bId}',${idx})" style="position:absolute;top:4px;left:4px;background:#dc2626;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;">×</button></div>`).join('') : '<div style="grid-column:1/-1;text-align:center;padding:16px;">لسه مفيش صور مرفوعة.</div>'; }
+    async function removeIdPhoto(bId, idx) { var b = appDB.bookings.find(x => x.id === bId); if (!b) return; currentOpenedPermitPhotos.splice(idx, 1); await saveBookingPhotosCloud(bId, currentOpenedPermitPhotos); b.idPhotoCount = currentOpenedPermitPhotos.length; if (!currentOpenedPermitPhotos.length) b.permitStatus = 'missing'; await saveSingleBookingCloud(b); renderPermitGallery(bId); refreshAllUI(); }
     function sendSecurityPermitWhatsApp() {
-      var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (!b || !b.idPhotos || !b.idPhotos.length) { alert("⚠️ ارفع صور البطاقات أولاً!"); return; }
+      var bId = document.getElementById('permitBookingId').value, b = appDB.bookings.find(x => x.id === bId); if (!b || !currentOpenedPermitPhotos.length) { alert("⚠️ ارفع صور البطايق الأول!"); return; }
       var cObj = appDB.chalets.find(c => c.id === b.chaletId) || {}, secPhone = (cObj.securityPhone || '').replace(/\D/g, '');
       if (secPhone.startsWith('01') && secPhone.length === 11) secPhone = '2' + secPhone;
-      var txt = `🛡️ *طلب تصريح دخول أمني - شركة العربي للاستثمار العقاري*\n🏖️ *القرية:* ${b.village} (${b.chaletName})\n👤 *النزيل:* ${b.clientName} (${b.clientPhone})\n📅 *من:* ${b.startDate} *إلى:* ${b.endDate}`;
-      b.permitStatus = 'sent'; saveDB(); refreshAllUI();
-      if (window.pywebview && window.pywebview.api) window.pywebview.api.copy_images_to_clipboard_and_whatsapp(b.idPhotos, txt, cObj.securityPhone || "").then(() => alert("✅ تم نسخ البطاقات للحافظة وفتح واتساب الأمن!"));
+      var txt = `🛡️ *طلب تصريح دخول - شركة العربي للاستثمار العقاري*\n🏖️ *القرية:* ${b.village} (${b.chaletName})\n👤 *الاسم:* ${b.clientName} (${b.clientPhone})\n📅 *من:* ${b.startDate} *لحد:* ${b.endDate}`;
+      b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI();
+      if (window.pywebview && window.pywebview.api) window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentOpenedPermitPhotos, txt, cObj.securityPhone || "").then(() => showToast("✅ تم نسخ البطايق وفتح واتساب الأمن!"));
       else window.open(`https://api.whatsapp.com/send?phone=${secPhone}&text=${encodeURIComponent(txt)}`, '_blank');
     }
-    function markPermitAsSentOnly() { var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (b) { b.permitStatus = 'sent'; saveDB(); refreshAllUI(); document.getElementById('permitModal').style.display = 'none'; } }
+    function markPermitAsSentOnly() { var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (b) { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); document.getElementById('permitModal').style.display = 'none'; } }
 
-    function showQuickDrawer(bId, isPin) {
-      if (!isPin && pinnedDrawerBookingId) return; if (isPin) pinnedDrawerBookingId = bId;
+    function sendWelcomeLocationWhatsApp(bId) {
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
+      var loc = (appDB.villageLocations && appDB.villageLocations[b.village]) || {}, phone = (b.clientPhone || '').replace(/\D/g, '');
+      if (phone.startsWith('01') && phone.length === 11) phone = '2' + phone;
+      var msg = `🌴 *أهلاً بحضرتك أ/ ${b.clientName} في شركة العربي للاستثمار العقاري*\n━━━━━━━━━━━━━━━━━━━━\n🏡 *الشاليه:* ${b.village} - ${b.chaletName}\n📅 *الدخول:* ${b.startDate} (الساعة 2 الضهر)\n📅 *الخروج:* ${b.endDate} (الساعة 12 الضهر)\n💵 *الباقي عند الوصول:* ${b.remaining.toLocaleString()} ج.م\n${loc.mapsUrl ? `📍 *اللوكيشن:* ${loc.mapsUrl}\n` : ''}📋 *تعليمات البوابة:* ${loc.gateNotes || 'يرجى إحضار أصل البطايق الشخصية.'}\nنتمنى لحضرتك إقامة سعيدة! ✨`;
+      window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // بناء HTML بطاقة تفاصيل الحجز (مشتركة بين الجدول وقائمة الحجوزات والبطايق)
+    function buildBookingCardHTML(b, photosArr) {
       var isAdmin = currentUser && currentUser.role === 'admin', isAllowed = canManageBooking(b);
-      var phone = (isAllowed || (currentUser && currentUser.canSeeAllPhones)) ? b.clientPhone : (b.clientPhone.slice(0,4) + "*****" + b.clientPhone.slice(-2));
-      document.getElementById('qsdTitle').innerText = `${b.village} - ${b.chaletName}`;
-      document.getElementById('qsdSubId').innerText = `#${b.id}`;
-      document.getElementById('qsdContent').innerHTML = `
-        <div class="d-sec">👤 بيانات العميل</div>
+      var phone = maskPhoneForViewer(b);
+      var photosHtml = '';
+      if (isAllowed) {
+        if (photosArr && photosArr.length) {
+          photosHtml = `<div class="d-sec">🪪 صور البطاقات المرفوعة (${photosArr.length})</div><div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">` + photosArr.map((src, i) => `<div style="border:1px solid var(--border-color); border-radius:6px; overflow:hidden;"><img src="${src}" style="width:100%; display:block;"><button onclick="triggerUniversalImageDownload('بطاقة-${b.clientName}-${i+1}.jpg','${src}')" style="width:100%; background:#0284c7; color:#fff; border:none; font-size:10px; padding:3px; cursor:pointer;">📥 تحميل</button></div>`).join('') + `</div>`;
+        } else {
+          photosHtml = `<div style="margin:6px 0; padding:6px; background:#fef2f2; color:#dc2626; border-radius:6px; font-size:11px; text-align:center;">🔴 لم يتم رفع صور بطاقات لهذا الحجز</div>`;
+        }
+      }
+
+      return `
+        <div class="d-sec">👤 بيانات العميل والحجز</div>
         <div class="d-row"><span>العميل:</span><b>${b.clientName}</b></div>
-        <div class="d-row"><span>الهاتف:</span><b dir="ltr">${phone}</b></div>
-        <div class="d-row"><span>الفترة:</span><b>${b.startDate} ⬅️ ${b.endDate}</b></div>
+        <div class="d-row"><span>التليفون:</span><b dir="ltr">${phone}</b></div>
+        <div class="d-row"><span>الميعاد:</span><b>${b.startDate} ⬅️ ${b.endDate} (${b.rentType||''})</b></div>
         <div class="d-row"><span>السيلز:</span><b>${b.agentName}</b></div>
         <div class="d-sec">💰 الحساب</div>
         <div class="d-row"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
-        <div class="d-row"><span>المدفوع:</span><b style="color:#16a34a;">${b.deposit.toLocaleString()} ج.م</b></div>
-        <div class="d-row"><span>المتبقي:</span><b style="color:#dc2626;">${b.remaining.toLocaleString()} ج.م</b></div>
+        <div class="d-row"><span>المدفوع (${b.method}):</span><b style="color:#16a34a;">${b.deposit.toLocaleString()} ج.م</b></div>
+        <div class="d-row"><span>الباقي:</span><b style="color:#dc2626;">${b.remaining.toLocaleString()} ج.م</b></div>
+        ${photosHtml}
         ${isAllowed ? `
           <div class="row-2" style="margin-top:8px;">
-            <button class="btn-submit" style="background:#0284c7;margin-top:0;font-size:11px;" onclick="openPermitModal('${b.id}')">🪪 البطاقات والأمن</button>
-            <button class="btn-submit" style="background:#16a34a;margin-top:0;font-size:11px;" onclick="exportReceiptA5WithMultiWatermark('${b.id}')">📸 إيصال مختوم</button>
+            <button class="btn-submit" style="background:#0284c7;margin-top:0;font-size:11px;" onclick="openPermitModal('${b.id}')">🪪 إدارة البطايق والأمن</button>
+            <button class="btn-submit" style="background:#16a34a;margin-top:0;font-size:11px;" onclick="exportReceiptA5WithMultiWatermark('${b.id}')">📸 إيصال العميل</button>
           </div>
           <div class="row-2" style="margin-top:6px;">
-            <button class="btn-submit" style="background:#d97706;margin-top:0;" onclick="startEditBooking('${b.id}')">✏️ تعديل</button>
-            <button class="btn-submit" style="background:#dc2626;margin-top:0;" onclick="deleteBookingById('${b.id}')">🗑️ حذف</button>
+            <button class="btn-submit" style="background:#059669;margin-top:0;font-size:11px;" onclick="sendWelcomeLocationWhatsApp('${b.id}')">📍 اللوكيشن واتساب</button>
+            <button class="btn-submit" style="background:#d97706;margin-top:0;font-size:11px;" onclick="startEditBooking('${b.id}')">✏️ تعديل الحجز</button>
           </div>
-        ` : `<div style="margin-top:8px;padding:6px;background:var(--bg-subtle);border-radius:6px;font-size:10.5px;text-align:center;">🔒 خاص بـ (أ/ ${b.agentName})</div>`}
-        ${isAdmin && b.remaining>0 ? `<button class="btn-submit" style="background:#16a34a;" onclick="openSettleModal('${b.id}')">✅ تحصيل المتبقي</button>` : ''}
+          <button class="btn-submit" style="background:#dc2626;margin-top:6px;" onclick="deleteBookingById('${b.id}')">🗑️ حذف الحجز</button>
+        ` : `<div style="margin-top:8px;padding:8px;background:var(--bg-subtle);border-radius:6px;font-size:11px;text-align:center;">🔒 هذا الحجز خاص بـ (أ/ ${b.agentName}) — رقم الهاتف والبطاقات محمية</div>`}
+        ${isAdmin && b.remaining>0 ? `<button class="btn-submit" style="background:#16a34a;margin-top:6px;" onclick="openSettleModal('${b.id}')">✅ تحصيل الباقي</button>` : ''}
       `;
+    }
+
+    async function showQuickDrawer(bId, isPin) {
+      if (!isPin && pinnedDrawerBookingId) return; if (isPin) pinnedDrawerBookingId = bId;
+      var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
+      document.getElementById('qsdTitle').innerText = `${b.village} - ${b.chaletName}`;
+      document.getElementById('qsdSubId').innerText = `#${b.id}`;
+      document.getElementById('qsdContent').innerHTML = buildBookingCardHTML(b, []);
       document.getElementById('quickSideDrawer').style.display = 'flex';
+      if (canManageBooking(b) && (b.idPhotoCount || 0) > 0) {
+        var phs = await fetchBookingPhotosCloud(b.id);
+        if (document.getElementById('qsdSubId').innerText === `#${b.id}`) {
+          document.getElementById('qsdContent').innerHTML = buildBookingCardHTML(b, phs);
+        }
+      }
     }
     function closeQuickDrawer() { pinnedDrawerBookingId = null; document.getElementById('quickSideDrawer').style.display = 'none'; }
+
+    // قائمة الحجوزات والبطايق (معاينة كاملة عند الوقوف/الضغط + إخفاء الرقم لغير الأدمن وصاحب الحجز)
+    function renderLedgerList() {
+      var v = document.getElementById('ledgerVillageFilter').value, p = document.getElementById('ledgerPermitFilter').value, q = (document.getElementById('ledgerSearchInput').value||'').toLowerCase();
+      var list = appDB.bookings.filter(b => (!v || b.village===v) && (p==='all' || (b.permitStatus||((b.idPhotoCount&&b.idPhotoCount>0)?'ready':'missing'))===p) && (!q || b.clientName.toLowerCase().includes(q) || b.clientPhone.includes(q)));
+      document.getElementById('ledgerListContainer').innerHTML = list.map(b => {
+        var maskedPhone = maskPhoneForViewer(b);
+        var isAllowed = canManageBooking(b);
+        return `
+          <div class="ledger-row-card" onmouseenter="showLedgerCard('${b.id}', false)" onclick="showLedgerCard('${b.id}', true)">
+            <div>
+              <b>${b.village} (${b.chaletName}) - ${b.clientName}</b> <span style="font-size:11px; color:var(--primary); font-weight:800;" dir="ltr">[${maskedPhone}]</span><br>
+              <span style="font-size:11px; color:var(--text-muted);">📅 من ${b.startDate} لحد ${b.endDate} | 👤 السيلز: <b>${b.agentName}</b> | 💰 الإجمالي: <b>${b.total.toLocaleString()} ج.م</b></span>
+            </div>
+            ${isAllowed ? `<button class="btn-hdr" style="background:#0284c7;" onclick="event.stopPropagation(); openPermitModal('${b.id}')">🪪 البطايق (${b.idPhotoCount||0})</button>` : `<span style="font-size:10.5px;color:var(--text-muted);">🔒 خاص بـ ${b.agentName}</span>`}
+          </div>
+        `;
+      }).join('') || '<div style="text-align:center; padding:20px;">مفيش حجوزات مطابقة.</div>';
+    }
+
+    async function showLedgerCard(bId, isPin) {
+      if (!isPin && pinnedLedgerBookingId) return;
+      if (isPin) pinnedLedgerBookingId = bId;
+      var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
+      var card = document.getElementById('ledgerDetailCard');
+      document.getElementById('ldcTitle').innerText = `${b.village} - ${b.chaletName}`;
+      document.getElementById('ldcSubId').innerText = `#${b.id}`;
+      document.getElementById('ldcContent').innerHTML = buildBookingCardHTML(b, []);
+      card.style.display = 'flex';
+      if (canManageBooking(b) && (b.idPhotoCount || 0) > 0) {
+        var phs = await fetchBookingPhotosCloud(b.id);
+        if (document.getElementById('ldcSubId').innerText === `#${b.id}`) {
+          document.getElementById('ldcContent').innerHTML = buildBookingCardHTML(b, phs);
+        }
+      }
+    }
 
     function exportReceiptA5WithMultiWatermark(bId) {
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
@@ -1344,14 +1460,14 @@
             <table style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:16px;">
               <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">رقم الإيصال:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">#${b.id}</td></tr>
               <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">العميل:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.clientName} (${b.clientPhone})</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الوحدة:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.village} - ${b.chaletName}</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الفترة:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">دخول ${b.startDate} ⬅️ مغادرة ${b.endDate}</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">السيلز:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.agentName}</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الشاليه:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.village} - ${b.chaletName}</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الفترة:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">دخول ${b.startDate} ⬅️ خروج ${b.endDate} (${b.rentType||''})</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">المسؤول:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.agentName}</td></tr>
             </table>
             <div style="background:rgba(248,250,252,0.85); border:2px solid #0f766e; border-radius:10px; padding:14px;">
               <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
               <div style="display:flex;justify-content:space-between;margin-bottom:6px;color:#15803d;"><span>المدفوع (${b.method}):</span><b>${b.deposit.toLocaleString()} ج.م</b></div>
-              <div style="display:flex;justify-content:space-between;font-size:16px;color:#dc2626;border-top:1.5px dashed #94a3b8;padding-top:6px;"><span>المتبقي:</span><b>${b.remaining.toLocaleString()} ج.م</b></div>
+              <div style="display:flex;justify-content:space-between;font-size:16px;color:#dc2626;border-top:1.5px dashed #94a3b8;padding-top:6px;"><span>الباقي عند الدخول:</span><b>${b.remaining.toLocaleString()} ج.م</b></div>
             </div>
           </div>
         </div>
@@ -1359,26 +1475,210 @@
       </div>`;
       html2canvas(w.firstElementChild, { scale: 2, width: 559, windowWidth: 600, useCORS: true, backgroundColor: '#ffffff' }).then(c => { w.innerHTML = ''; triggerUniversalImageDownload(`ايصال-${b.clientName}.png`, c.toDataURL('image/png')); });
     }
+	// دمج اللوجو والفوتر تلقائياً على صور الشاليهات عند الرفع + التحميل والمشاركة على واتساب وماسنجر
+    function brandChaletPhotoWithLogoAndFooter(file) {
+      return new Promise(resolve => {
+        var r = new FileReader();
+        r.onload = ev => {
+          var img = new Image();
+          img.onload = () => {
+            var maxW = 1080, scale = Math.min(1, maxW / img.width);
+            var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+            var footerH = Math.max(46, Math.round(h * 0.08));
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h + footerH;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
 
-    function exportTreasuryAsA4Image() { var el = document.getElementById('treasuryCaptureArea'); if (!el) { calculateTreasury(); el = document.getElementById('treasuryCaptureArea'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`جرد-الخزينة-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
-    function exportOwnerStatementA4() { var el = document.getElementById('ownerA4Card'); if (!el) { generateOwnerStatement(); el = document.getElementById('ownerA4Card'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`كشف-حساب-مالك-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
+            // شريط الفوتر السفلي الشفاف
+            ctx.fillStyle = "rgba(11, 25, 44, 0.90)";
+            ctx.fillRect(0, h, w, footerH);
+            ctx.fillStyle = "#d4af37";
+            ctx.fillRect(0, h, w, 3);
 
+            ctx.fillStyle = "#fef08a";
+            ctx.font = `bold ${Math.max(15, Math.round(footerH * 0.42))}px Cairo, Tahoma, sans-serif`;
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            ctx.fillText("شركة العربي للاستثمار العقاري • fb.com/Elaraby.estate", w - 16, h + footerH / 2);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "left";
+            ctx.fillText("01008743750", 16, h + footerH / 2);
+
+            // رسم اللوجو كعلامة مائية في المنتصف والزاوية
+            var logoImg = new Image();
+            logoImg.crossOrigin = "anonymous";
+            logoImg.onload = () => {
+              ctx.save();
+              ctx.globalAlpha = 0.22;
+              var lw = Math.round(w * 0.32);
+              var lh = Math.round(lw * (logoImg.height / (logoImg.width || 1)));
+              ctx.drawImage(logoImg, (w - lw) / 2, (h - lh) / 2, lw, lh);
+              ctx.globalAlpha = 0.85;
+              var cornerW = Math.round(w * 0.16);
+              var cornerH = Math.round(cornerW * (logoImg.height / (logoImg.width || 1)));
+              ctx.fillStyle = "rgba(0,0,0,0.65)";
+              ctx.fillRect(14, 14, cornerW + 10, cornerH + 10);
+              ctx.drawImage(logoImg, 19, 19, cornerW, cornerH);
+              ctx.restore();
+              resolve(canvas.toDataURL('image/jpeg', 0.84));
+            };
+            logoImg.onerror = () => resolve(canvas.toDataURL('image/jpeg', 0.84));
+            logoImg.src = APP_LOGO_SRC;
+          };
+          img.src = ev.target.result;
+        };
+        r.readAsDataURL(file);
+      });
+    }
+
+    async function onSelectCatVillage() { var v = document.getElementById('catVillageSelect').value, sel = document.getElementById('catChaletSelect'); if (!sel) return; sel.innerHTML = appDB.chalets.filter(c=>c.village===v).map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); loadSelectedChaletCatalog(); }
+    async function loadSelectedChaletCatalog() {
+      var c = appDB.chalets.find(x=>x.id===document.getElementById('catChaletSelect').value); if (!c) return;
+      document.getElementById('catPriceInp').value=c.price||""; document.getElementById('catPhoneInp').value=c.phone||"01008743750"; document.getElementById('catDescInp').value=c.desc||"";
+      try { var res = await fetch(`${FIREBASE_URL}/elaraby_v8_photos/chalets/${c.id}.json`); var arr = res.ok ? await res.json() : []; tempCatPhotos = Array.isArray(arr) ? arr : []; } catch (e) { tempCatPhotos = []; }
+      document.getElementById('catPendingThumbs').innerHTML = tempCatPhotos.map((s, idx)=>`<div style="position:relative;"><img src="${s}" style="width:65px;height:50px;object-fit:cover;border-radius:5px;"><button type="button" onclick="tempCatPhotos.splice(${idx},1);document.getElementById('catPendingThumbs').children[${idx}].remove();" style="position:absolute;top:0;left:0;background:#dc2626;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;">×</button></div>`).join('');
+    }
+    async function handleCatPhotosUpload(e) {
+      showToast("⏳ جاري وضع اللوجو والفوتر على الصور...");
+      for (var f of Array.from(e.target.files)) {
+        tempCatPhotos.push(await brandChaletPhotoWithLogoAndFooter(f));
+      }
+      document.getElementById('catPendingThumbs').innerHTML = tempCatPhotos.map(s=>`<img src="${s}" style="width:65px;height:50px;object-fit:cover;border-radius:5px;">`).join('');
+      showToast("✅ تم تجهيز الصور باللوجو والفوتر!");
+    }
+    async function saveChaletCatalogData() {
+      var c = appDB.chalets.find(x=>x.id===document.getElementById('catChaletSelect').value); if (!c) return;
+      c.price=document.getElementById('catPriceInp').value; c.phone=document.getElementById('catPhoneInp').value; c.desc=document.getElementById('catDescInp').value; c.photoCount = tempCatPhotos.length;
+      if (tempCatPhotos.length) chaletCoverCache[c.id] = tempCatPhotos[0];
+      await fetch(`${FIREBASE_URL}/elaraby_v8_photos/chalets/${c.id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(tempCatPhotos) });
+      saveDB(); renderCatalogCards(); document.getElementById('catEditorModal').style.display='none';
+      showToast("✅ تم حفظ صور الشاليه باللوجو والفوتر!");
+    }
+
+    function renderCatalogCards() {
+      var v = document.getElementById('catViewVillageFilter').value, q = (document.getElementById('catViewSearch').value||'').toLowerCase(), box = document.getElementById('catalogCardsContainer'); if (!box) return;
+      box.innerHTML = appDB.chalets.filter(c=>(!v||c.village===v)&&(!q||c.name.toLowerCase().includes(q)||(c.desc||'').toLowerCase().includes(q))).map(c => {
+        var cover = chaletCoverCache[c.id] || APP_LOGO_SRC;
+        return `<div class="cat-card">
+          <div class="cat-cover" onclick="openGallery('${c.id}')">
+            <img id="catCoverImg_${c.id}" src="${cover}">
+            <span style="position:absolute;bottom:8px;left:8px;background:rgba(11,25,44,0.85);color:#fef08a;padding:3px 8px;border-radius:6px;font-size:10.5px;font-weight:800;">🖼️ ${c.photoCount||0} صور مختومة</span>
+          </div>
+          <div style="padding:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <b>🏖️ ${c.village} - ${c.name}</b>
+              <button class="btn-hdr" style="background:#0d9488;" onclick="openGallery('${c.id}')">👁️ عرض ومشاركة</button>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin:5px 0;">${c.desc||'اضغط لعرض الصور وتحميلها أو مشاركتها باللوجو'}</div>
+          </div>
+        </div>`;
+      }).join('');
+      appDB.chalets.forEach(c => {
+        if ((c.photoCount||0) > 0 && !chaletCoverCache[c.id]) {
+          fetch(`${FIREBASE_URL}/elaraby_v8_photos/chalets/${c.id}/0.json`).then(r=>r.json()).then(src => { if (src) { chaletCoverCache[c.id] = src; var img = document.getElementById('catCoverImg_'+c.id); if (img) img.src = src; } }).catch(()=>{});
+        }
+      });
+    }
+
+    async function openGallery(id) {
+      var c = appDB.chalets.find(x=>x.id===id); if (!c) return;
+      currentGalleryChalet = c; currentGalleryPhotos = [];
+      document.getElementById('modalChaletTitle').innerText = `🏖️ ${c.village} - ${c.name}`;
+      document.getElementById('modalImagesList').innerHTML = '<div style="padding:20px;grid-column:1/-1;text-align:center;">⏳ جاري تحميل الصور باللوجو...</div>';
+      document.getElementById('galleryModal').style.display='flex';
+      var res = await fetch(`${FIREBASE_URL}/elaraby_v8_photos/chalets/${id}.json`), photos = res.ok ? await res.json() : [];
+      currentGalleryPhotos = Array.isArray(photos) ? photos : [];
+      document.getElementById('modalImagesList').innerHTML = currentGalleryPhotos.length
+        ? currentGalleryPhotos.map((s, idx)=>`<div style="border:1px solid var(--border-color);border-radius:8px;overflow:hidden;"><img src="${s}" style="width:100%;display:block;"><button onclick="triggerUniversalImageDownload('${c.village}-${c.name}-${idx+1}.jpg','${s}')" style="width:100%;background:#334155;color:#fff;border:none;padding:5px;font-size:11px;font-weight:700;cursor:pointer;">📥 تحميل الصورة دي</button></div>`).join('')
+        : '<div style="padding:20px;grid-column:1/-1;text-align:center;">لسه مفيش صور مرفوعة للشاليه ده.</div>';
+    }
+
+    function downloadAllCurrentChaletPhotos() {
+      if (!currentGalleryPhotos.length || !currentGalleryChalet) { alert("⚠️ مفيش صور للتحميل!"); return; }
+      currentGalleryPhotos.forEach((src, i) => {
+        setTimeout(() => { triggerUniversalImageDownload(`${currentGalleryChalet.village}-${currentGalleryChalet.name}-${i+1}.jpg`, src); }, i * 350);
+      });
+      showToast(`📥 جاري تحميل ${currentGalleryPhotos.length} صورة باللوجو والفوتر!`);
+    }
+
+    async function shareCurrentChaletPhotos(platform) {
+      if (!currentGalleryChalet) return;
+      var c = currentGalleryChalet;
+      var shareTxt = `🏖️ *${c.village} - ${c.name}*\n${c.desc ? '📋 ' + c.desc + '\n' : ''}${c.price ? '💰 السعر: ' + c.price + '\n' : ''}📞 للتواصل والحجز: 01008743750\n🌐 شركة العربي للاستثمار العقاري: fb.com/Elaraby.estate`;
+
+      if (navigator.share && currentGalleryPhotos.length && navigator.canShare) {
+        try {
+          var files = [];
+          for (var i = 0; i < currentGalleryPhotos.length; i++) {
+            var res = await fetch(currentGalleryPhotos[i]);
+            var blob = await res.blob();
+            files.push(new File([blob], `${c.name}-${i+1}.jpg`, { type: 'image/jpeg' }));
+          }
+          if (navigator.canShare({ files })) {
+            await navigator.share({ title: `${c.village} - ${c.name}`, text: shareTxt, files });
+            return;
+          }
+        } catch (err) {}
+      }
+
+      if (window.pywebview && window.pywebview.api && currentGalleryPhotos.length) {
+        await window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentGalleryPhotos, shareTxt, "");
+        if (platform === 'messenger') window.open('https://www.messenger.com/', '_blank');
+        showToast("✅ تم نسخ الصور للحافظة! اعمل لصق (Ctrl+V) في الشات");
+        return;
+      }
+
+      if (navigator.clipboard) navigator.clipboard.writeText(shareTxt).catch(()=>{});
+      if (platform === 'whatsapp') window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareTxt)}`, '_blank');
+      else window.open('https://www.messenger.com/', '_blank');
+      showToast("📋 تم نسخ تفاصيل الشاليه! (لإرسال الصور مباشرة اضغط تحميل الكل)");
+    }
+
+    // الصيانة والأعطال
+    function addMaintenanceTicket() {
+      var chaletId = document.getElementById('maintChaletSel').value, cObj = appDB.chalets.find(c => c.id === chaletId);
+      var desc = document.getElementById('maintDescInp').value.trim(), priority = document.getElementById('maintPriorityInp').value, cost = parseFloat(document.getElementById('maintCostInp').value) || 0;
+      if (!cObj || !desc) { alert("اختار الشاليه واكتب المشكلة!"); return; }
+      if (!appDB.maintenanceTickets) appDB.maintenanceTickets = [];
+      appDB.maintenanceTickets.unshift({ id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: formatLocalDate(new Date()), chaletId, village: cObj.village, chaletName: cObj.name, desc, priority, cost, status: 'open' });
+      saveDB(); refreshAllUI(); document.getElementById('maintDescInp').value = ''; document.getElementById('maintCostInp').value = 0;
+    }
+    function closeMaintenanceTicket(idx) {
+      var t = appDB.maintenanceTickets[idx]; if (!t) return;
+      var finalCost = prompt(`الصيانة كلفت كام فعلياً (ج.م) عشان تتخصم من حساب ${t.chaletName}؟`, t.cost || 0);
+      if (finalCost === null) return;
+      var costNum = parseFloat(finalCost) || 0; t.status = 'closed'; t.cost = costNum;
+      if (costNum > 0) { if (!appDB.expenses) appDB.expenses = []; appDB.expenses.push({ date: formatLocalDate(new Date()), chaletId: t.chaletId, desc: `صيانة: ${t.desc}`, amount: costNum }); }
+      saveDB(); refreshAllUI();
+    }
+    function renderMaintenanceTickets() {
+      var div = document.getElementById('maintTicketsContainer'); if (!div) return;
+      div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;"><div><b>${t.status==='open'?'🔧':'✅'} ${t.village} - ${t.chaletName}</b> <span style="font-size:10.5px;">(${t.date} • ${t.priority})</span><br><span style="font-size:12px;">${t.desc} — التكلفة: <b>${t.cost} ج.م</b></span></div>${t.status==='open' ? `<button class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : `<span style="color:#16a34a; font-weight:800; font-size:11px;">مقفول</span>`}</div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
+    }
+
+    // الخزينة وتحليل القرى
     function switchTreasurySub(sub) { ['Main','Owner','Exp'].forEach(s => { document.getElementById('trSub'+s).style.display=(s.toLowerCase()===sub)?'block':'none'; document.getElementById('trTab'+s).classList.toggle('active', s.toLowerCase()===sub); }); }
     function calculateTreasury() {
       var s = document.getElementById('tStartDate').value, e = document.getElementById('tEndDate').value;
       var list = appDB.bookings.filter(b => b.status !== 'hold' && b.regDate >= s && b.regDate <= e), exps = (appDB.expenses || []).filter(x => x.date >= s && x.date <= e);
-      var total = 0, dep = 0, agStats = {}, leadStats = {};
+      var total = 0, dep = 0, agStats = {}, villageStats = {};
       list.forEach(b => {
-        total += b.total; dep += b.deposit; var u = (appDB.users || []).find(x => x.fullName === b.agentName);
-        if (!agStats[b.agentName]) agStats[b.agentName] = { count: 0, total: 0, comm: 0, uObj: u };
+        total += b.total; dep += b.deposit;
+        var u = (appDB.users || []).find(x => x.fullName === b.agentName);
+        if (!agStats[b.agentName]) agStats[b.agentName] = { count: 0, total: 0, comm: 0 };
         agStats[b.agentName].count++; agStats[b.agentName].total += b.total; agStats[b.agentName].comm += calculateUserCommission(u, b);
-        var src = b.leadSource || 'غير محدد'; if (!leadStats[src]) leadStats[src] = { count: 0, total: 0 }; leadStats[src].count++; leadStats[src].total += b.total;
+        if (!villageStats[b.village]) villageStats[b.village] = { count: 0, nights: 0, total: 0 };
+        villageStats[b.village].count++; villageStats[b.village].nights += getStayNights(b.startDate, b.endDate).length; villageStats[b.village].total += b.total;
       });
       var totalExp = exps.reduce((sum, x) => sum + x.amount, 0), totalComm = Object.values(agStats).reduce((sum, a) => sum + a.comm, 0);
       var agRows = Object.keys(agStats).map(ag => `<tr><td><b>${ag}</b></td><td>${agStats[ag].count}</td><td>${agStats[ag].total.toLocaleString()}</td><td style="color:#0d9488;font-weight:900;">${agStats[ag].comm.toLocaleString()} ج.م</td></tr>`).join('');
-      var leadRows = Object.keys(leadStats).map(src => `<tr><td><b>${src}</b></td><td>${leadStats[src].count}</td><td>${leadStats[src].total.toLocaleString()} ج.م</td></tr>`).join('');
-      document.getElementById('treasuryReportArea').innerHTML = `<div id="treasuryCaptureArea" style="background:#fff; color:#0f172a; padding:14px; border-radius:12px; border:2px solid #0f766e; position:relative; overflow:hidden;">${getMultiWatermarkHTML()}<div style="position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:10px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div><b style="color:#fef08a;">جرد الخزينة والعمولات</b><div style="font-size:11px;">من ${s} إلى ${e}</div></div><img src="${APP_LOGO_SRC}" style="height:44px; background:#000; padding:3px; border-radius:6px;"></div><div class="kpi-strip" style="padding:0 0 10px;"><div class="kpi-card"><div><div class="kpi-lbl">الإجمالي</div><div class="kpi-val">${total.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المحصل</div><div class="kpi-val" style="color:#16a34a;">${dep.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المصروفات + العمولات</div><div class="kpi-val" style="color:#dc2626;">${(totalExp+totalComm).toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">صافي الربح</div><div class="kpi-val" style="color:#0d9488;">${(dep-totalExp-totalComm).toLocaleString()}</div></div></div></div><div class="row-2"><div class="box-card"><h4 style="margin:0 0 8px;">💵 عمولات كل سيلز</h4><table class="cal-table"><thead><tr><th>السيلز</th><th>العدد</th><th>المبيعات</th><th>العمولة</th></tr></thead><tbody>${agRows||'<tr><td colspan="4">لا يوجد</td></tr>'}</tbody></table></div><div class="box-card"><h4 style="margin:0 0 8px;">📣 مصادر العملاء</h4><table class="cal-table"><thead><tr><th>المصدر</th><th>العدد</th><th>القيمة</th></tr></thead><tbody>${leadRows||'<tr><td colspan="3">لا يوجد</td></tr>'}</tbody></table></div></div></div><div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div></div>`;
+      var vRows = Object.keys(villageStats).sort((a,b)=>villageStats[b].total-villageStats[a].total).map(v => `<tr><td><b>🏖️ ${v}</b></td><td>${villageStats[v].count}</td><td>${villageStats[v].nights} ليلة</td><td style="color:#0284c7;font-weight:900;">${villageStats[v].total.toLocaleString()} ج.م</td></tr>`).join('');
+      document.getElementById('treasuryReportArea').innerHTML = `<div id="treasuryCaptureArea" style="background:#fff; color:#0f172a; padding:14px; border-radius:12px; border:2px solid #0f766e; position:relative; overflow:hidden;">${getMultiWatermarkHTML()}<div style="position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:10px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div><b style="color:#fef08a;">جرد الخزينة والعمولات وإيراد كل قرية</b><div style="font-size:11px;">من ${s} لحد ${e}</div></div><img src="${APP_LOGO_SRC}" style="height:44px; background:#000; padding:3px; border-radius:6px;"></div><div class="kpi-strip" style="padding:0 0 10px;"><div class="kpi-card"><div><div class="kpi-lbl">إجمالي الحجوزات</div><div class="kpi-val">${total.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المدفوع فعلياً</div><div class="kpi-val" style="color:#16a34a;">${dep.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المصاريف + العمولات</div><div class="kpi-val" style="color:#dc2626;">${(totalExp+totalComm).toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">الصافي</div><div class="kpi-val" style="color:#0d9488;">${(dep-totalExp-totalComm).toLocaleString()}</div></div></div></div><div class="row-2"><div class="box-card"><h4 style="margin:0 0 8px;">💵 عمولات السيلز</h4><table class="cal-table"><thead><tr><th>السيلز</th><th>الحجوزات</th><th>المبيعات</th><th>العمولة</th></tr></thead><tbody>${agRows||'<tr><td colspan="4">مفيش</td></tr>'}</tbody></table></div><div class="box-card"><h4 style="margin:0 0 8px;">📊 إيراد كل قرية</h4><table class="cal-table"><thead><tr><th>القرية</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${vRows||'<tr><td colspan="4">مفيش</td></tr>'}</tbody></table></div></div></div><div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div></div>`;
     }
+    function exportTreasuryAsA4Image() { var el = document.getElementById('treasuryCaptureArea'); if (!el) { calculateTreasury(); el = document.getElementById('treasuryCaptureArea'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`جرد-الخزينة-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
+    function exportOwnerStatementA4() { var el = document.getElementById('ownerA4Card'); if (!el) { generateOwnerStatement(); el = document.getElementById('ownerA4Card'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`كشف-حساب-مالك-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
     function onSelectOwnerVillage() { var v = document.getElementById('ownVillageSel').value, sel = document.getElementById('ownChaletSel'); if (!sel) return; sel.innerHTML = ''; appDB.chalets.filter(c => c.village === v).forEach(c => { var o = document.createElement('option'); o.value = c.id; o.innerText = c.name; sel.appendChild(o); }); }
     function generateOwnerStatement() {
       var cObj = appDB.chalets.find(c => c.id === document.getElementById('ownChaletSel').value); if (!cObj) return;
@@ -1386,52 +1686,161 @@
       var books = appDB.bookings.filter(b => b.status !== 'hold' && b.chaletId === cObj.id && b.startDate >= s && b.startDate <= e);
       var expSum = (appDB.expenses||[]).filter(x => x.chaletId === cObj.id && x.date >= s && x.date <= e).reduce((sum,x)=>sum+x.amount,0) + extra;
       var gross = books.reduce((sum,b)=>sum+b.total,0), fee = Math.round(gross*(feePct/100)), net = gross - fee - expSum;
-      document.getElementById('ownerStatementPreview').innerHTML = `<div id="ownerA4Card" style="background:#fff; color:#0f172a; border:2.5px solid #0f766e; border-radius:12px; overflow:hidden; position:relative;">${getMultiWatermarkHTML()}<div style="padding:18px; position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:14px 18px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37; margin-bottom:14px;"><div><div style="font-size:18px; font-weight:900; color:#fef08a;">كشف حساب مالك شاليه</div><div style="font-size:12px;">${cObj.village} (${cObj.name})</div></div><img src="${APP_LOGO_SRC}" style="height:48px; background:#000; padding:4px; border-radius:6px;"></div><table style="width:100%; border-collapse:collapse; font-size:12px; text-align:center; margin-bottom:14px;"><thead><tr style="background:#0f766e; color:#fff;"><th style="padding:7px;">الدخول</th><th>المغادرة</th><th>الليالي</th><th>الإيجار</th></tr></thead><tbody>${books.map(b => `<tr><td style="border:1px solid #cbd5e1;padding:6px;">${b.startDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${b.endDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${getStayNights(b.startDate,b.endDate).length}</td><td style="border:1px solid #cbd5e1;padding:6px;font-weight:800;">${b.total.toLocaleString()} ج.م</td></tr>`).join('') || '<tr><td colspan="4" style="padding:12px;border:1px solid #cbd5e1;">لا توجد حجوزات</td></tr>'}</tbody></table><div style="background:rgba(248,250,252,0.88); border:1.5px solid #0f766e; border-radius:10px; padding:12px; font-size:13px;"><div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>إجمالي الإيجارات:</span><b>${gross.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#dc2626;"><span>نسبة إدارة الشركة (${feePct}%):</span><b>- ${fee.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#dc2626;"><span>المصروفات:</span><b>- ${expSum.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; border-top:2px dashed #94a3b8; padding-top:6px; font-size:16px; color:#15803d;"><span>صافي المستحق للمالك:</span><b>${net.toLocaleString()} ج.م</b></div></div></div>${getTransparentExportFooterHTML()}</div>`;
+      document.getElementById('ownerStatementPreview').innerHTML = `<div id="ownerA4Card" style="background:#fff; color:#0f172a; border:2.5px solid #0f766e; border-radius:12px; overflow:hidden; position:relative;">${getMultiWatermarkHTML()}<div style="padding:18px; position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:14px 18px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37; margin-bottom:14px;"><div><div style="font-size:18px; font-weight:900; color:#fef08a;">كشف حساب مالك شاليه</div><div style="font-size:12px;">${cObj.village} (${cObj.name})</div></div><img src="${APP_LOGO_SRC}" style="height:48px; background:#000; padding:4px; border-radius:6px;"></div><table style="width:100%; border-collapse:collapse; font-size:12px; text-align:center; margin-bottom:14px;"><thead><tr style="background:#0f766e; color:#fff;"><th style="padding:7px;">الدخول</th><th>الخروج</th><th>المدة</th><th>الإيجار</th></tr></thead><tbody>${books.map(b => `<tr><td style="border:1px solid #cbd5e1;padding:6px;">${b.startDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${b.endDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${b.rentType||''}</td><td style="border:1px solid #cbd5e1;padding:6px;font-weight:800;">${b.total.toLocaleString()} ج.م</td></tr>`).join('') || '<tr><td colspan="4" style="padding:12px;border:1px solid #cbd5e1;">مفيش حجوزات</td></tr>'}</tbody></table><div style="background:rgba(248,250,252,0.88); border:1.5px solid #0f766e; border-radius:10px; padding:12px; font-size:13px;"><div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>إجمالي الإيجارات:</span><b>${gross.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#dc2626;"><span>نسبة المكتب (${feePct}%):</span><b>- ${fee.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#dc2626;"><span>المصاريف والصيانة:</span><b>- ${expSum.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; border-top:2px dashed #94a3b8; padding-top:6px; font-size:16px; color:#15803d;"><span>صافي المستحق للمالك:</span><b>${net.toLocaleString()} ج.م</b></div></div></div>${getTransparentExportFooterHTML()}</div>`;
     }
-    function renderMyCommissions() {
-      if (!currentUser) return;
-      var myBooks = appDB.bookings.filter(b => b.status !== 'hold' && b.agentName === currentUser.fullName);
-      var totalSales = myBooks.reduce((s, b) => s + b.total, 0), totalComm = myBooks.reduce((s, b) => s + calculateUserCommission(currentUser, b), 0);
-      document.getElementById('myCommContent').innerHTML = `<div class="kpi-strip" style="padding:0 0 12px; grid-template-columns:repeat(3,1fr);"><div class="kpi-card"><div><div class="kpi-lbl">حجوزاتي</div><div class="kpi-val">${myBooks.length}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">مبيعاتي</div><div class="kpi-val">${totalSales.toLocaleString()} ج.م</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">عمولتي</div><div class="kpi-val" style="color:#16a34a;">${totalComm.toLocaleString()} ج.م</div></div></div></div><table class="cal-table"><thead><tr><th>الإيصال</th><th>الشاليه</th><th>العميل</th><th>الليالي</th><th>قيمة الحجز</th><th>عمولتي</th></tr></thead><tbody>${myBooks.map(b => `<tr><td>#${b.id}</td><td>${b.village} - ${b.chaletName}</td><td>${b.clientName}</td><td>${getStayNights(b.startDate,b.endDate).length}</td><td>${b.total.toLocaleString()}</td><td style="color:#16a34a;font-weight:900;">${calculateUserCommission(currentUser,b).toLocaleString()} ج.م</td></tr>`).join('')}</tbody></table>`;
+
+    // الإعدادات الثلاثة المنظمة
+    function switchSetSub(sub) { ['Chalets','Comm','Users'].forEach(s => { var el = document.getElementById('setSub'+s), tb = document.getElementById('setTab'+s); if (el) el.style.display=(s.toLowerCase()===sub)?'block':'none'; if (tb) tb.classList.toggle('active', s.toLowerCase()===sub); }); }
+
+    function applyGlobalCommissionToAllSales() {
+      if (currentUser.role !== 'admin') return;
+      var t = document.getElementById('globalCommTypeInp').value;
+      var v = parseFloat(document.getElementById('globalCommValInp').value) || 0;
+      appDB.globalCommConfig = { type: t, val: v };
+      (appDB.users || []).forEach(u => { if (u.role === 'sales') { u.commType = t; u.commVal = v; } });
+      saveDB(); refreshAllUI();
+      showToast("✅ تم توحيد العمولة على كل السيلز بنجاح!");
     }
+
+    function saveVillageCommission(v, idx) {
+      if (currentUser.role !== 'admin') return;
+      if (!appDB.villageCommissions) appDB.villageCommissions = {};
+      appDB.villageCommissions[v] = { type: document.getElementById('vCommType_'+idx).value, val: parseFloat(document.getElementById('vCommVal_'+idx).value) || 0 };
+      saveDB(); showToast(`✅ تم حفظ عمولة قرية (${v})!`);
+    }
+
+    function renderSettingsLists() {
+      sortAndGroupChaletsByVillage();
+      var villages = [...new Set(appDB.chalets.map(c => c.village))];
+      var exSel = document.getElementById('existingVillageSelect'); if (exSel) exSel.innerHTML = `<option value="__new__">-- اختار قرية موجودة --</option>` + villages.map(v => `<option value="${v}">${v}</option>`).join('');
+      var renSel = document.getElementById('renameVillageSelect'); if (renSel) renSel.innerHTML = villages.map(v => `<option value="${v}">${v}</option>`).join('');
+
+      var cDiv = document.getElementById('chaletsManageList');
+      if (cDiv) {
+        cDiv.innerHTML = villages.map(v => {
+          var vChalets = appDB.chalets.map((c, idx) => ({ c, idx })).filter(x => x.c.village === v);
+          return `<div style="border:1.5px solid var(--primary); border-radius:10px; padding:10px; margin-bottom:12px; background:var(--bg-surface);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding-bottom:6px; border-bottom:1px dashed var(--border-color);">
+              <b style="font-size:13.5px; color:var(--primary);">🏖️ قرية ${v} (${vChalets.length} شاليه)</b>
+              <button type="button" class="btn-hdr" style="background:#0284c7;" onclick="toggleVillageCheckboxes('${v}')">☑️ تحديد كل شاليهات ${v}</button>
+            </div>
+            ${vChalets.map(({ c, idx }) => `
+              <div style="display:grid; grid-template-columns:30px 1.2fr 0.8fr 0.8fr 1fr auto auto; gap:6px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:6px; border-radius:8px;">
+                <input type="checkbox" class="bulk-chalet-cb" data-village="${v}" data-idx="${idx}" style="width:17px; height:17px; cursor:pointer;">
+                <input type="text" id="chName_${idx}" class="form-control" value="${c.name}">
+                <input type="number" id="chWd_${idx}" class="form-control" value="${c.weekdayPrice||2000}">
+                <input type="number" id="chWe_${idx}" class="form-control" value="${c.weekendPrice||2600}">
+                <input type="text" id="chSec_${idx}" class="form-control" value="${c.securityPhone||''}" placeholder="رقم الأمن" dir="ltr">
+                <button class="btn-hdr" style="background:var(--primary);" onclick="saveChaletRow(${idx})">حفظ</button>
+                <button class="btn-hdr" style="background:#dc2626;" onclick="if(confirm('حذف الشاليه؟')){appDB.chalets.splice(${idx},1);saveDB();refreshAllUI();}">✖</button>
+              </div>
+            `).join('')}
+          </div>`;
+        }).join('');
+      }
+
+      if (appDB.globalCommConfig) {
+        var gT = document.getElementById('globalCommTypeInp'), gV = document.getElementById('globalCommValInp');
+        if (gT) gT.value = appDB.globalCommConfig.type || 'pct';
+        if (gV) gV.value = appDB.globalCommConfig.val || 3;
+      }
+
+      var vcDiv = document.getElementById('villageCommissionsList');
+      if (vcDiv) {
+        if (!appDB.villageCommissions) appDB.villageCommissions = {};
+        vcDiv.innerHTML = villages.map((v, i) => {
+          var vc = appDB.villageCommissions[v] || { type: 'default', val: 0 };
+          return `<div style="background:var(--bg-surface); padding:8px; border-radius:8px; margin-bottom:6px; display:grid; grid-template-columns:0.9fr 1.2fr 0.7fr auto; gap:6px; align-items:center; border:1px solid var(--border-color);">
+            <b>🏖️ ${v}</b>
+            <select id="vCommType_${i}" class="form-control">
+              <option value="default" ${vc.type==='default'?'selected':''}>نفس عمولة السيلز العادية</option>
+              <option value="pct" ${vc.type==='pct'?'selected':''}>نسبة %</option>
+              <option value="per_night" ${vc.type==='per_night'?'selected':''}>مبلغ على الليلة</option>
+              <option value="fixed_booking" ${vc.type==='fixed_booking'?'selected':''}>مبلغ على الحجز</option>
+            </select>
+            <input type="number" id="vCommVal_${i}" class="form-control" value="${vc.val||0}" placeholder="القيمة">
+            <button class="btn-hdr" style="background:var(--primary);" onclick="saveVillageCommission('${v}', ${i})">حفظ</button>
+          </div>`;
+        }).join('');
+      }
+
+      var locDiv = document.getElementById('villageLocationsList');
+      if (locDiv) {
+        if (!appDB.villageLocations) appDB.villageLocations = {};
+        locDiv.innerHTML = villages.map((v, i) => {
+          var loc = appDB.villageLocations[v] || { mapsUrl: '', gateNotes: '' };
+          return `<div style="background:var(--bg-surface); padding:8px; border-radius:8px; margin-bottom:6px; display:grid; grid-template-columns:0.8fr 1.2fr 1.5fr auto; gap:6px; align-items:center; border:1px solid var(--border-color);">
+            <b>🏖️ ${v}</b>
+            <input type="text" id="vLocUrl_${i}" class="form-control" value="${loc.mapsUrl||''}" placeholder="رابط اللوكيشن" dir="ltr">
+            <input type="text" id="vLocNote_${i}" class="form-control" value="${loc.gateNotes||''}" placeholder="تعليمات البوابة">
+            <button class="btn-hdr" style="background:var(--primary);" onclick="saveVillageLocation('${v}', ${i})">حفظ</button>
+          </div>`;
+        }).join('');
+      }
+
+      var uDiv = document.getElementById('usersManageList');
+      if (uDiv) {
+        uDiv.innerHTML = (appDB.users || []).map((u, i) => `
+          <div style="display:grid; grid-template-columns:1.2fr 0.9fr 0.8fr auto auto; gap:6px; margin-bottom:6px; align-items:center; background:var(--bg-subtle); padding:7px; border-radius:8px;">
+            <input type="text" id="uFN_${i}" class="form-control" value="${u.fullName}">
+            <input type="text" id="uP_${i}" class="form-control" value="${u.password}" dir="ltr">
+            <select id="uR_${i}" class="form-control"><option value="sales" ${u.role==='sales'?'selected':''}>سيلز</option><option value="admin" ${u.role==='admin'?'selected':''}>مدير</option></select>
+            <button class="btn-hdr" style="background:var(--primary);" onclick="saveUserRow(${i})">حفظ</button>
+            ${u.username !== 'admin' ? `<button class="btn-hdr" style="background:#dc2626;" onclick="deleteSystemUser(${i})">🗑️</button>` : `<span>👑</span>`}
+          </div>
+        `).join('');
+      }
+    }
+
+    function saveVillageLocation(v, idx) { if (currentUser.role !== 'admin') return; if (!appDB.villageLocations) appDB.villageLocations = {}; appDB.villageLocations[v] = { mapsUrl: document.getElementById('vLocUrl_'+idx).value.trim(), gateNotes: document.getElementById('vLocNote_'+idx).value.trim() }; saveDB(); showToast(`✅ تم حفظ لوكيشن قرية ${v}!`); }
+    function toggleVillageCheckboxes(v) { var boxes = Array.from(document.querySelectorAll(`.bulk-chalet-cb[data-village="${v}"]`)), all = boxes.every(b => b.checked); boxes.forEach(b => b.checked = !all); }
+    function toggleSelectAllChaletsBulk() { var boxes = Array.from(document.querySelectorAll('.bulk-chalet-cb')), all = boxes.every(b => b.checked); boxes.forEach(b => b.checked = !all); }
+    function applyBulkPricesToSelected() { if (currentUser.role !== 'admin') return; var checked = Array.from(document.querySelectorAll('.bulk-chalet-cb:checked')); if (!checked.length) { alert("⚠️ حدد شاليه واحد على الأقل!"); return; } var newWd = document.getElementById('bulkWeekdayInp').value, newWe = document.getElementById('bulkWeekendInp').value; if (!newWd && !newWe) return; checked.forEach(cb => { var idx = parseInt(cb.getAttribute('data-idx'), 10); if (newWd !== "") appDB.chalets[idx].weekdayPrice = parseFloat(newWd) || 0; if (newWe !== "") appDB.chalets[idx].weekendPrice = parseFloat(newWe) || 0; }); saveDB(); refreshAllUI(); showToast(`✅ تم تحديث الأسعار لـ (${checked.length}) شاليه!`); }
+    function addChalet() { if (currentUser.role !== 'admin') return; var v = document.getElementById('newVillageInp').value.trim(), n = document.getElementById('newChaletInp').value.trim(); if (!v || !n) return; appDB.chalets.push({ id: 'c_' + Date.now(), village: v, name: n, weekdayPrice: 2000, weekendPrice: 2600, securityPhone: "", price: "", phone: "01008743750", desc: "", photoCount: 0 }); sortAndGroupChaletsByVillage(); saveDB(); refreshAllUI(); document.getElementById('newChaletInp').value = ''; }
+    function saveChaletRow(i) { if (currentUser.role !== 'admin') return; appDB.chalets[i].name = document.getElementById('chName_'+i).value.trim(); appDB.chalets[i].weekdayPrice = parseFloat(document.getElementById('chWd_'+i).value) || 0; appDB.chalets[i].weekendPrice = parseFloat(document.getElementById('chWe_'+i).value) || 0; appDB.chalets[i].securityPhone = document.getElementById('chSec_'+i).value.trim(); saveDB(); refreshAllUI(); showToast("✅ تم الحفظ!"); }
+    function renameEntireVillage() { if (currentUser.role !== 'admin') return; var oldName = document.getElementById('renameVillageSelect').value, newName = document.getElementById('renameVillageNewInp').value.trim(); if (!oldName || !newName || oldName === newName) return; appDB.chalets.forEach(c => { if (c.village === oldName) c.village = newName; }); appDB.bookings.forEach(b => { if (b.village === oldName) b.village = newName; }); sortAndGroupChaletsByVillage(); saveDB(); refreshAllUI(); showToast(`✅ تم تغيير الاسم إلى (${newName})!`); }
+    function deleteEntireVillage() { if (currentUser.role !== 'admin') return; var v = document.getElementById('renameVillageSelect').value; if (!v || !confirm(`حذف قرية (${v}) بالكامل؟`)) return; appDB.chalets = appDB.chalets.filter(c => c.village !== v); saveDB(); refreshAllUI(); }
+    function saveUserRow(i) { if (currentUser.role !== 'admin') return; appDB.users[i].fullName = document.getElementById('uFN_'+i).value.trim(); appDB.users[i].password = document.getElementById('uP_'+i).value.trim(); appDB.users[i].role = document.getElementById('uR_'+i).value; saveDB(); refreshAllUI(); showToast("✅ تم حفظ التعديلات!"); }
+    function deleteSystemUser(i) { if (currentUser.role !== 'admin') return; var u = appDB.users[i]; if (!u || u.username === 'admin' || !confirm(`حذف (${u.fullName})؟`)) return; appDB.users.splice(i, 1); saveDB(); refreshAllUI(); }
+    function addSystemUser() { if (currentUser.role !== 'admin') return; var fullName = document.getElementById('newUserFullName').value.trim(), username = document.getElementById('newUserLogin').value.trim().toLowerCase(), password = document.getElementById('newUserPass').value.trim(), role = document.getElementById('newUserRole').value, color = document.getElementById('newUserColor').value; if (!fullName || !username || !password) return; var g = appDB.globalCommConfig || { type: 'pct', val: 3 }; appDB.users.push({ username, password, fullName, role, color, commType: g.type, commVal: g.val, active: true }); saveDB(); refreshAllUI(); }
+
+    function startGridDrag(v, cId, d) { isDraggingGrid = true; dragChaletId = cId; dragStartDay = d; dragEndDay = d; highlightDraggedCells(); }
+    function moveGridDrag(cId, d) { if (isDraggingGrid && cId===dragChaletId) { dragEndDay = d; highlightDraggedCells(); } }
+    function highlightDraggedCells() { document.querySelectorAll('.empty-cell.drag-selected').forEach(el => el.classList.remove('drag-selected')); if (!dragStartDay || !dragEndDay) return; var s = parseLocalDate(dragStartDay), e = parseLocalDate(dragEndDay); if (s > e) { var t = s; s = e; e = t; } var c = new Date(s); while (c <= e) { var cell = document.querySelector(`.empty-cell[data-chalet="${dragChaletId}"][data-day="${formatLocalDate(c)}"]`); if (cell) cell.classList.add('drag-selected'); c.setDate(c.getDate()+1); } }
+    function endGridDrag() { if (!isDraggingGrid) return; isDraggingGrid = false; var s = parseLocalDate(dragStartDay), e = parseLocalDate(dragEndDay); if (s > e) { var t = s; s = e; e = t; } var checkout = new Date(e); checkout.setDate(checkout.getDate()+1); var cObj = appDB.chalets.find(c => c.id === dragChaletId); document.querySelectorAll('.empty-cell.drag-selected').forEach(el => el.classList.remove('drag-selected')); if (cObj) openQuickBookingModal(cObj.village, cObj.id, formatLocalDate(s), formatLocalDate(checkout)); }
+    window.addEventListener('mouseup', () => { if (isDraggingGrid) endGridDrag(); });
+
     function populateDropdowns() {
       sortAndGroupChaletsByVillage();
       var villages = [...new Set(appDB.chalets.map(c => c.village))];
-      ['bookingVillageSelect','catVillageSelect','wlVillage','ownVillageSel'].forEach(id => { var el = document.getElementById(id); if (!el) return; var prev = el.value; el.innerHTML = villages.map(v => `<option value="${v}">${v}</option>`).join(''); if (prev && villages.includes(prev)) el.value = prev; });
+      ['bookingVillageSelect','catVillageSelect','ownVillageSel'].forEach(id => { var el = document.getElementById(id); if (!el) return; var prev = el.value; el.innerHTML = villages.map(v => `<option value="${v}">${v}</option>`).join(''); if (prev && villages.includes(prev)) el.value = prev; });
       ['gridVillageFilter','ledgerVillageFilter','catViewVillageFilter','checkVillage'].forEach(id => { var el = document.getElementById(id); if (!el) return; var prev = el.value; el.innerHTML = `<option value="">كل القرى (${appDB.chalets.length})</option>` + villages.map(v => `<option value="${v}">قرية ${v}</option>`).join(''); if (prev) el.value = prev; });
       var agSel = document.getElementById('agentName'); if (agSel) { agSel.innerHTML = (appDB.users||[]).filter(u=>u.active).map(u=>`<option value="${u.fullName}">${u.fullName}</option>`).join(''); if (currentUser) agSel.value = currentUser.fullName; }
-      var expSel = document.getElementById('expChaletSel'); if (expSel) expSel.innerHTML = `<option value="general">مصروف مكتب عام</option>` + appDB.chalets.map(c => `<option value="${c.id}">${c.village} - ${c.name}</option>`).join('');
+      var expSel = document.getElementById('expChaletSel'), maintSel = document.getElementById('maintChaletSel');
+      var chOpts = appDB.chalets.map(c => `<option value="${c.id}">${c.village} - ${c.name}</option>`).join('');
+      if (expSel) expSel.innerHTML = `<option value="general">مصروف مكتب عام</option>` + chOpts;
+      if (maintSel) maintSel.innerHTML = chOpts;
       onSelectBookingVillage(); onSelectOwnerVillage();
     }
     function onSelectBookingVillage() { var v = document.getElementById('bookingVillageSelect').value, sel = document.getElementById('chaletSelect'); if (!sel) return; sel.innerHTML = appDB.chalets.filter(c => c.village === v).map(c => `<option value="${c.id}">${c.name}</option>`).join(''); onSelectBookingChalet(); }
     function handleGlobalQuickSearch(q) { q = q.trim().toLowerCase(); if (!q) return; var f = appDB.bookings.find(b => b.clientName.toLowerCase().includes(q) || b.clientPhone.includes(q) || b.id.toLowerCase().includes(q)); if (f) { switchView('grid'); document.getElementById('gridMonth').value = String(parseInt(f.startDate.split('-')[1],10)); renderCalendarGrid(); showQuickDrawer(f.id, true); } }
     function confirmHoldToBooking(id) { startEditBooking(id); document.getElementById('bookingStatusType').value = 'confirmed'; toggleHoldOptions(); }
-    function releaseExpiredHold(id) { var idx = appDB.bookings.findIndex(x => x.id === id); if (idx === -1) return; appDB.bookings.splice(idx, 1); saveDB(); refreshAllUI(); closeQuickDrawer(); }
-    function deleteBookingById(id) { var idx = appDB.bookings.findIndex(x => x.id === id); if (idx === -1 || !confirm("حذف الحجز؟")) return; appDB.bookings.splice(idx, 1); saveDB(); closeQuickDrawer(); refreshAllUI(); }
-    function startEditBooking(id) { var b = appDB.bookings.find(x => x.id === id); if (!b || !canManageBooking(b)) return; openQuickBookingModal(b.village, b.chaletId, b.startDate, b.endDate); document.getElementById('editingBookingId').value = b.id; document.getElementById('bookingModalTitle').innerText = `✏️ تعديل #${b.id}`; document.getElementById('bookingStatusType').value = b.status || 'confirmed'; toggleHoldOptions(); document.getElementById('agentName').value = b.agentName; document.getElementById('leadSource').value = b.leadSource || 'إعلان فيسبوك / إنستجرام'; document.getElementById('clientName').value = b.clientName; document.getElementById('clientPhone').value = b.clientPhone; document.getElementById('unitPrice').value = Math.round(b.total / Math.max(1, getStayNights(b.startDate, b.endDate).length)); document.getElementById('deposit').value = b.deposit; document.getElementById('paymentMethod').value = b.method; recalculateTotals(); }
-    function openSettleModal(id) { var b = appDB.bookings.find(x => x.id === id); if (!b) return; document.getElementById('settleBookingId').value = b.id; document.getElementById('settleInfoBox').innerHTML = `المتبقي: <b>${b.remaining.toLocaleString()} ج.م</b>`; document.getElementById('settleAmountInp').value = b.remaining; document.getElementById('settleModal').style.display = 'flex'; }
-    function confirmSettleRemaining() { var b = appDB.bookings.find(x => x.id === document.getElementById('settleBookingId').value), amt = parseFloat(document.getElementById('settleAmountInp').value)||0; if (!b || amt <= 0) return; b.deposit += amt; b.remaining = Math.max(0, b.total - b.deposit); saveDB(); document.getElementById('settleModal').style.display = 'none'; refreshAllUI(); showQuickDrawer(b.id, true); }
-    function checkAllAvailableChalets() { var v = document.getElementById('checkVillage').value, s = document.getElementById('checkStart').value, e = document.getElementById('checkEnd').value, req = getStayNights(s, e), targets = v ? appDB.chalets.filter(c => c.village === v) : appDB.chalets, free = [], html = ''; targets.forEach(c => { var conflict = appDB.bookings.find(b => b.chaletId === c.id && req.some(d => getStayNights(b.startDate, b.endDate).includes(d))); if (!conflict) { free.push(c); html += `<div style="background:var(--today-bg);border:1.5px solid var(--primary);border-radius:8px;padding:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div><b>✅ ${c.village} - ${c.name}</b> (${req.length} ليلة)</div><button class="btn-hdr" style="background:var(--primary);" onclick="openQuickBookingModal('${c.village}','${c.id}','${s}','${e}')">➕ تسكين</button></div>`; } }); document.getElementById('availResult').innerHTML = html || '<div style="text-align:center;padding:20px;">لا توجد وحدات متاحة.</div>'; if (free.length) { document.getElementById('waAvailCopyBox').style.display='block'; document.getElementById('waAvailText').value = `🏖️ *المتاح لدى شركة العربي للاستثمار العقاري*\n📅 من ${s} إلى ${e}\n` + free.map(c=>`✅ ${c.village} - ${c.name}`).join('\n'); } }
-    function addToWaitlist() { var name = document.getElementById('wlClientName').value.trim(), phone = document.getElementById('wlClientPhone').value.trim(), village = document.getElementById('wlVillage').value, s = document.getElementById('wlStart').value, e = document.getElementById('wlEnd').value; if (!name || !phone) return; if (!appDB.waitlist) appDB.waitlist = []; appDB.waitlist.push({ name, phone, village, startDate: s, endDate: e }); saveDB(); refreshAllUI(); document.getElementById('wlClientName').value = ''; document.getElementById('wlClientPhone').value = ''; }
-    function renderWaitlist() { var div = document.getElementById('waitlistContainer'); if (!div) return; div.innerHTML = (appDB.waitlist||[]).map((w, i) => `<div style="border:1px solid var(--border-color);border-radius:8px;padding:8px;margin-bottom:6px;display:flex;justify-content:space-between;"><div><b>${w.name}</b> (${w.phone}) - ${w.village} (${w.startDate})</div><button class="btn-hdr" style="background:#dc2626;" onclick="appDB.waitlist.splice(${i},1);saveDB();refreshAllUI();">✖</button></div>`).join('') || 'فارغة'; }
-    function renderLedgerList() { var v = document.getElementById('ledgerVillageFilter').value, p = document.getElementById('ledgerPermitFilter').value, q = (document.getElementById('ledgerSearchInput').value||'').toLowerCase(), list = appDB.bookings.filter(b => (!v || b.village===v) && (p==='all' || (b.permitStatus||((b.idPhotos&&b.idPhotos.length)?'ready':'missing'))===p) && (!q || b.clientName.toLowerCase().includes(q) || b.clientPhone.includes(q))); document.getElementById('ledgerListContainer').innerHTML = list.map(b => `<div style="border:1px solid var(--border-color);border-radius:8px;padding:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div onclick="showQuickDrawer('${b.id}',true)" style="cursor:pointer;"><b>${b.village} (${b.chaletName}) - ${b.clientName}</b><br><span style="font-size:11px;">من ${b.startDate} إلى ${b.endDate} | السيلز: ${b.agentName}</span></div>${canManageBooking(b) ? `<button class="btn-hdr" style="background:#0284c7;" onclick="openPermitModal('${b.id}')">🪪 البطاقات والتصريح (${(b.idPhotos||[]).length})</button>` : `<span style="font-size:10.5px;color:var(--text-muted);">🔒 خاص بـ ${b.agentName}</span>`}</div>`).join(''); }
+    function releaseExpiredHold(id) { var idx = appDB.bookings.findIndex(x => x.id === id); if (idx === -1) return; appDB.bookings.splice(idx, 1); deleteSingleBookingCloud(id); refreshAllUI(); closeQuickDrawer(); }
+    function deleteBookingById(id) { var idx = appDB.bookings.findIndex(x => x.id === id); if (idx === -1 || !confirm("حذف الحجز؟")) return; appDB.bookings.splice(idx, 1); deleteSingleBookingCloud(id); closeQuickDrawer(); refreshAllUI(); }
+    function startEditBooking(id) { var b = appDB.bookings.find(x => x.id === id); if (!b || !canManageBooking(b)) return; openQuickBookingModal(b.village, b.chaletId, b.startDate, b.endDate); document.getElementById('editingBookingId').value = b.id; document.getElementById('bookingModalTitle').innerText = `✏️ تعديل #${b.id}`; document.getElementById('bookingStatusType').value = b.status || 'confirmed'; toggleHoldOptions(); document.getElementById('rentPeriodType').value = b.rentPeriodType || 'daily'; onRentPeriodTypeChange(); document.getElementById('monthsCount').value = b.monthsCount || 1; document.getElementById('agentName').value = b.agentName; document.getElementById('leadSource').value = b.leadSource || 'إعلان فيسبوك / إنستجرام'; document.getElementById('clientName').value = b.clientName; document.getElementById('clientPhone').value = b.clientPhone; document.getElementById('unitPrice').value = b.rentPeriodType === 'monthly' ? Math.round(b.total / (b.monthsCount||1)) : Math.round(b.total / Math.max(1, getStayNights(b.startDate, b.endDate).length)); document.getElementById('deposit').value = b.deposit; document.getElementById('paymentMethod').value = b.method; recalculateTotals(); }
+    function openSettleModal(id) { var b = appDB.bookings.find(x => x.id === id); if (!b) return; document.getElementById('settleBookingId').value = b.id; document.getElementById('settleInfoBox').innerHTML = `الباقي: <b>${b.remaining.toLocaleString()} ج.م</b>`; document.getElementById('settleAmountInp').value = b.remaining; document.getElementById('settleModal').style.display = 'flex'; }
+    function confirmSettleRemaining() { var b = appDB.bookings.find(x => x.id === document.getElementById('settleBookingId').value), amt = parseFloat(document.getElementById('settleAmountInp').value)||0; if (!b || amt <= 0) return; b.deposit += amt; b.remaining = Math.max(0, b.total - b.deposit); saveSingleBookingCloud(b); document.getElementById('settleModal').style.display = 'none'; refreshAllUI(); showQuickDrawer(b.id, true); }
+    function checkAllAvailableChalets() { var v = document.getElementById('checkVillage').value, s = document.getElementById('checkStart').value, e = document.getElementById('checkEnd').value, req = getStayNights(s, e), targets = v ? appDB.chalets.filter(c => c.village === v) : appDB.chalets, free = [], html = ''; targets.forEach(c => { var conflict = appDB.bookings.find(b => b.chaletId === c.id && req.some(d => getStayNights(b.startDate, b.endDate).includes(d))); if (!conflict) { free.push(c); html += `<div style="background:var(--today-bg);border:1.5px solid var(--primary);border-radius:8px;padding:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div><b>✅ ${c.village} - ${c.name}</b> (${req.length} ليلة)</div><button class="btn-hdr" style="background:var(--primary);" onclick="openQuickBookingModal('${c.village}','${c.id}','${s}','${e}')">➕ حجز</button></div>`; } }); document.getElementById('availResult').innerHTML = html || '<div style="text-align:center;padding:20px;">مفيش شاليهات فاضية في الأيام دي.</div>'; if (free.length) { document.getElementById('waAvailCopyBox').style.display='block'; document.getElementById('waAvailText').value = `🏖️ *المتاح لدى شركة العربي للاستثمار العقاري*\n📅 من ${s} لحد ${e}\n` + free.map(c=>`✅ ${c.village} - ${c.name}`).join('\n'); } }
+    function renderMyCommissions() { if (!currentUser) return; var myBooks = appDB.bookings.filter(b => b.status !== 'hold' && b.agentName === currentUser.fullName), totalSales = myBooks.reduce((s, b) => s + b.total, 0), totalComm = myBooks.reduce((s, b) => s + calculateUserCommission(currentUser, b), 0); document.getElementById('myCommContent').innerHTML = `<div class="kpi-strip" style="padding:0 0 12px; grid-template-columns:repeat(3,1fr);"><div class="kpi-card"><div><div class="kpi-lbl">حجوزاتي</div><div class="kpi-val">${myBooks.length}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">مبيعاتي</div><div class="kpi-val">${totalSales.toLocaleString()} ج.م</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">عمولتي</div><div class="kpi-val" style="color:#16a34a;">${totalComm.toLocaleString()} ج.م</div></div></div></div><table class="cal-table"><thead><tr><th>الإيصال</th><th>الشاليه</th><th>العميل</th><th>المدة</th><th>قيمة الحجز</th><th>عمولتي</th></tr></thead><tbody>${myBooks.map(b => `<tr><td>#${b.id}</td><td>${b.village} - ${b.chaletName}</td><td>${b.clientName}</td><td>${b.rentType||''}</td><td>${b.total.toLocaleString()}</td><td style="color:#16a34a;font-weight:900;">${calculateUserCommission(currentUser,b).toLocaleString()} ج.م</td></tr>`).join('')}</tbody></table>`; }
     function renderAuditLog() { var d = document.getElementById('auditLogContainer'); if (d) d.innerHTML = (appDB.auditLog||[]).map(a => `<div style="padding:6px;border-bottom:1px solid var(--border-color);font-size:11.5px;display:flex;justify-content:space-between;"><span><b>${a.user}:</b> ${a.action}</span><span>${a.time}</span></div>`).join(''); }
     function addExpense() { var date = document.getElementById('expDate').value, chaletId = document.getElementById('expChaletSel').value, desc = document.getElementById('expDesc').value.trim(), amount = parseFloat(document.getElementById('expAmount').value)||0; if (!desc || amount<=0) return; if (!appDB.expenses) appDB.expenses = []; appDB.expenses.push({ date, chaletId, desc, amount }); saveDB(); renderExpenses(); }
     function renderExpenses() { var d = document.getElementById('expensesListContainer'); if (d) d.innerHTML = (appDB.expenses||[]).map((x,i) => `<div style="padding:6px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;"><span>${x.date} - ${x.desc}</span><b>${x.amount} ج.م</b></div>`).join(''); }
-    function onSelectCatVillage() { var v = document.getElementById('catVillageSelect').value, sel = document.getElementById('catChaletSelect'); if (!sel) return; sel.innerHTML = appDB.chalets.filter(c=>c.village===v).map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); loadSelectedChaletCatalog(); }
-    function loadSelectedChaletCatalog() { var c = appDB.chalets.find(x=>x.id===document.getElementById('catChaletSelect').value); if (!c) return; document.getElementById('catPriceInp').value=c.price||""; document.getElementById('catPhoneInp').value=c.phone||"01008743750"; document.getElementById('catDescInp').value=c.desc||""; tempCatPhotos=(c.photos||[]).slice(); }
-    async function handleCatPhotosUpload(e) { for (var f of Array.from(e.target.files)) tempCatPhotos.push(await compressImageFile(f)); document.getElementById('catPendingThumbs').innerHTML = tempCatPhotos.map(s=>`<img src="${s}" style="width:50px;height:40px;object-fit:cover;">`).join(''); }
-    function saveChaletCatalogData() { var c = appDB.chalets.find(x=>x.id===document.getElementById('catChaletSelect').value); if (!c) return; c.price=document.getElementById('catPriceInp').value; c.phone=document.getElementById('catPhoneInp').value; c.desc=document.getElementById('catDescInp').value; c.photos=tempCatPhotos.slice(); saveDB(); renderCatalogCards(); document.getElementById('catEditorModal').style.display='none'; }
-    function renderCatalogCards() { var v = document.getElementById('catViewVillageFilter').value, q = (document.getElementById('catViewSearch').value||'').toLowerCase(), box = document.getElementById('catalogCardsContainer'); if (!box) return; box.innerHTML = appDB.chalets.filter(c=>(!v||c.village===v)&&(!q||c.name.toLowerCase().includes(q))).map(c => `<div class="cat-card"><div class="cat-cover" onclick="openGallery('${c.id}')"><img src="${(c.photos&&c.photos.length)?c.photos[0]:APP_LOGO_SRC}"></div><div style="padding:10px;"><b>🏖️ ${c.village} - ${c.name}</b><div style="font-size:11px;margin:4px 0;">${c.desc||''}</div></div></div>`).join(''); }
-    function openGallery(id) { var c = appDB.chalets.find(x=>x.id===id); if (!c) return; document.getElementById('modalChaletTitle').innerText=`${c.village} - ${c.name}`; document.getElementById('modalImagesList').innerHTML=(c.photos||[]).map(s=>`<img src="${s}" style="width:100%;border-radius:8px;">`).join(''); document.getElementById('galleryModal').style.display='flex'; }
-    function loadGmailSettingsToUI() { if (!appDB.gmailConfig) return; document.getElementById('gmailSenderInp').value=appDB.gmailConfig.sender||""; document.getElementById('gmailAppPassInp').value=appDB.gmailConfig.appPassword||""; document.getElementById('gmailRecipientInp').value=appDB.gmailConfig.recipient||""; }
-    function saveGmailSettings() { appDB.gmailConfig = { sender: document.getElementById('gmailSenderInp').value, appPassword: document.getElementById('gmailAppPassInp').value, recipient: document.getElementById('gmailRecipientInp').value }; saveDB(); alert("✅ تم حفظ إعدادات Gmail!"); }
-    function downloadEncryptedBackup() { if (window.pywebview && window.pywebview.api) window.pywebview.api.export_encrypted_full_backup(`نسخة-العربي-${formatLocalDate(new Date())}.elaraby`, JSON.stringify(appDB)).then(r => { if (r && r.success) alert("✅ تم التصدير!"); }); }
-    function restoreEncryptedBackup() { if (window.pywebview && window.pywebview.api) window.pywebview.api.import_encrypted_full_backup().then(r => { if (r && r.success) { appDB = JSON.parse(r.data); saveDB(); refreshAllUI(); alert("✅ تم الاستعادة!"); } }); }
+    function downloadEncryptedBackup() { if (window.pywebview && window.pywebview.api) window.pywebview.api.export_encrypted_full_backup(`نسخة-العربي-${formatLocalDate(new Date())}.elaraby`, JSON.stringify(appDB)).then(r => { if (r && r.success) showToast("✅ تم حفظ النسخة!"); }); }
+    function restoreEncryptedBackup() { if (window.pywebview && window.pywebview.api) window.pywebview.api.import_encrypted_full_backup().then(r => { if (r && r.success) { appDB = JSON.parse(r.data); saveDB(); refreshAllUI(); showToast("✅ تم الاسترجاع!"); } }); }
     function exportToExcelCSV() {
-      var csv = "الإيصال,الحالة,القرية,الشاليه,العميل,الهاتف,الدخول,المغادرة,الإجمالي,المدفوع,المتبقي,السيلز\n";
-      appDB.bookings.forEach(b => { csv += `${b.id},${b.status},${b.village},${b.chaletName},"${b.clientName}","${b.clientPhone}",${b.startDate},${b.endDate},${b.total},${b.deposit},${b.remaining},"${b.agentName}"\n`; });
-      if (window.pywebview && window.pywebview.api) window.pywebview.api.save_text_file(`حجوزات-العربي-${formatLocalDate(new Date())}.csv`, csv, ['CSV (*.csv)']).then(r => { if (r && r.success) alert("✅ تم التصدير!"); });
+      var csv = "الإيصال,الحالة,القرية,الشاليه,العميل,التليفون,النظام,الدخول,الخروج,الإجمالي,المدفوع,الباقي,السيلز\n";
+      appDB.bookings.forEach(b => { csv += `${b.id},${b.status},${b.village},${b.chaletName},"${b.clientName}","${b.clientPhone}",${b.rentType||''},${b.startDate},${b.endDate},${b.total},${b.deposit},${b.remaining},"${b.agentName}"\n`; });
+      if (window.pywebview && window.pywebview.api) window.pywebview.api.save_text_file(`حجوزات-العربي-${formatLocalDate(new Date())}.csv`, csv, ['CSV (*.csv)']).then(r => { if (r && r.success) showToast("✅ تم التصدير!"); });
     }
   </script>
 </body>
