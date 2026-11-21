@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Elaraby Pro - سيستم إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
+  <title>Elaraby Pro V11 - سيستم إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
@@ -32,7 +32,6 @@
     }
     h1, h2, h3, .brand-title, .btn-submit, .tab-btn { font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif; }
 
-    /* إشعار عائم أنيق */
     .toast-banner {
       position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
       background: #0f766e; color: #fff; border: 2px solid var(--gold);
@@ -40,7 +39,6 @@
       box-shadow: 0 12px 30px rgba(0,0,0,0.35); z-index: 20000; display: none;
     }
 
-    /* شاشة البداية (5 ثواني) */
     .splash-overlay {
       position: fixed; inset: 0; background: radial-gradient(circle at center, #162a45 0%, #070d17 100%);
       z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -55,11 +53,9 @@
     .splash-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #0d9488, #d4af37); animation: load5s 5s linear forwards; }
     @keyframes load5s { to { width: 100%; } }
 
-    /* شاشة الدخول */
     .login-overlay { position: fixed; inset: 0; background: linear-gradient(135deg, #090d16, #162a45); z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 16px; }
     .login-card { background: #ffffff; color: #0f172a; width: 100%; max-width: 400px; border-radius: 18px; padding: 24px; box-shadow: 0 24px 60px rgba(0,0,0,0.55); border-top: 5px solid var(--gold); text-align: center; }
 
-    /* المنطقة العلوية القابلة للطي في الموبايل */
     .collapsible-top-zone.collapsed-mobile { display: none !important; }
     .mobile-collapse-bar {
       display: none; background: #0b192c; color: #fef08a; padding: 5px 12px;
@@ -67,7 +63,6 @@
       position: sticky; top: 0; z-index: 95;
     }
 
-    /* الهيدر العلوي */
     .top-header {
       background: var(--header-bg); color: #ffffff; padding: 6px 14px;
       display: flex; justify-content: space-between; align-items: center;
@@ -83,7 +78,6 @@
     .online-pill { background: rgba(22,163,74,0.2); border: 1px solid #22c55e; color: #bbf7d0; padding: 4px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 700; }
     .btn-hdr { padding: 5px 9px; border: none; border-radius: 7px; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; color: #fff; display: inline-flex; align-items: center; gap: 4px; }
 
-    /* التبويبات العلوية */
     .top-nav-bar {
       background: var(--bg-surface); border-bottom: 1.5px solid var(--border-color);
       padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; gap: 6px; overflow-x: auto;
@@ -93,7 +87,6 @@
     .tab-btn.active { background: var(--primary); color: #ffffff; }
     .tab-btn.gold-tab.active { background: #b45309; color: #fff; }
 
-    /* KPI Strip */
     .kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 6px 14px 2px; }
     .kpi-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 5px 12px; display: flex; justify-content: space-between; align-items: center; }
     .kpi-lbl { font-size: 10.5px; font-weight: 700; color: var(--text-muted); }
@@ -115,7 +108,6 @@
     .agent-pill { padding: 4px 9px; border-radius: 16px; border: 1.5px solid transparent; font-size: 11px; font-weight: 800; cursor: pointer; color: #fff; opacity: 0.72; }
     .agent-pill.selected { opacity: 1; border-color: var(--gold); transform: scale(1.04); }
 
-    /* جدول الحجوزات */
     .grid-workspace { display: flex; gap: 10px; position: relative; width: 100%; }
     .sheet-box {
       flex: 1; height: calc(100vh - 215px); min-height: 420px;
@@ -286,7 +278,7 @@
         <button id="tabAvail" class="tab-btn" onclick="switchView('avail')">🔍 إيه المتاح؟</button>
         <button id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 الحجوزات والبطايق</button>
         <button id="tabMaint" class="tab-btn" onclick="switchView('maint')">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
-        <button id="tabMyComm" class="tab-btn sales-only" style="display:none;" onclick="switchView('mycomm')">💵 عمولاتي</button>
+        <button id="tabMyComm" class="tab-btn" onclick="switchView('mycomm')">💵 عمولاتي</button>
         <button id="tabTreasury" class="tab-btn admin-only" onclick="switchView('treasury')">💰 الخزينة والملاك</button>
         <button id="tabAudit" class="tab-btn admin-only" onclick="switchView('audit')">🛡️ سجل الحركات</button>
         <button id="tabSettings" class="tab-btn admin-only" onclick="switchView('settings')">⚙️ الإعدادات</button>
@@ -319,7 +311,7 @@
           </select>
           <select id="gridVillageFilter" class="ctrl-select" onchange="renderCalendarGrid()"></select>
           <button type="button" class="btn-hdr" style="background:#f59e0b; color:#0f172a; font-weight:900;" onclick="scrollToTodayRow()">📍 النهاردة</button>
-          <button type="button" id="btnExportGridImg" class="btn-hdr" style="background:#0d9488;" onclick="exportCurrentGridAsA4Image()">📸 حفظ الجدول صورة كاملة</button>
+          <button type="button" id="btnExportGridImg" class="btn-hdr" style="background:#0d9488;" onclick="exportCurrentGridAsA4Image()">📸 حفظ الجدول صورة ملونة</button>
         </div>
         <div class="toolbar-right" id="agentFilterPills"></div>
       </div>
@@ -339,7 +331,7 @@
       </div>
     </div>
 
-    <!-- 2. صور الشاليهات (باللوجو والفوتر + تحميل ومشاركة واتساب وماسنجر) -->
+    <!-- 2. صور الشاليهات -->
     <div id="viewCatalog" class="panel-container">
       <div class="grid-toolbar">
         <div class="toolbar-left">
@@ -371,7 +363,7 @@
       </div>
     </div>
 
-    <!-- 4. الحجوزات والبطايق (مع بطاقة معاينة كاملة عند الوقوف/الضغط + خصوصية السيلز) -->
+    <!-- 4. الحجوزات والبطايق -->
     <div id="viewLedger" class="panel-container">
       <div class="grid-toolbar">
         <div class="toolbar-left">
@@ -417,10 +409,10 @@
       </div>
     </div>
 
-    <!-- 6. كشف عمولات السيلز -->
+    <!-- 6. كشف عمولاتي (متاح لكل يوزر بما فيهم الأدمن) -->
     <div id="viewMycomm" class="panel-container">
-      <div class="box-card" style="max-width:800px; margin:0 auto;">
-        <h3 style="margin:0 0 10px; color:var(--primary);">💵 شغلي وعمولاتي</h3>
+      <div class="box-card" style="max-width:850px; margin:0 auto;">
+        <h3 style="margin:0 0 10px; color:var(--primary);">💵 شغلي وعمولاتي المستحقة</h3>
         <div id="myCommContent"></div>
       </div>
     </div>
@@ -429,7 +421,7 @@
     <div id="viewTreasury" class="panel-container admin-only">
       <div class="grid-toolbar">
         <div class="toolbar-left">
-          <button class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')">💰 الجرد والعمولات وإيراد كل قرية</button>
+          <button class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')">💰 الجرد المفصّل والعمولات وإيراد القرى</button>
           <button class="tab-btn" id="trTabOwner" onclick="switchTreasurySub('owner')">📑 كشف حساب مالك شاليه</button>
           <button class="tab-btn" id="trTabExp" onclick="switchTreasurySub('exp')">💸 مصاريف الشاليهات والمكتب</button>
         </div>
@@ -438,6 +430,10 @@
       <div id="trSubMain">
         <div class="grid-toolbar">
           <div class="toolbar-left">
+            <select id="tFilterByType" class="ctrl-select" onchange="calculateTreasury()">
+              <option value="regDate">حسب تاريخ تسجيل الحجز</option>
+              <option value="startDate">حسب تاريخ وصول العميل</option>
+            </select>
             <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="tStartDate" class="ctrl-select">
             <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="tEndDate" class="ctrl-select">
             <button class="btn-hdr" style="background:var(--primary);" onclick="calculateTreasury()">💰 احسب الجرد</button>
@@ -496,7 +492,7 @@
       <div class="grid-toolbar">
         <div class="toolbar-left">
           <button class="tab-btn active" id="setTabChalets" onclick="switchSetSub('chalets')">1️⃣ القرى والشاليهات والأسعار</button>
-          <button class="tab-btn" id="setTabComm" onclick="switchSetSub('comm')">2️⃣ عمولات السيلز والقرى</button>
+          <button class="tab-btn" id="setTabComm" onclick="switchSetSub('comm')">2️⃣ العمولات (موحدة / لكل موظف / لكل قرية)</button>
           <button class="tab-btn" id="setTabUsers" onclick="switchSetSub('users')">3️⃣ الموظفين واللوكيشن</button>
         </div>
       </div>
@@ -543,30 +539,36 @@
         <div id="chaletsManageList"></div>
       </div>
 
-      <!-- القسم 2: العمولات السهلة (توحيد الكل + عمولة خاصة لكل قرية) -->
+      <!-- القسم 2: العمولات الشاملة (توحيد الكل + عمولة خاصة لكل موظف + عمولة كل قرية) -->
       <div id="setSubComm" class="box-card" style="display:none;">
         <div class="panel-grid-2">
-          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1.5px solid var(--primary);">
-            <h4 style="margin:0 0 8px; color:var(--primary);">⚡ توحيد العمولة على كل السيلز بضغطة واحدة</h4>
-            <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 8px;">لو كل السيلز بياخدوا نفس النسبة أو نفس المبلغ، ظبطها هنا وهتتطبق عليهم كلهم فوراً:</p>
-            <div class="form-group">
-              <label>طريقة حساب العمولة:</label>
-              <select id="globalCommTypeInp" class="form-control">
-                <option value="pct">نسبة مئوية (%) من إجمالي الحجز</option>
-                <option value="per_night">مبلغ ثابت (ج.م) على كل ليلة</option>
-                <option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
-              </select>
+          <div>
+            <!-- توحيد الكل -->
+            <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1.5px solid var(--primary); margin-bottom:12px;">
+              <h4 style="margin:0 0 6px; color:var(--primary);">⚡ توحيد العمولة على كل السيلز بضغطة واحدة</h4>
+              <div class="row-2">
+                <select id="globalCommTypeInp" class="form-control">
+                  <option value="pct">نسبة مئوية (%) من إجمالي الحجز</option>
+                  <option value="per_night">مبلغ ثابت (ج.م) على كل ليلة</option>
+                  <option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
+                </select>
+                <input type="number" id="globalCommValInp" class="form-control" value="3" placeholder="القيمة">
+              </div>
+              <button class="btn-submit" onclick="applyGlobalCommissionToAllSales()">✅ تطبيق على كل السيلز</button>
             </div>
-            <div class="form-group">
-              <label>قيمة العمولة (مثلاً 3 لو 3% أو 100 لو 100 جنيه):</label>
-              <input type="number" id="globalCommValInp" class="form-control" value="3">
+
+            <!-- عمولة خاصة لكل موظف/مدير لوحده -->
+            <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+              <h4 style="margin:0 0 6px; color:var(--text-main);">👤 عمولة خاصة لكل موظف / مدير لوحده</h4>
+              <p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">تقدر تحدد عمولة مختلفة لكل سيلز أو لنفسك (الأدمن) وهتتخصم وتتحسب في الخزينة تلقائياً:</p>
+              <div id="individualUserCommList"></div>
             </div>
-            <button class="btn-submit" onclick="applyGlobalCommissionToAllSales()">✅ تطبيق العمولة دي على كل السيلز</button>
           </div>
 
+          <!-- عمولة مخصصة لكل قرية لوحدها -->
           <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
-            <h4 style="margin:0 0 8px; color:#b45309;">🏖️ عمولة مخصصة لكل قرية لوحدها (اختياري)</h4>
-            <p style="font-size:11.5px; color:var(--text-muted); margin:0 0 8px;">لو قرية معينة ليها عمولة مختلفة عن الباقي (بالنسبة % أو بالليلة أو بالحجز)، حددها هنا:</p>
+            <h4 style="margin:0 0 6px; color:#b45309;">🏖️ عمولة مخصصة لكل قرية لوحدها (اختياري)</h4>
+            <p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">لو قرية معينة ليها عمولة مختلفة عن الباقي (بالنسبة % أو بالليلة أو بالحجز)، حددها هنا وهتلغي العمولة العادية في القرية دي بس:</p>
             <div id="villageCommissionsList"></div>
           </div>
         </div>
@@ -617,7 +619,7 @@
     <button class="mob-nav-btn" onclick="switchView('grid')"><span>📅</span><span>الجدول</span></button>
     <button class="mob-nav-btn" onclick="openQuickBookingModal()"><span>➕</span><span>حجز جديد</span></button>
     <button class="mob-nav-btn" onclick="switchView('catalog')"><span>🖼️</span><span>الصور</span></button>
-    <button class="mob-nav-btn" onclick="switchView('avail')"><span>🔍</span><span>المتاح</span></button>
+    <button class="mob-nav-btn" onclick="switchView('mycomm')"><span>💵</span><span>عمولاتي</span></button>
     <button class="mob-nav-btn" onclick="switchView('ledger')"><span>📑</span><span>الحجوزات</span></button>
   </div>
 
@@ -634,7 +636,7 @@
     </div>
   </div>
 
-  <!-- مودال تسجيل حجز جديد (نظيف ومباشر وبدون تأمين) -->
+  <!-- مودال تسجيل حجز جديد -->
   <div id="bookingModal" class="modal-overlay" onclick="if(event.target===this) closeBookingModal()">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
@@ -668,9 +670,9 @@
               <option value="monthly">شهري (بالشهر)</option>
             </select>
           </div>
-          <div class="form-group"><label>📅 تاريخ الدخول *</label><input type="date" id="startDate" class="form-control" onchange="onStartOrMonthsChange()" required></div>
+          <div class="form-group"><label>📅 تاريخ الوصول *</label><input type="date" id="startDate" class="form-control" onchange="onStartOrMonthsChange()" required></div>
           <div class="form-group" id="monthsCountBox" style="display:none;"><label>🔢 عدد الشهور *</label><input type="number" id="monthsCount" class="form-control" value="1" min="1" max="24" oninput="onStartOrMonthsChange()"></div>
-          <div class="form-group" id="endDateBox"><label>📅 الخروج الصبح *</label><input type="date" id="endDate" class="form-control" onchange="recalculateTotals()" required></div>
+          <div class="form-group" id="endDateBox"><label>📅 تاريخ المغادرة *</label><input type="date" id="endDate" class="form-control" onchange="recalculateTotals()" required></div>
         </div>
 
         <div class="row-3">
@@ -771,7 +773,7 @@
   <div id="offscreenExportWrapper"></div>
   <script>
     var FIREBASE_URL = "https://elaraby-chalets-default-rtdb.europe-west1.firebasedatabase.app";
-    var DB_KEY = "ELARABY_CLOUD_DB_V10";
+    var DB_KEY = "ELARABY_CLOUD_DB_V11";
     var APP_LOGO_SRC = "Elaraby.png";
     var currentUser = null, pinnedDrawerBookingId = null, pinnedLedgerBookingId = null, selectedAgentFilter = "all";
     var tempCatPhotos = [], currentGalleryPhotos = [], currentGalleryChalet = null;
@@ -808,6 +810,29 @@
 
     var appDB = (function() { try { var c = localStorage.getItem(DB_KEY); return c ? JSON.parse(c) : defaultDB; } catch (e) { return defaultDB; } })();
 
+    // تحويل اللوجو لـ Base64 مسبقاً لضمان عدم فشل رسمه على أي صورة أو جهاز
+    function preloadAppLogoBase64() {
+      if (window.pywebview && window.pywebview.api) {
+        window.pywebview.api.get_logo_base64().then(b64 => {
+          if (b64 && b64.startsWith('data:image')) {
+            APP_LOGO_SRC = b64;
+            document.querySelectorAll('.app-logo-img').forEach(i => i.src = b64);
+          }
+        }).catch(()=>{});
+        return;
+      }
+      fetch("Elaraby.png").then(r => r.blob()).then(blob => {
+        var reader = new FileReader();
+        reader.onloadend = () => {
+          if (typeof reader.result === 'string' && reader.result.startsWith('data:image')) {
+            APP_LOGO_SRC = reader.result;
+            document.querySelectorAll('.app-logo-img').forEach(i => i.src = reader.result);
+          }
+        };
+        reader.readAsDataURL(blob);
+      }).catch(()=>{});
+    }
+
     function showToast(msg) {
       var t = document.getElementById('toastBanner');
       if (!t) return;
@@ -815,7 +840,6 @@
       setTimeout(() => { t.style.display = 'none'; }, 3500);
     }
 
-    // إخفاء أرقام التليفونات لغير الأدمن وصاحب الحجز (يظهر أول 3 أرقام بس مثل 010********)
     function maskPhoneForViewer(b) {
       if (!b || !b.clientPhone) return "";
       if (currentUser && (currentUser.role === 'admin' || currentUser.fullName === b.agentName || currentUser.fullName === b.createdBy)) {
@@ -849,8 +873,9 @@
       return list;
     }
 
+    // حساب العمولة لأي يوزر (بما فيهم الأدمن لو محطوطله عمولة) مع أولوية لعمولة القرية المخصصة
     function calculateUserCommission(userObj, bookingObj) {
-      if (!userObj || userObj.role === 'admin') return 0;
+      if (!userObj) return 0;
       var vRule = (appDB.villageCommissions && appDB.villageCommissions[bookingObj.village]) || null;
       var useVillageRule = vRule && vRule.type && vRule.type !== 'default' && (parseFloat(vRule.val) > 0);
       var type = useVillageRule ? vRule.type : (userObj.commType || 'pct');
@@ -863,12 +888,44 @@
       return 0;
     }
 
+    function getCommissionLabelForUser(u) {
+      var t = u.commType || 'pct', v = parseFloat(u.commVal) || 0;
+      if (t === 'pct') return `${v}%`;
+      if (t === 'per_night') return `${v} ج/ليلة`;
+      if (t === 'fixed_booking') return `${v} ج/حجز`;
+      return '0';
+    }
+
+    // تحميل الصور في الموبايل والكمبيوتر بدون تعليق data: في Safari
     function triggerUniversalImageDownload(fileName, dataUrl) {
       if (window.pywebview && window.pywebview.api) {
         window.pywebview.api.save_base64_image(fileName, dataUrl).then(r => { if (r && r.success) showToast("✅ تم حفظ الصورة: " + fileName); });
-      } else {
-        var a = document.createElement('a'); a.href = dataUrl; a.download = fileName;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        return;
+      }
+      try {
+        var parts = dataUrl.split(',');
+        var mime = parts[0].match(/:(.*?);/)[1] || 'image/png';
+        var bstr = atob(parts[1]);
+        var n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) u8arr[n] = bstr.charCodeAt(n);
+        var blob = new Blob([u8arr], { type: mime });
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        var fileObj = new File([blob], fileName, { type: mime });
+
+        if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [fileObj] })) {
+          navigator.share({ files: [fileObj], title: fileName }).catch(()=>{});
+          return;
+        }
+        var blobUrl = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(blobUrl); }, 2500);
+      } catch (e) {
+        var a2 = document.createElement('a'); a2.href = dataUrl; a2.download = fileName;
+        document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
       }
     }
 
@@ -889,7 +946,7 @@
 
     function getTransparentExportFooterHTML() {
       return `
-        <div style="background:rgba(11, 25, 44, 0.88); color:#fef08a; padding:10px 18px; display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:800; position:relative; z-index:25; border-top:2px solid #d4af37;">
+        <div style="background:rgba(11, 25, 44, 0.90); color:#fef08a; padding:10px 18px; display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:800; position:relative; z-index:25; border-top:2px solid #d4af37;">
           <span style="display:flex; align-items:center; gap:8px;">
             <img src="${APP_LOGO_SRC}" style="height:28px; background:#000; padding:2px; border-radius:4px;">
             <span>شركة العربي للاستثمار العقاري</span>
@@ -916,8 +973,8 @@
     async function syncFromCloud(silent) {
       try {
         var [coreRes, booksRes] = await Promise.all([
-          fetch(`${FIREBASE_URL}/elaraby_system_v10_core.json`),
-          fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings.json`)
+          fetch(`${FIREBASE_URL}/elaraby_system_v11_core.json`),
+          fetch(`${FIREBASE_URL}/elaraby_system_v11_bookings.json`)
         ]);
         if (coreRes.ok) {
           var data = await coreRes.json();
@@ -952,13 +1009,13 @@
 
     async function saveSingleBookingCloud(bookingObj) {
       saveLocalCache();
-      try { await fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings/${bookingObj.id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(bookingObj) }); } catch (e) {}
+      try { await fetch(`${FIREBASE_URL}/elaraby_system_v11_bookings/${bookingObj.id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(bookingObj) }); } catch (e) {}
     }
 
     async function deleteSingleBookingCloud(bId) {
       saveLocalCache();
       try {
-        await fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings/${bId}.json`, { method: "DELETE" });
+        await fetch(`${FIREBASE_URL}/elaraby_system_v11_bookings/${bId}.json`, { method: "DELETE" });
         await fetch(`${FIREBASE_URL}/elaraby_v8_photos/bookings/${bId}.json`, { method: "DELETE" });
       } catch (e) {}
     }
@@ -969,8 +1026,8 @@
       var booksObj = {}; (appDB.bookings || []).forEach(b => { booksObj[b.id] = b; });
       try {
         await Promise.all([
-          fetch(`${FIREBASE_URL}/elaraby_system_v10_core.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(coreCopy) }),
-          fetch(`${FIREBASE_URL}/elaraby_system_v10_bookings.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(booksObj) })
+          fetch(`${FIREBASE_URL}/elaraby_system_v11_core.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(coreCopy) }),
+          fetch(`${FIREBASE_URL}/elaraby_system_v11_bookings.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(booksObj) })
         ]);
       } catch (e) {}
     }
@@ -1031,13 +1088,11 @@
     function dismissPasswordAlert(id) { appDB.passwordAlerts = (appDB.passwordAlerts || []).filter(a => a.id !== id); saveDB(); refreshAllUI(); }
 
     window.onload = function() {
+      preloadAppLogoBase64();
       setTimeout(() => { var sp = document.getElementById('splashScreen'); if (sp) { sp.style.opacity = '0'; setTimeout(() => sp.style.display = 'none', 600); } }, 5000);
       if (localStorage.getItem('ELARABY_THEME') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); document.getElementById('btnThemeToggle').innerText = '☀️'; }
       var today = formatLocalDate(new Date());
       ['startDate','endDate','checkStart','checkEnd','tStartDate','tEndDate','ownStartDate','ownEndDate','expDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = today; });
-      if (window.pywebview && window.pywebview.api) {
-        window.pywebview.api.get_logo_base64().then(b64 => { if (b64 && b64.startsWith('data:image')) { APP_LOGO_SRC = b64; document.querySelectorAll('.app-logo-img').forEach(i => i.src = b64); } });
-      }
       syncFromCloud(false);
       cloudPollInterval = setInterval(() => { if (currentUser) syncFromCloud(true); }, 15000);
     };
@@ -1136,6 +1191,7 @@
 
     function scrollToTodayRow() { var r = document.querySelector('tr.today-row'); if (r) r.scrollIntoView({ behavior:'smooth', block:'center' }); }
 
+    // تصدير الجدول بكامل ألوانه الصريحة للأندرويد والآيفون والكمبيوتر
     function exportCurrentGridAsA4Image() {
       var vFilter = document.getElementById('gridVillageFilter').value;
       var visibleChalets = vFilter ? appDB.chalets.filter(c => c.village === vFilter) : appDB.chalets;
@@ -1143,17 +1199,33 @@
 
       var table = document.getElementById('mainCalendarTable').cloneNode(true);
       table.style.width = '100%'; table.style.tableLayout = 'auto'; table.style.fontSize = '11px';
+      table.style.backgroundColor = '#ffffff'; table.style.color = '#0f172a';
       table.querySelectorAll('.sticky-c1, .sticky-c2, thead').forEach(el => { el.style.position = 'static'; });
-      table.querySelectorAll('th, td').forEach(el => { el.style.minWidth = '115px'; el.style.whiteSpace = 'nowrap'; });
+
+      table.querySelectorAll('tbody tr').forEach(tr => {
+        var isWk = tr.classList.contains('weekend-row'), isTd = tr.classList.contains('today-row');
+        tr.querySelectorAll('td').forEach(td => {
+          td.style.minWidth = '115px'; td.style.whiteSpace = 'nowrap'; td.style.border = '1px solid #cbd5e1';
+          if (td.classList.contains('booked-cell')) {
+            var bg = td.style.backgroundColor || '#0d9488';
+            if (td.classList.contains('hold-cell')) bg = '#d97706';
+            td.style.backgroundColor = bg;
+            td.style.color = '#ffffff';
+          } else {
+            td.style.backgroundColor = isTd ? '#fef3c7' : (isWk ? '#fefce8' : '#ffffff');
+            td.style.color = '#0f172a';
+          }
+        });
+      });
 
       var w = document.getElementById('offscreenExportWrapper');
       w.style.width = dynamicWidth + 'px';
-      w.innerHTML = `<div style="width:${dynamicWidth}px; background:#fff; padding:22px; border:4px solid #0f766e; position:relative; overflow:hidden;">
+      w.innerHTML = `<div style="width:${dynamicWidth}px; background:#ffffff; padding:22px; border:4px solid #0f766e; position:relative; overflow:hidden;">
         ${getMultiWatermarkHTML()}
         <div style="position:relative; z-index:2;">
-          <div style="background:#0b192c; color:#fff; padding:14px 20px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37; margin-bottom:14px;">
+          <div style="background:#0b192c; color:#ffffff; padding:14px 20px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37; margin-bottom:14px;">
             <div>
-              <div style="font-size:20px; font-weight:900; color:#fef08a;">شركة العربي للاستثمار العقاري • جدول الحجوزات الكامل (${visibleChalets.length} شاليه)</div>
+              <div style="font-size:20px; font-weight:900; color:#fef08a;">شركة العربي للاستثمار العقاري • جدول الحجوزات (${visibleChalets.length} شاليه)</div>
               <div style="font-size:13px; color:#cbd5e1;" dir="ltr">fb.com/Elaraby.estate</div>
             </div>
             <img src="${APP_LOGO_SRC}" style="height:56px; background:#000; padding:5px; border-radius:8px;">
@@ -1166,7 +1238,7 @@
 
       html2canvas(w.firstElementChild, { scale: 2, width: dynamicWidth, windowWidth: dynamicWidth + 50, useCORS: true, backgroundColor: '#ffffff' }).then(c => {
         w.innerHTML = '';
-        triggerUniversalImageDownload(`جدول-العربي-الكامل-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'));
+        triggerUniversalImageDownload(`جدول-العربي-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'));
       });
     }
 	// نظام الإيجار اليومي أو الشهري + زر الدفع الكامل
@@ -1261,7 +1333,7 @@
       var rentPeriodType = document.getElementById('rentPeriodType').value, monthsCount = parseInt(document.getElementById('monthsCount').value, 10) || 1;
       var sDate = document.getElementById('startDate').value, eDate = document.getElementById('endDate').value;
 
-      if (parseLocalDate(eDate) < parseLocalDate(sDate)) { alert("تاريخ الخروج لازم يكون بعد الدخول!"); return; }
+      if (parseLocalDate(eDate) < parseLocalDate(sDate)) { alert("تاريخ المغادرة لازم يكون بعد تاريخ الوصول!"); return; }
       var reqNights = getStayNights(sDate, eDate);
       var conflict = appDB.bookings.find(b => (!editingId || b.id !== editingId) && b.chaletId === chaletId && reqNights.some(d => getStayNights(b.startDate, b.endDate).includes(d)));
       if (conflict) { alert(`⚠️ الشاليه محجوز في الأيام دي لـ (${conflict.agentName} - ${conflict.clientName})`); return; }
@@ -1282,7 +1354,6 @@
       } else {
         var newB = {
           id: "INV-" + Math.floor(100000 + Math.random() * 900000), status: statusType, holdExpiresAt, regDate, createdBy: actor,
-          createdAt: `${regDate} ${new Date().toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'})}`,
           chaletId, village: chaletObj.village, chaletName: chaletObj.name, agentName, leadSource, clientName, clientPhone,
           rentPeriodType, monthsCount, startDate: sDate, endDate: eDate, rentType: rentLabel, total, deposit: dep, remaining: rem, method,
           idPhotoCount: 0, permitStatus: 'missing'
@@ -1296,7 +1367,6 @@
       showToast("✅ تم الحجز والتخزين بنجاح!");
     }
 
-    // ضغط الصور العادية للبطايق
     function compressImageFile(file) {
       return new Promise(resolve => {
         var r = new FileReader(); r.onload = ev => {
@@ -1351,11 +1421,10 @@
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
       var loc = (appDB.villageLocations && appDB.villageLocations[b.village]) || {}, phone = (b.clientPhone || '').replace(/\D/g, '');
       if (phone.startsWith('01') && phone.length === 11) phone = '2' + phone;
-      var msg = `🌴 *أهلاً بحضرتك أ/ ${b.clientName} في شركة العربي للاستثمار العقاري*\n━━━━━━━━━━━━━━━━━━━━\n🏡 *الشاليه:* ${b.village} - ${b.chaletName}\n📅 *الدخول:* ${b.startDate} (الساعة 2 الضهر)\n📅 *الخروج:* ${b.endDate} (الساعة 12 الضهر)\n💵 *الباقي عند الوصول:* ${b.remaining.toLocaleString()} ج.م\n${loc.mapsUrl ? `📍 *اللوكيشن:* ${loc.mapsUrl}\n` : ''}📋 *تعليمات البوابة:* ${loc.gateNotes || 'يرجى إحضار أصل البطايق الشخصية.'}\nنتمنى لحضرتك إقامة سعيدة! ✨`;
+      var msg = `🌴 *أهلاً بحضرتك أ/ ${b.clientName} في شركة العربي للاستثمار العقاري*\n━━━━━━━━━━━━━━━━━━━━\n🏡 *الشاليه:* ${b.village} - ${b.chaletName}\n📅 *تاريخ الوصول:* ${b.startDate}\n📅 *تاريخ المغادرة:* ${b.endDate}\n💵 *الباقي:* ${b.remaining.toLocaleString()} ج.م\n${loc.mapsUrl ? `📍 *اللوكيشن:* ${loc.mapsUrl}\n` : ''}📋 *تعليمات البوابة:* ${loc.gateNotes || 'يرجى إحضار أصل البطايق الشخصية.'}\nنتمنى لحضرتك إقامة سعيدة! ✨`;
       window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // بناء HTML بطاقة تفاصيل الحجز (مشتركة بين الجدول وقائمة الحجوزات والبطايق)
     function buildBookingCardHTML(b, photosArr) {
       var isAdmin = currentUser && currentUser.role === 'admin', isAllowed = canManageBooking(b);
       var phone = maskPhoneForViewer(b);
@@ -1372,8 +1441,9 @@
         <div class="d-sec">👤 بيانات العميل والحجز</div>
         <div class="d-row"><span>العميل:</span><b>${b.clientName}</b></div>
         <div class="d-row"><span>التليفون:</span><b dir="ltr">${phone}</b></div>
-        <div class="d-row"><span>الميعاد:</span><b>${b.startDate} ⬅️ ${b.endDate} (${b.rentType||''})</b></div>
-        <div class="d-row"><span>السيلز:</span><b>${b.agentName}</b></div>
+        <div class="d-row"><span>تاريخ الحجز:</span><b>${b.regDate || '-'}</b></div>
+        <div class="d-row"><span>الوصول ⬅️ المغادرة:</span><b>${b.startDate} ⬅️ ${b.endDate} (${b.rentType||''})</b></div>
+        <div class="d-row"><span>المسؤول:</span><b>${b.agentName}</b></div>
         <div class="d-sec">💰 الحساب</div>
         <div class="d-row"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
         <div class="d-row"><span>المدفوع (${b.method}):</span><b style="color:#16a34a;">${b.deposit.toLocaleString()} ج.م</b></div>
@@ -1389,7 +1459,7 @@
             <button class="btn-submit" style="background:#d97706;margin-top:0;font-size:11px;" onclick="startEditBooking('${b.id}')">✏️ تعديل الحجز</button>
           </div>
           <button class="btn-submit" style="background:#dc2626;margin-top:6px;" onclick="deleteBookingById('${b.id}')">🗑️ حذف الحجز</button>
-        ` : `<div style="margin-top:8px;padding:8px;background:var(--bg-subtle);border-radius:6px;font-size:11px;text-align:center;">🔒 هذا الحجز خاص بـ (أ/ ${b.agentName}) — رقم الهاتف والبطاقات محمية</div>`}
+        ` : `<div style="margin-top:8px;padding:8px;background:var(--bg-subtle);border-radius:6px;font-size:11px;text-align:center;">🔒 هذا الحجز خاص بـ (${b.agentName}) — رقم الهاتف والبطاقات محمية</div>`}
         ${isAdmin && b.remaining>0 ? `<button class="btn-submit" style="background:#16a34a;margin-top:6px;" onclick="openSettleModal('${b.id}')">✅ تحصيل الباقي</button>` : ''}
       `;
     }
@@ -1410,7 +1480,6 @@
     }
     function closeQuickDrawer() { pinnedDrawerBookingId = null; document.getElementById('quickSideDrawer').style.display = 'none'; }
 
-    // قائمة الحجوزات والبطايق (معاينة كاملة عند الوقوف/الضغط + إخفاء الرقم لغير الأدمن وصاحب الحجز)
     function renderLedgerList() {
       var v = document.getElementById('ledgerVillageFilter').value, p = document.getElementById('ledgerPermitFilter').value, q = (document.getElementById('ledgerSearchInput').value||'').toLowerCase();
       var list = appDB.bookings.filter(b => (!v || b.village===v) && (p==='all' || (b.permitStatus||((b.idPhotoCount&&b.idPhotoCount>0)?'ready':'missing'))===p) && (!q || b.clientName.toLowerCase().includes(q) || b.clientPhone.includes(q)));
@@ -1421,7 +1490,7 @@
           <div class="ledger-row-card" onmouseenter="showLedgerCard('${b.id}', false)" onclick="showLedgerCard('${b.id}', true)">
             <div>
               <b>${b.village} (${b.chaletName}) - ${b.clientName}</b> <span style="font-size:11px; color:var(--primary); font-weight:800;" dir="ltr">[${maskedPhone}]</span><br>
-              <span style="font-size:11px; color:var(--text-muted);">📅 من ${b.startDate} لحد ${b.endDate} | 👤 السيلز: <b>${b.agentName}</b> | 💰 الإجمالي: <b>${b.total.toLocaleString()} ج.م</b></span>
+              <span style="font-size:11px; color:var(--text-muted);">📅 من ${b.startDate} لحد ${b.endDate} | 👤 المسؤول: <b>${b.agentName}</b> | 💰 الإجمالي: <b>${b.total.toLocaleString()} ج.م</b></span>
             </div>
             ${isAllowed ? `<button class="btn-hdr" style="background:#0284c7;" onclick="event.stopPropagation(); openPermitModal('${b.id}')">🪪 البطايق (${b.idPhotoCount||0})</button>` : `<span style="font-size:10.5px;color:var(--text-muted);">🔒 خاص بـ ${b.agentName}</span>`}
           </div>
@@ -1446,36 +1515,75 @@
       }
     }
 
+    // تصميم إيصال فندقي شيك للعميل بالتواريخ فقط بدون أي توقيتات
     function exportReceiptA5WithMultiWatermark(bId) {
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
-      var w = document.getElementById('offscreenExportWrapper'); w.style.width = '559px';
-      w.innerHTML = `<div style="width:559px; min-height:794px; background:#fff; border:3px solid #0f766e; border-radius:14px; overflow:hidden; position:relative; display:flex; flex-direction:column; justify-content:space-between;">
-        ${getMultiWatermarkHTML()}
-        <div style="position:relative; z-index:2;">
-          <div style="background:#0b192c; color:#fff; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37;">
-            <div><div style="font-size:19px; font-weight:900; color:#fef08a;">شركة العربي للاستثمار العقاري</div><div style="font-size:12px; color:#cbd5e1;">إيصال تأكيد حجز</div></div>
-            <img src="${APP_LOGO_SRC}" style="height:56px; background:#000; padding:5px; border-radius:8px;">
-          </div>
-          <div style="padding:20px;">
-            <table style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:16px;">
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">رقم الإيصال:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">#${b.id}</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">العميل:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.clientName} (${b.clientPhone})</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الشاليه:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.village} - ${b.chaletName}</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">الفترة:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">دخول ${b.startDate} ⬅️ خروج ${b.endDate} (${b.rentType||''})</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid #cbd5e1;">المسؤول:</td><td style="padding:8px;border-bottom:1px solid #cbd5e1;font-weight:900;text-align:left;">${b.agentName}</td></tr>
-            </table>
-            <div style="background:rgba(248,250,252,0.85); border:2px solid #0f766e; border-radius:10px; padding:14px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:6px;color:#15803d;"><span>المدفوع (${b.method}):</span><b>${b.deposit.toLocaleString()} ج.م</b></div>
-              <div style="display:flex;justify-content:space-between;font-size:16px;color:#dc2626;border-top:1.5px dashed #94a3b8;padding-top:6px;"><span>الباقي عند الدخول:</span><b>${b.remaining.toLocaleString()} ج.م</b></div>
+      var w = document.getElementById('offscreenExportWrapper'); w.style.width = '560px';
+      w.innerHTML = `
+        <div style="width:560px; min-height:780px; background:#ffffff; border:3px solid #0b192c; border-radius:16px; overflow:hidden; position:relative; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+          ${getMultiWatermarkHTML()}
+          <div style="position:relative; z-index:2;">
+            <div style="background:linear-gradient(135deg, #0b192c, #162a45); color:#ffffff; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid #d4af37;">
+              <div>
+                <div style="font-size:21px; font-weight:900; color:#fef08a;">شركة العربي للاستثمار العقاري</div>
+                <div style="font-size:13px; color:#e2e8f0; margin-top:3px;">إيصال تأكيد حجز وحدة سياحية</div>
+                <div style="display:inline-block; margin-top:6px; background:rgba(212,175,55,0.2); border:1px solid #d4af37; color:#fef08a; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:800;">رقم الإيصال: #${b.id}</div>
+              </div>
+              <img src="${APP_LOGO_SRC}" style="height:64px; background:#000; padding:6px; border-radius:10px; border:1.5px solid #d4af37;">
+            </div>
+
+            <div style="padding:22px 24px;">
+              <div style="background:rgba(248,250,252,0.92); border:1.5px solid #cbd5e1; border-radius:12px; padding:14px 16px; margin-bottom:16px;">
+                <div style="font-size:13px; font-weight:900; color:#0f766e; margin-bottom:10px; border-bottom:1px solid #e2e8f0; padding-bottom:5px;">📋 بيانات العميل والوحدة</div>
+                <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
+                  <tr><td style="padding:7px 4px; color:#475569; width:38%;">اسم العميل:</td><td style="padding:7px 4px; font-weight:900; color:#0f172a;">${b.clientName}</td></tr>
+                  <tr><td style="padding:7px 4px; color:#475569;">رقم التليفون:</td><td style="padding:7px 4px; font-weight:900; color:#0f172a;" dir="ltr">${b.clientPhone}</td></tr>
+                  <tr><td style="padding:7px 4px; color:#475569;">القرية والشاليه:</td><td style="padding:7px 4px; font-weight:900; color:#0b192c;">${b.village} — ${b.chaletName}</td></tr>
+                  <tr><td style="padding:7px 4px; color:#475569;">الموظف المسؤول:</td><td style="padding:7px 4px; font-weight:800; color:#0f172a;">${b.agentName}</td></tr>
+                </table>
+              </div>
+
+              <div style="background:rgba(240,253,250,0.92); border:1.5px solid #0d9488; border-radius:12px; padding:14px 16px; margin-bottom:16px;">
+                <div style="font-size:13px; font-weight:900; color:#0f766e; margin-bottom:10px; border-bottom:1px solid #99f6e4; padding-bottom:5px;">📅 تواريخ الإقامة</div>
+                <table style="width:100%; border-collapse:collapse; font-size:13.5px; text-align:center;">
+                  <tr style="background:#0f766e; color:#ffffff;">
+                    <th style="padding:8px; border-radius:6px 6px 0 0;">تاريخ الحجز</th>
+                    <th style="padding:8px;">تاريخ الوصول</th>
+                    <th style="padding:8px;">تاريخ المغادرة</th>
+                    <th style="padding:8px; border-radius:0 6px 0 0;">المدة</th>
+                  </tr>
+                  <tr style="background:#ffffff;">
+                    <td style="padding:10px 6px; border:1px solid #cbd5e1; font-weight:800;">${b.regDate || '-'}</td>
+                    <td style="padding:10px 6px; border:1px solid #cbd5e1; font-weight:900; color:#0f766e;">${b.startDate}</td>
+                    <td style="padding:10px 6px; border:1px solid #cbd5e1; font-weight:900; color:#b45309;">${b.endDate}</td>
+                    <td style="padding:10px 6px; border:1px solid #cbd5e1; font-weight:900;">${b.rentType || '-'}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div style="background:rgba(11,25,44,0.04); border:2px solid #0b192c; border-radius:12px; padding:16px;">
+                <div style="font-size:13px; font-weight:900; color:#0b192c; margin-bottom:10px;">💳 التفاصيل المالية</div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; font-size:14px; border-bottom:1px dashed #cbd5e1;">
+                  <span>إجمالي قيمة الحجز:</span>
+                  <b>${b.total.toLocaleString()} ج.م</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; font-size:14px; color:#15803d; border-bottom:1px dashed #cbd5e1;">
+                  <span>المدفوع (${b.method}):</span>
+                  <b>${b.deposit.toLocaleString()} ج.م</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0 2px; font-size:16.5px; color:#dc2626; font-weight:900;">
+                  <span>المتبقي:</span>
+                  <span>${b.remaining.toLocaleString()} ج.م</span>
+                </div>
+              </div>
             </div>
           </div>
+          ${getTransparentExportFooterHTML()}
         </div>
-        ${getTransparentExportFooterHTML()}
-      </div>`;
-      html2canvas(w.firstElementChild, { scale: 2, width: 559, windowWidth: 600, useCORS: true, backgroundColor: '#ffffff' }).then(c => { w.innerHTML = ''; triggerUniversalImageDownload(`ايصال-${b.clientName}.png`, c.toDataURL('image/png')); });
+      `;
+      html2canvas(w.firstElementChild, { scale: 2, width: 560, windowWidth: 600, useCORS: true, backgroundColor: '#ffffff' }).then(c => { w.innerHTML = ''; triggerUniversalImageDownload(`ايصال-${b.clientName}.png`, c.toDataURL('image/png')); });
     }
-	// دمج اللوجو والفوتر تلقائياً على صور الشاليهات عند الرفع + التحميل والمشاركة على واتساب وماسنجر
+	// دمج اللوجو والفوتر تلقائياً على صور الشاليهات باستخدام APP_LOGO_SRC المضمون
     function brandChaletPhotoWithLogoAndFooter(file) {
       return new Promise(resolve => {
         var r = new FileReader();
@@ -1484,14 +1592,13 @@
           img.onload = () => {
             var maxW = 1080, scale = Math.min(1, maxW / img.width);
             var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
-            var footerH = Math.max(46, Math.round(h * 0.08));
+            var footerH = Math.max(48, Math.round(h * 0.085));
             var canvas = document.createElement('canvas');
             canvas.width = w; canvas.height = h + footerH;
             var ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
 
-            // شريط الفوتر السفلي الشفاف
-            ctx.fillStyle = "rgba(11, 25, 44, 0.90)";
+            ctx.fillStyle = "rgba(11, 25, 44, 0.92)";
             ctx.fillRect(0, h, w, footerH);
             ctx.fillStyle = "#d4af37";
             ctx.fillRect(0, h, w, 3);
@@ -1506,26 +1613,36 @@
             ctx.textAlign = "left";
             ctx.fillText("01008743750", 16, h + footerH / 2);
 
-            // رسم اللوجو كعلامة مائية في المنتصف والزاوية
-            var logoImg = new Image();
-            logoImg.crossOrigin = "anonymous";
-            logoImg.onload = () => {
-              ctx.save();
-              ctx.globalAlpha = 0.22;
-              var lw = Math.round(w * 0.32);
-              var lh = Math.round(lw * (logoImg.height / (logoImg.width || 1)));
-              ctx.drawImage(logoImg, (w - lw) / 2, (h - lh) / 2, lw, lh);
-              ctx.globalAlpha = 0.85;
-              var cornerW = Math.round(w * 0.16);
-              var cornerH = Math.round(cornerW * (logoImg.height / (logoImg.width || 1)));
-              ctx.fillStyle = "rgba(0,0,0,0.65)";
-              ctx.fillRect(14, 14, cornerW + 10, cornerH + 10);
-              ctx.drawImage(logoImg, 19, 19, cornerW, cornerH);
-              ctx.restore();
-              resolve(canvas.toDataURL('image/jpeg', 0.84));
+            var finishWithLogo = () => {
+              var logoImg = new Image();
+              logoImg.onload = () => {
+                ctx.save();
+                ctx.globalAlpha = 0.22;
+                var lw = Math.round(w * 0.32);
+                var lh = Math.round(lw * (logoImg.height / (logoImg.width || 1)));
+                ctx.drawImage(logoImg, (w - lw) / 2, (h - lh) / 2, lw, lh);
+                ctx.globalAlpha = 0.88;
+                var cornerW = Math.round(w * 0.16);
+                var cornerH = Math.round(cornerW * (logoImg.height / (logoImg.width || 1)));
+                ctx.fillStyle = "rgba(0,0,0,0.7)";
+                ctx.fillRect(14, 14, cornerW + 10, cornerH + 10);
+                ctx.drawImage(logoImg, 19, 19, cornerW, cornerH);
+                ctx.restore();
+                resolve(canvas.toDataURL('image/jpeg', 0.84));
+              };
+              logoImg.onerror = () => resolve(canvas.toDataURL('image/jpeg', 0.84));
+              logoImg.src = APP_LOGO_SRC;
             };
-            logoImg.onerror = () => resolve(canvas.toDataURL('image/jpeg', 0.84));
-            logoImg.src = APP_LOGO_SRC;
+
+            if (!APP_LOGO_SRC.startsWith('data:image')) {
+              fetch(APP_LOGO_SRC).then(res => res.blob()).then(b => {
+                var fr = new FileReader();
+                fr.onloadend = () => { if (typeof fr.result === 'string') APP_LOGO_SRC = fr.result; finishWithLogo(); };
+                fr.readAsDataURL(b);
+              }).catch(finishWithLogo);
+            } else {
+              finishWithLogo();
+            }
           };
           img.src = ev.target.result;
         };
@@ -1598,7 +1715,7 @@
     function downloadAllCurrentChaletPhotos() {
       if (!currentGalleryPhotos.length || !currentGalleryChalet) { alert("⚠️ مفيش صور للتحميل!"); return; }
       currentGalleryPhotos.forEach((src, i) => {
-        setTimeout(() => { triggerUniversalImageDownload(`${currentGalleryChalet.village}-${currentGalleryChalet.name}-${i+1}.jpg`, src); }, i * 350);
+        setTimeout(() => { triggerUniversalImageDownload(`${currentGalleryChalet.village}-${currentGalleryChalet.name}-${i+1}.jpg`, src); }, i * 400);
       });
       showToast(`📥 جاري تحميل ${currentGalleryPhotos.length} صورة باللوجو والفوتر!`);
     }
@@ -1658,25 +1775,68 @@
       div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;"><div><b>${t.status==='open'?'🔧':'✅'} ${t.village} - ${t.chaletName}</b> <span style="font-size:10.5px;">(${t.date} • ${t.priority})</span><br><span style="font-size:12px;">${t.desc} — التكلفة: <b>${t.cost} ج.م</b></span></div>${t.status==='open' ? `<button class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : `<span style="color:#16a34a; font-weight:800; font-size:11px;">مقفول</span>`}</div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
     }
 
-    // الخزينة وتحليل القرى
+    // الخزينة المفصّلة (شاملة عمولة الأدمن وكل سيلز + إيراد كل قرية + المتبقي)
     function switchTreasurySub(sub) { ['Main','Owner','Exp'].forEach(s => { document.getElementById('trSub'+s).style.display=(s.toLowerCase()===sub)?'block':'none'; document.getElementById('trTab'+s).classList.toggle('active', s.toLowerCase()===sub); }); }
     function calculateTreasury() {
       var s = document.getElementById('tStartDate').value, e = document.getElementById('tEndDate').value;
-      var list = appDB.bookings.filter(b => b.status !== 'hold' && b.regDate >= s && b.regDate <= e), exps = (appDB.expenses || []).filter(x => x.date >= s && x.date <= e);
-      var total = 0, dep = 0, agStats = {}, villageStats = {};
+      var filterField = (document.getElementById('tFilterByType') && document.getElementById('tFilterByType').value) || 'regDate';
+      var list = appDB.bookings.filter(b => {
+        if (b.status === 'hold') return false;
+        var dt = b[filterField] || b.regDate || b.startDate;
+        return dt >= s && dt <= e;
+      });
+      var exps = (appDB.expenses || []).filter(x => x.date >= s && x.date <= e);
+      var total = 0, dep = 0, remTotal = 0, agStats = {}, villageStats = {};
+
       list.forEach(b => {
-        total += b.total; dep += b.deposit;
-        var u = (appDB.users || []).find(x => x.fullName === b.agentName);
-        if (!agStats[b.agentName]) agStats[b.agentName] = { count: 0, total: 0, comm: 0 };
-        agStats[b.agentName].count++; agStats[b.agentName].total += b.total; agStats[b.agentName].comm += calculateUserCommission(u, b);
+        total += b.total; dep += b.deposit; remTotal += (b.remaining || 0);
+        var u = (appDB.users || []).find(x => x.fullName === b.agentName) || { fullName: b.agentName, role: 'sales', commType: 'pct', commVal: 0 };
+        var comm = calculateUserCommission(u, b);
+        if (!agStats[b.agentName]) agStats[b.agentName] = { count: 0, total: 0, dep: 0, comm: 0, rule: getCommissionLabelForUser(u), role: u.role };
+        agStats[b.agentName].count++; agStats[b.agentName].total += b.total; agStats[b.agentName].dep += b.deposit; agStats[b.agentName].comm += comm;
+
         if (!villageStats[b.village]) villageStats[b.village] = { count: 0, nights: 0, total: 0 };
         villageStats[b.village].count++; villageStats[b.village].nights += getStayNights(b.startDate, b.endDate).length; villageStats[b.village].total += b.total;
       });
+
       var totalExp = exps.reduce((sum, x) => sum + x.amount, 0), totalComm = Object.values(agStats).reduce((sum, a) => sum + a.comm, 0);
-      var agRows = Object.keys(agStats).map(ag => `<tr><td><b>${ag}</b></td><td>${agStats[ag].count}</td><td>${agStats[ag].total.toLocaleString()}</td><td style="color:#0d9488;font-weight:900;">${agStats[ag].comm.toLocaleString()} ج.م</td></tr>`).join('');
+      var agRows = Object.keys(agStats).map(ag => {
+        var a = agStats[ag];
+        return `<tr>
+          <td><b>${a.role==='admin'?'👑 ':'👤 '}${ag}</b> <span style="font-size:10px;color:#0284c7;">(${a.rule})</span></td>
+          <td>${a.count}</td>
+          <td>${a.total.toLocaleString()}</td>
+          <td style="color:#16a34a;">${a.dep.toLocaleString()}</td>
+          <td style="color:#dc2626;font-weight:900;">- ${a.comm.toLocaleString()} ج.م</td>
+        </tr>`;
+      }).join('');
+
       var vRows = Object.keys(villageStats).sort((a,b)=>villageStats[b].total-villageStats[a].total).map(v => `<tr><td><b>🏖️ ${v}</b></td><td>${villageStats[v].count}</td><td>${villageStats[v].nights} ليلة</td><td style="color:#0284c7;font-weight:900;">${villageStats[v].total.toLocaleString()} ج.م</td></tr>`).join('');
-      document.getElementById('treasuryReportArea').innerHTML = `<div id="treasuryCaptureArea" style="background:#fff; color:#0f172a; padding:14px; border-radius:12px; border:2px solid #0f766e; position:relative; overflow:hidden;">${getMultiWatermarkHTML()}<div style="position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:10px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><div><b style="color:#fef08a;">جرد الخزينة والعمولات وإيراد كل قرية</b><div style="font-size:11px;">من ${s} لحد ${e}</div></div><img src="${APP_LOGO_SRC}" style="height:44px; background:#000; padding:3px; border-radius:6px;"></div><div class="kpi-strip" style="padding:0 0 10px;"><div class="kpi-card"><div><div class="kpi-lbl">إجمالي الحجوزات</div><div class="kpi-val">${total.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المدفوع فعلياً</div><div class="kpi-val" style="color:#16a34a;">${dep.toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">المصاريف + العمولات</div><div class="kpi-val" style="color:#dc2626;">${(totalExp+totalComm).toLocaleString()}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">الصافي</div><div class="kpi-val" style="color:#0d9488;">${(dep-totalExp-totalComm).toLocaleString()}</div></div></div></div><div class="row-2"><div class="box-card"><h4 style="margin:0 0 8px;">💵 عمولات السيلز</h4><table class="cal-table"><thead><tr><th>السيلز</th><th>الحجوزات</th><th>المبيعات</th><th>العمولة</th></tr></thead><tbody>${agRows||'<tr><td colspan="4">مفيش</td></tr>'}</tbody></table></div><div class="box-card"><h4 style="margin:0 0 8px;">📊 إيراد كل قرية</h4><table class="cal-table"><thead><tr><th>القرية</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${vRows||'<tr><td colspan="4">مفيش</td></tr>'}</tbody></table></div></div></div><div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div></div>`;
+
+      document.getElementById('treasuryReportArea').innerHTML = `
+        <div id="treasuryCaptureArea" style="background:#fff; color:#0f172a; padding:14px; border-radius:12px; border:2px solid #0f766e; position:relative; overflow:hidden;">
+          ${getMultiWatermarkHTML()}
+          <div style="position:relative; z-index:2;">
+            <div style="background:#0b192c; color:#fff; padding:10px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <div><b style="color:#fef08a;">جرد الخزينة المفصّل وعمولات كل الموظفين وإيراد القرى</b><div style="font-size:11px;">من ${s} لحد ${e}</div></div>
+              <img src="${APP_LOGO_SRC}" style="height:44px; background:#000; padding:3px; border-radius:6px;">
+            </div>
+            <div class="kpi-strip" style="padding:0 0 10px;">
+              <div class="kpi-card"><div><div class="kpi-lbl">إجمالي الحجوزات (الباقي: ${remTotal.toLocaleString()})</div><div class="kpi-val">${total.toLocaleString()}</div></div></div>
+              <div class="kpi-card"><div><div class="kpi-lbl">المحصل فعلياً</div><div class="kpi-val" style="color:#16a34a;">${dep.toLocaleString()}</div></div></div>
+              <div class="kpi-card"><div><div class="kpi-lbl">إجمالي العمولات المخصومة</div><div class="kpi-val" style="color:#dc2626;">- ${totalComm.toLocaleString()}</div></div></div>
+              <div class="kpi-card"><div><div class="kpi-lbl">الصافي بعد العمولات والمصاريف</div><div class="kpi-val" style="color:#0d9488;">${(dep-totalExp-totalComm).toLocaleString()}</div></div></div>
+            </div>
+            <div class="row-2">
+              <div class="box-card"><h4 style="margin:0 0 8px;">💵 عمولات كل موظف (شامل الأدمن والسيلز)</h4><table class="cal-table"><thead><tr><th>الموظف</th><th>الحجوزات</th><th>الإجمالي</th><th>المحصل</th><th>العمولة</th></tr></thead><tbody>${agRows||'<tr><td colspan="5">مفيش</td></tr>'}</tbody></table></div>
+              <div class="box-card"><h4 style="margin:0 0 8px;">📊 إيراد كل قرية</h4><table class="cal-table"><thead><tr><th>القرية</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${vRows||'<tr><td colspan="4">مفيش</td></tr>'}</tbody></table></div>
+            </div>
+          </div>
+          <div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div>
+        </div>
+      `;
     }
+
     function exportTreasuryAsA4Image() { var el = document.getElementById('treasuryCaptureArea'); if (!el) { calculateTreasury(); el = document.getElementById('treasuryCaptureArea'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`جرد-الخزينة-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
     function exportOwnerStatementA4() { var el = document.getElementById('ownerA4Card'); if (!el) { generateOwnerStatement(); el = document.getElementById('ownerA4Card'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`كشف-حساب-مالك-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
     function onSelectOwnerVillage() { var v = document.getElementById('ownVillageSel').value, sel = document.getElementById('ownChaletSel'); if (!sel) return; sel.innerHTML = ''; appDB.chalets.filter(c => c.village === v).forEach(c => { var o = document.createElement('option'); o.value = c.id; o.innerText = c.name; sel.appendChild(o); }); }
@@ -1689,7 +1849,7 @@
       document.getElementById('ownerStatementPreview').innerHTML = `<div id="ownerA4Card" style="background:#fff; color:#0f172a; border:2.5px solid #0f766e; border-radius:12px; overflow:hidden; position:relative;">${getMultiWatermarkHTML()}<div style="padding:18px; position:relative; z-index:2;"><div style="background:#0b192c; color:#fff; padding:14px 18px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #d4af37; margin-bottom:14px;"><div><div style="font-size:18px; font-weight:900; color:#fef08a;">كشف حساب مالك شاليه</div><div style="font-size:12px;">${cObj.village} (${cObj.name})</div></div><img src="${APP_LOGO_SRC}" style="height:48px; background:#000; padding:4px; border-radius:6px;"></div><table style="width:100%; border-collapse:collapse; font-size:12px; text-align:center; margin-bottom:14px;"><thead><tr style="background:#0f766e; color:#fff;"><th style="padding:7px;">الدخول</th><th>الخروج</th><th>المدة</th><th>الإيجار</th></tr></thead><tbody>${books.map(b => `<tr><td style="border:1px solid #cbd5e1;padding:6px;">${b.startDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${b.endDate}</td><td style="border:1px solid #cbd5e1;padding:6px;">${b.rentType||''}</td><td style="border:1px solid #cbd5e1;padding:6px;font-weight:800;">${b.total.toLocaleString()} ج.م</td></tr>`).join('') || '<tr><td colspan="4" style="padding:12px;border:1px solid #cbd5e1;">مفيش حجوزات</td></tr>'}</tbody></table><div style="background:rgba(248,250,252,0.88); border:1.5px solid #0f766e; border-radius:10px; padding:12px; font-size:13px;"><div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>إجمالي الإيجارات:</span><b>${gross.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:5px; color:#dc2626;"><span>نسبة المكتب (${feePct}%):</span><b>- ${fee.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#dc2626;"><span>المصاريف والصيانة:</span><b>- ${expSum.toLocaleString()} ج.م</b></div><div style="display:flex; justify-content:space-between; border-top:2px dashed #94a3b8; padding-top:6px; font-size:16px; color:#15803d;"><span>صافي المستحق للمالك:</span><b>${net.toLocaleString()} ج.م</b></div></div></div>${getTransparentExportFooterHTML()}</div>`;
     }
 
-    // الإعدادات الثلاثة المنظمة
+    // الإعدادات الثلاثة المنظمة + عمولة كل موظف/أدمن + عمولة كل قرية + توحيد الكل
     function switchSetSub(sub) { ['Chalets','Comm','Users'].forEach(s => { var el = document.getElementById('setSub'+s), tb = document.getElementById('setTab'+s); if (el) el.style.display=(s.toLowerCase()===sub)?'block':'none'; if (tb) tb.classList.toggle('active', s.toLowerCase()===sub); }); }
 
     function applyGlobalCommissionToAllSales() {
@@ -1700,6 +1860,14 @@
       (appDB.users || []).forEach(u => { if (u.role === 'sales') { u.commType = t; u.commVal = v; } });
       saveDB(); refreshAllUI();
       showToast("✅ تم توحيد العمولة على كل السيلز بنجاح!");
+    }
+
+    function saveIndividualUserCommission(i) {
+      if (currentUser.role !== 'admin') return;
+      appDB.users[i].commType = document.getElementById('uCommType_'+i).value;
+      appDB.users[i].commVal = parseFloat(document.getElementById('uCommVal_'+i).value) || 0;
+      saveDB(); refreshAllUI();
+      showToast(`✅ تم حفظ عمولة (${appDB.users[i].fullName})!`);
     }
 
     function saveVillageCommission(v, idx) {
@@ -1745,6 +1913,22 @@
         if (gV) gV.value = appDB.globalCommConfig.val || 3;
       }
 
+      var indCommDiv = document.getElementById('individualUserCommList');
+      if (indCommDiv) {
+        indCommDiv.innerHTML = (appDB.users || []).map((u, i) => `
+          <div style="background:var(--bg-surface); padding:8px; border-radius:8px; margin-bottom:6px; display:grid; grid-template-columns:1fr 1.15fr 0.7fr auto; gap:6px; align-items:center; border:1px solid var(--border-color);">
+            <b>${u.role==='admin'?'👑 ':'👤 '}${u.fullName}</b>
+            <select id="uCommType_${i}" class="form-control">
+              <option value="pct" ${(u.commType||'pct')==='pct'?'selected':''}>نسبة %</option>
+              <option value="per_night" ${u.commType==='per_night'?'selected':''}>مبلغ على الليلة</option>
+              <option value="fixed_booking" ${u.commType==='fixed_booking'?'selected':''}>مبلغ على الحجز</option>
+            </select>
+            <input type="number" id="uCommVal_${i}" class="form-control" value="${u.commVal||0}" placeholder="القيمة">
+            <button class="btn-hdr" style="background:var(--primary);" onclick="saveIndividualUserCommission(${i})">حفظ</button>
+          </div>
+        `).join('');
+      }
+
       var vcDiv = document.getElementById('villageCommissionsList');
       if (vcDiv) {
         if (!appDB.villageCommissions) appDB.villageCommissions = {};
@@ -1753,7 +1937,7 @@
           return `<div style="background:var(--bg-surface); padding:8px; border-radius:8px; margin-bottom:6px; display:grid; grid-template-columns:0.9fr 1.2fr 0.7fr auto; gap:6px; align-items:center; border:1px solid var(--border-color);">
             <b>🏖️ ${v}</b>
             <select id="vCommType_${i}" class="form-control">
-              <option value="default" ${vc.type==='default'?'selected':''}>نفس عمولة السيلز العادية</option>
+              <option value="default" ${vc.type==='default'?'selected':''}>نفس عمولة الموظف العادية</option>
               <option value="pct" ${vc.type==='pct'?'selected':''}>نسبة %</option>
               <option value="per_night" ${vc.type==='per_night'?'selected':''}>مبلغ على الليلة</option>
               <option value="fixed_booking" ${vc.type==='fixed_booking'?'selected':''}>مبلغ على الحجز</option>
@@ -1831,7 +2015,7 @@
     function openSettleModal(id) { var b = appDB.bookings.find(x => x.id === id); if (!b) return; document.getElementById('settleBookingId').value = b.id; document.getElementById('settleInfoBox').innerHTML = `الباقي: <b>${b.remaining.toLocaleString()} ج.م</b>`; document.getElementById('settleAmountInp').value = b.remaining; document.getElementById('settleModal').style.display = 'flex'; }
     function confirmSettleRemaining() { var b = appDB.bookings.find(x => x.id === document.getElementById('settleBookingId').value), amt = parseFloat(document.getElementById('settleAmountInp').value)||0; if (!b || amt <= 0) return; b.deposit += amt; b.remaining = Math.max(0, b.total - b.deposit); saveSingleBookingCloud(b); document.getElementById('settleModal').style.display = 'none'; refreshAllUI(); showQuickDrawer(b.id, true); }
     function checkAllAvailableChalets() { var v = document.getElementById('checkVillage').value, s = document.getElementById('checkStart').value, e = document.getElementById('checkEnd').value, req = getStayNights(s, e), targets = v ? appDB.chalets.filter(c => c.village === v) : appDB.chalets, free = [], html = ''; targets.forEach(c => { var conflict = appDB.bookings.find(b => b.chaletId === c.id && req.some(d => getStayNights(b.startDate, b.endDate).includes(d))); if (!conflict) { free.push(c); html += `<div style="background:var(--today-bg);border:1.5px solid var(--primary);border-radius:8px;padding:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;"><div><b>✅ ${c.village} - ${c.name}</b> (${req.length} ليلة)</div><button class="btn-hdr" style="background:var(--primary);" onclick="openQuickBookingModal('${c.village}','${c.id}','${s}','${e}')">➕ حجز</button></div>`; } }); document.getElementById('availResult').innerHTML = html || '<div style="text-align:center;padding:20px;">مفيش شاليهات فاضية في الأيام دي.</div>'; if (free.length) { document.getElementById('waAvailCopyBox').style.display='block'; document.getElementById('waAvailText').value = `🏖️ *المتاح لدى شركة العربي للاستثمار العقاري*\n📅 من ${s} لحد ${e}\n` + free.map(c=>`✅ ${c.village} - ${c.name}`).join('\n'); } }
-    function renderMyCommissions() { if (!currentUser) return; var myBooks = appDB.bookings.filter(b => b.status !== 'hold' && b.agentName === currentUser.fullName), totalSales = myBooks.reduce((s, b) => s + b.total, 0), totalComm = myBooks.reduce((s, b) => s + calculateUserCommission(currentUser, b), 0); document.getElementById('myCommContent').innerHTML = `<div class="kpi-strip" style="padding:0 0 12px; grid-template-columns:repeat(3,1fr);"><div class="kpi-card"><div><div class="kpi-lbl">حجوزاتي</div><div class="kpi-val">${myBooks.length}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">مبيعاتي</div><div class="kpi-val">${totalSales.toLocaleString()} ج.م</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">عمولتي</div><div class="kpi-val" style="color:#16a34a;">${totalComm.toLocaleString()} ج.م</div></div></div></div><table class="cal-table"><thead><tr><th>الإيصال</th><th>الشاليه</th><th>العميل</th><th>المدة</th><th>قيمة الحجز</th><th>عمولتي</th></tr></thead><tbody>${myBooks.map(b => `<tr><td>#${b.id}</td><td>${b.village} - ${b.chaletName}</td><td>${b.clientName}</td><td>${b.rentType||''}</td><td>${b.total.toLocaleString()}</td><td style="color:#16a34a;font-weight:900;">${calculateUserCommission(currentUser,b).toLocaleString()} ج.م</td></tr>`).join('')}</tbody></table>`; }
+    function renderMyCommissions() { if (!currentUser) return; var myBooks = appDB.bookings.filter(b => b.status !== 'hold' && b.agentName === currentUser.fullName), totalSales = myBooks.reduce((s, b) => s + b.total, 0), totalComm = myBooks.reduce((s, b) => s + calculateUserCommission(currentUser, b), 0); document.getElementById('myCommContent').innerHTML = `<div class="kpi-strip" style="padding:0 0 12px; grid-template-columns:repeat(3,1fr);"><div class="kpi-card"><div><div class="kpi-lbl">حجوزاتي</div><div class="kpi-val">${myBooks.length}</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">مبيعاتي</div><div class="kpi-val">${totalSales.toLocaleString()} ج.م</div></div></div><div class="kpi-card"><div><div class="kpi-lbl">عمولتي (${getCommissionLabelForUser(currentUser)})</div><div class="kpi-val" style="color:#16a34a;">${totalComm.toLocaleString()} ج.م</div></div></div></div><table class="cal-table"><thead><tr><th>الإيصال</th><th>الشاليه</th><th>العميل</th><th>المدة</th><th>قيمة الحجز</th><th>عمولتي</th></tr></thead><tbody>${myBooks.map(b => `<tr><td>#${b.id}</td><td>${b.village} - ${b.chaletName}</td><td>${b.clientName}</td><td>${b.rentType||''}</td><td>${b.total.toLocaleString()}</td><td style="color:#16a34a;font-weight:900;">${calculateUserCommission(currentUser,b).toLocaleString()} ج.م</td></tr>`).join('')}</tbody></table>`; }
     function renderAuditLog() { var d = document.getElementById('auditLogContainer'); if (d) d.innerHTML = (appDB.auditLog||[]).map(a => `<div style="padding:6px;border-bottom:1px solid var(--border-color);font-size:11.5px;display:flex;justify-content:space-between;"><span><b>${a.user}:</b> ${a.action}</span><span>${a.time}</span></div>`).join(''); }
     function addExpense() { var date = document.getElementById('expDate').value, chaletId = document.getElementById('expChaletSel').value, desc = document.getElementById('expDesc').value.trim(), amount = parseFloat(document.getElementById('expAmount').value)||0; if (!desc || amount<=0) return; if (!appDB.expenses) appDB.expenses = []; appDB.expenses.push({ date, chaletId, desc, amount }); saveDB(); renderExpenses(); }
     function renderExpenses() { var d = document.getElementById('expensesListContainer'); if (d) d.innerHTML = (appDB.expenses||[]).map((x,i) => `<div style="padding:6px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;"><span>${x.date} - ${x.desc}</span><b>${x.amount} ج.م</b></div>`).join(''); }
