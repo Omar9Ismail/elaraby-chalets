@@ -17,7 +17,11 @@
       ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
       ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
       "$uid": {
-        ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales') && auth.uid === $uid"
+        ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales') && auth.uid === $uid",
+        "mustChangePassword": {
+          ".write": "auth != null && auth.uid === $uid && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin') && data.val() === true && newData.val() === false",
+          ".validate": "newData.isBoolean()"
+        }
       }
     },
     "elaraby_directory": {
@@ -35,7 +39,20 @@
     },
     "elaraby_maintenance": {
       ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
-      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'"
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$id": {
+        ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales' && newData.exists() && ((!data.exists() && newData.child('createdByUid').val() === auth.uid) || (data.exists() && data.child('createdByUid').val() === auth.uid && newData.child('createdByUid').val() === data.child('createdByUid').val()))",
+        ".validate": "newData.hasChildren(['id','chaletId','desc','status','createdByUid']) && newData.child('id').isString() && newData.child('chaletId').isString() && newData.child('desc').isString() && newData.child('status').isString() && newData.child('createdByUid').isString() && (!data.exists() || (newData.child('id').val() === data.child('id').val() && newData.child('createdByUid').val() === data.child('createdByUid').val()))"
+      }
+    },
+    "elaraby_maintenance_history": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$ticketId": {
+        "$entryId": {
+          ".write": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales') && !data.exists() && newData.exists()",
+          ".validate": "newData.hasChildren(['actorUid','user','action','at']) && newData.child('actorUid').val() === auth.uid && newData.child('user').isString() && newData.child('action').isString() && newData.child('action').val().length <= 100 && newData.child('at').val() === now"
+        }
+      }
     },
     "elaraby_system_v11_bookings": {
       ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",

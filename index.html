@@ -497,6 +497,16 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       </div>
     </div>
 
+    <div id="maintHistoryModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
+      <div class="modal-box" style="max-width:520px;max-height:80vh;overflow:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <b style="font-size:14px;">🕓 سجل التعديلات</b>
+          <button type="button" onclick="document.getElementById('maintHistoryModal').style.display='none'" style="background:#475569;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;">✖</button>
+        </div>
+        <div id="maintHistoryBody"></div>
+      </div>
+    </div>
+
     <div id="viewMycomm" class="panel-container">
       <div class="box-card" style="max-width:850px; margin:0 auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap;">
@@ -1229,7 +1239,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         if (!core || !core.chalets || !profiles) throw new Error('بيانات الحساب غير مكتملة، كلم عمر');
         var users = isAdmin ? Object.values(profiles).filter(Boolean) : Object.values(directory || {}).map(function(u){return Object.assign({},u,{role:'sales',active:true,commType:'pct',commVal:0});});
         if (!isAdmin) { var i = users.findIndex(u=>u.username === profiles.username); if(i>=0) users[i]=profiles; else users.push(profiles); }
-        appDB = Object.assign({}, core, treasury || {}, {users:users,bookings:Object.values(books || {}).filter(Boolean), maintenanceTickets:maint || []});
+        appDB = Object.assign({}, core, treasury || {}, {users:users,bookings:Object.values(books || {}).filter(Boolean), maintenanceTickets:(maint ? (Array.isArray(maint) ? maint : Object.values(maint)) : []).filter(Boolean)});
         appDB.expenses = appDB.expenses || []; appDB.auditLog = Object.values(audit || {}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)); appDB.passwordAlerts = [];
         appDB.globalCommConfig = appDB.globalCommConfig || {type:'pct',val:0}; appDB.villageCommissions = appDB.villageCommissions || {};
         appDB.villageLocations = appDB.villageLocations || {};
@@ -1282,7 +1292,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       ['users','bookings','expenses','auditLog','passwordAlerts','globalCommConfig','villageCommissions','maintenanceTickets'].forEach(k=>delete core[k]);
       var treasury={expenses:appDB.expenses || [],globalCommConfig:appDB.globalCommConfig,villageCommissions:appDB.villageCommissions || {}};
       try {
-        await dbWrite('/', {'elaraby_system_v11_core':core,'elaraby_private_users':users,'elaraby_auth_roles':roles,'elaraby_directory':directory,'elaraby_treasury':treasury,'elaraby_maintenance':appDB.maintenanceTickets || []}, 'PATCH');
+        await dbWrite('/', {'elaraby_system_v11_core':core,'elaraby_private_users':users,'elaraby_auth_roles':roles,'elaraby_directory':directory,'elaraby_treasury':treasury}, 'PATCH');
 
         return true;
       } catch(e) {showToast('❌ '+e.message);return false;}
@@ -2122,24 +2132,53 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         : '<div style="padding:20px;grid-column:1/-1;text-align:center;">لسه مفيش صور مرفوعة للشاليه ده.</div>';
     }
 
-    async function addMaintenanceTicket() { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
+    function canEditMaintenance(t) {
+      if (isAdminSession()) return true;
+      var au = authReady() ? firebase.auth().currentUser : null;
+      return !!(au && t && t.createdByUid === au.uid);
+    }
+    function maintDbKey(t) { return t.dbKey || t.id; }
+    function maintHistoryEntry(actionText, before, after) {
+      var au = firebase.auth().currentUser;
+      return {actorUid: au.uid, user: currentUser ? currentUser.fullName : '', action: String(actionText).slice(0,100), at: {'.sv':'timestamp'}, before: before || null, after: after || null};
+    }
+    async function saveMaintenanceTicketCloud(t, actionText, before) {
+      await dbWrite('/elaraby_maintenance/' + maintDbKey(t), t);
+      try { await dbWrite('/elaraby_maintenance_history/' + maintDbKey(t) + '/' + newAuditId(), maintHistoryEntry(actionText, before, t)); }
+      catch(e) { console.error('Maintenance history write failed', e.message); }
+    }
+    async function addMaintenanceTicket() {
+      if (!currentUser || !authReady() || !firebase.auth().currentUser) { showToast('❌ سجل دخول الأول'); return; }
       var chaletId = document.getElementById('maintChaletSel').value, cObj = appDB.chalets.find(c => c.id === chaletId);
       var desc = document.getElementById('maintDescInp').value.trim(), priority = document.getElementById('maintPriorityInp').value, cost = parseFloat(document.getElementById('maintCostInp').value) || 0;
       if (!cObj || !desc) { alert("اختار الشاليه واكتب المشكلة!"); return; }
       if (!appDB.maintenanceTickets) appDB.maintenanceTickets = [];
+      var au = firebase.auth().currentUser;
       var editId = document.getElementById('editingMaintenanceId').value;
       if (editId) {
         var t = appDB.maintenanceTickets.find(x => x.id === editId); if (!t) { cancelMaintenanceEdit(); return; }
-        var oldDesc = t.desc;
+        if (!canEditMaintenance(t)) { showToast('⛔ تقدر تعدل الأعطال اللي انت سجلتها بس'); return; }
+        var before = Object.assign({}, t), oldDesc = t.desc;
         t.chaletId = chaletId; t.village = cObj.village; t.chaletName = cObj.name; t.desc = desc; t.priority = priority; t.cost = cost;
-        if (await saveDB()) { await logAuditAction('تعديل عطل (' + oldDesc + ') في ' + cObj.village + ' - ' + cObj.name); showToast('✅ اتحفظ التعديل'); }
+        try {
+          await saveMaintenanceTicketCloud(t, 'تعديل', before);
+          await logAuditAction('تعديل عطل (' + oldDesc + ') في ' + cObj.village + ' - ' + cObj.name);
+          showToast('✅ اتحفظ التعديل');
+        } catch(e) { Object.keys(before).forEach(k => { t[k] = before[k]; }); showToast('❌ ' + e.message); }
         cancelMaintenanceEdit(); refreshAllUI(); return;
       }
-      appDB.maintenanceTickets.unshift({ id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: formatLocalDate(new Date()), chaletId, village: cObj.village, chaletName: cObj.name, desc, priority, cost, status: 'open' });
-      saveDB(); refreshAllUI(); document.getElementById('maintDescInp').value = ''; document.getElementById('maintCostInp').value = 0;
+      var nt = { id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: formatLocalDate(new Date()), chaletId: chaletId, village: cObj.village, chaletName: cObj.name, desc: desc, priority: priority, cost: cost, status: 'open', createdByUid: au.uid, createdBy: currentUser.fullName };
+      appDB.maintenanceTickets.unshift(nt);
+      try {
+        await saveMaintenanceTicketCloud(nt, 'إضافة', null);
+        await logAuditAction('تسجيل عطل (' + desc + ') في ' + nt.village + ' - ' + nt.chaletName);
+        showToast('✅ اتسجل العطل');
+      } catch(e) { appDB.maintenanceTickets = appDB.maintenanceTickets.filter(x => x !== nt); showToast('❌ ' + e.message); }
+      refreshAllUI(); document.getElementById('maintDescInp').value = ''; document.getElementById('maintCostInp').value = 0;
     }
-    function editMaintenanceTicket(id) { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+    function editMaintenanceTicket(id) {
       var t = (appDB.maintenanceTickets || []).find(x => x.id === id); if (!t) return;
+      if (!canEditMaintenance(t)) { showToast('⛔ تقدر تعدل الأعطال اللي انت سجلتها بس'); return; }
       document.getElementById('maintChaletSel').value = t.chaletId; document.getElementById('maintDescInp').value = t.desc || '';
       document.getElementById('maintPriorityInp').value = t.priority || 'عادي'; document.getElementById('maintCostInp').value = t.cost || 0;
       document.getElementById('editingMaintenanceId').value = id;
@@ -2152,26 +2191,68 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var b = document.getElementById('btnSaveMaintenance'); if (b) b.innerHTML = '➕ تسجيل العطل';
       var c = document.getElementById('btnCancelMaintEdit'); if (c) c.style.display = 'none';
     }
-    async function deleteMaintenanceTicket(id) { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+    async function deleteMaintenanceTicket(id) { if (!isAdminSession()) {showToast('⛔ الحذف للأدمن فقط');return;}
       var t = (appDB.maintenanceTickets || []).find(x => x.id === id); if (!t) return;
       if (!confirm('حذف العطل (' + t.desc + ') من ' + t.village + ' - ' + t.chaletName + '؟')) return;
       var backup = appDB.maintenanceTickets.slice();
       appDB.maintenanceTickets = appDB.maintenanceTickets.filter(x => x.id !== id);
-      if (await saveDB()) { await logAuditAction('حذف عطل (' + t.desc + ') من ' + t.village + ' - ' + t.chaletName); showToast('✅ اتحذف العطل'); if (document.getElementById('editingMaintenanceId').value === id) cancelMaintenanceEdit(); }
-      else { appDB.maintenanceTickets = backup; }
+      try {
+        await dbWrite('/elaraby_maintenance/' + maintDbKey(t), null);
+        try { await dbWrite('/elaraby_maintenance_history/' + maintDbKey(t) + '/' + newAuditId(), maintHistoryEntry('حذف', t, null)); } catch(e2) { console.error('Maintenance history write failed', e2.message); }
+        await logAuditAction('حذف عطل (' + t.desc + ') من ' + t.village + ' - ' + t.chaletName);
+        showToast('✅ اتحذف العطل');
+        if (document.getElementById('editingMaintenanceId').value === id) cancelMaintenanceEdit();
+      } catch(e) { appDB.maintenanceTickets = backup; showToast('❌ ' + e.message); }
       renderMaintenanceTickets();
     }
-    function closeMaintenanceTicket(idx) { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
+    async function closeMaintenanceTicket(idx) { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
       var t = appDB.maintenanceTickets[idx]; if (!t) return;
       var finalCost = prompt(`الصيانة كلفت كام فعلياً (ج.م) عشان تتخصم من حساب ${t.chaletName}؟`, t.cost || 0);
       if (finalCost === null) return;
-      var costNum = parseFloat(finalCost) || 0; t.status = 'closed'; t.cost = costNum;
+      var costNum = parseFloat(finalCost) || 0;
+      var before = Object.assign({}, t);
+      t.status = 'closed'; t.cost = costNum;
       if (costNum > 0) { if (!appDB.expenses) appDB.expenses = []; appDB.expenses.push({ date: formatLocalDate(new Date()), chaletId: t.chaletId, desc: `صيانة: ${t.desc}`, amount: costNum }); }
-      saveDB(); refreshAllUI();
+      try {
+        await saveMaintenanceTicketCloud(t, 'قفل', before);
+        if (costNum > 0) await pushToCloud();
+        showToast('✅ اتقفل العطل');
+      } catch(e) { Object.keys(before).forEach(k => { t[k] = before[k]; }); if (costNum > 0 && appDB.expenses) appDB.expenses.pop(); showToast('❌ ' + e.message); }
+      refreshAllUI();
+    }
+    async function openMaintenanceHistory(id) { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+      var t = (appDB.maintenanceTickets || []).find(x => x.id === id);
+      var modal = document.getElementById('maintHistoryModal'), body = document.getElementById('maintHistoryBody');
+      if (!modal || !body) return;
+      body.innerHTML = '<div style="text-align:center;padding:14px;">جاري التحميل...</div>';
+      modal.style.display = 'flex';
+      try {
+        var data = await dbRead('/elaraby_maintenance_history/' + (t ? maintDbKey(t) : id));
+        var entries = data ? Object.values(data).filter(Boolean) : [];
+        entries.sort((a, b) => (b.at || 0) - (a.at || 0));
+        if (!entries.length) { body.innerHTML = '<div style="text-align:center;padding:14px;">مفيش تعديلات مسجلة للعطل ده.</div>'; return; }
+        body.innerHTML = entries.map(function(h) {
+          var when = h.at ? new Date(h.at).toLocaleString('ar-EG') : '';
+          var changes = [];
+          if (h.before && h.after) {
+            [['desc','الوصف'],['priority','الأهمية'],['cost','التكلفة'],['status','الحالة'],['chaletName','الشاليه'],['village','القرية']].forEach(function(f) {
+              var o = h.before[f[0]], n = h.after[f[0]];
+              if (String(o == null ? '' : o) !== String(n == null ? '' : n)) changes.push('<div style="font-size:11px;color:#94a3b8;">' + f[1] + ': <s style="color:#f87171;">' + esc(o == null ? '—' : o) + '</s> ← <b style="color:#4ade80;">' + esc(n == null ? '—' : n) + '</b></div>');
+            });
+            if (!changes.length) changes.push('<div style="font-size:11px;color:#94a3b8;">حفظ من غير تغيير في القيم</div>');
+          } else if (h.after) {
+            changes.push('<div style="font-size:11px;color:#94a3b8;">' + esc(h.after.desc || '') + '</div>');
+          } else if (h.before) {
+            changes.push('<div style="font-size:11px;color:#94a3b8;">' + esc(h.before.desc || '') + '</div>');
+          }
+          return '<div style="border:1px solid var(--border-color);border-radius:8px;padding:8px;margin-bottom:6px;"><div style="display:flex;justify-content:space-between;font-size:12px;gap:8px;"><b>' + esc(h.user || '') + ' — ' + esc(h.action || '') + '</b><span style="color:#94a3b8;font-size:10.5px;white-space:nowrap;">' + when + '</span></div>' + changes.join('') + '</div>';
+        }).join('');
+      } catch(e) { body.innerHTML = '<div style="text-align:center;padding:14px;">تعذر تحميل السجل: ' + esc(e.message) + '</div>'; }
     }
     function renderMaintenanceTickets() {
       var div = document.getElementById('maintTicketsContainer'); if (!div) return;
-      div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:10px; margin-bottom:6px;"><div style="min-width:0;line-height:1.8;"><b>${t.status==='open'?'🔧':'✅'} ${esc(t.village)} - ${esc(t.chaletName)}</b> <span style="font-size:10.5px;">(${esc(t.date)} • ${esc(t.priority)})</span><br><span style="font-size:12px;overflow-wrap:anywhere;white-space:normal;display:inline-block;max-width:100%;">${esc(t.desc)} — التكلفة: <b>${Number(t.cost||0).toLocaleString()} ج.م</b></span></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;">${t.status==='open' && isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : `<span style="color:#16a34a; font-weight:800; font-size:11px;align-self:center;">مقفول</span>`}${isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#2563eb;" onclick="editMaintenanceTicket('${t.id}')">✏️ تعديل</button><button type="button" class="btn-hdr" style="background:#dc2626;" onclick="deleteMaintenanceTicket('${t.id}')">🗑️ حذف</button>` : ''}</div></div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
+      var au0 = authReady() ? firebase.auth().currentUser : null;
+      div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:10px; margin-bottom:6px;"><div style="min-width:0;line-height:1.8;"><b>${t.status==='open'?'🔧':'✅'} ${esc(t.village)} - ${esc(t.chaletName)}</b> <span style="font-size:10.5px;">(${esc(t.date)} • ${esc(t.priority)})</span><br><span style="font-size:12px;overflow-wrap:anywhere;white-space:normal;display:inline-block;max-width:100%;">${esc(t.desc)} — التكلفة: <b>${Number(t.cost||0).toLocaleString()} ج.م</b></span><br><span style="font-size:10px;color:#94a3b8;">سجّله: ${esc(t.createdBy || '—')}</span></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;">${t.status==='open' && isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : (t.status!=='open' ? `<span style="color:#16a34a; font-weight:800; font-size:11px;align-self:center;">مقفول</span>` : '')}${canEditMaintenance(t) ? `<button type="button" class="btn-hdr" style="background:#2563eb;" onclick="editMaintenanceTicket('${t.id}')">✏️ تعديل</button>` : ''}${isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#475569;" onclick="openMaintenanceHistory('${t.id}')">🕓 سجل التعديلات</button><button type="button" class="btn-hdr" style="background:#dc2626;" onclick="deleteMaintenanceTicket('${t.id}')">🗑️ حذف</button>` : ''}</div></div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
     }
 
     function switchTreasurySub(sub) { ['Main','Inv','Owner','Exp','Stats'].forEach(s => { document.getElementById('trSub'+s).style.display=(s.toLowerCase()===sub)?'block':'none'; document.getElementById('trTab'+s).classList.toggle('active', s.toLowerCase()===sub); }); }
