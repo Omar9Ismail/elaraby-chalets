@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "elaraby_system_v11_core": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    },
+    "elaraby_system_v11_bookings": {
+      ".read": "auth != null",
+      "$bookingId": {
+        ".write": "auth != null"
+      }
+    },
+    "elaraby_v8_photos": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "online_presence": {
+      ".read": "auth != null",
+      "$username": {
+        ".write": "auth != null"
+      }
+    }
+  }
+}
