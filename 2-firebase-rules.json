@@ -1,0 +1,72 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "elaraby_auth_roles": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".validate": "newData.isString() && (newData.val() === 'admin' || newData.val() === 'sales' || newData.val() === 'disabled')"
+      },
+      "oBEyeBieaPMuNCUadC95PqJrOCH2": {
+        ".validate": "newData.val() === 'admin'"
+      }
+    },
+    "elaraby_private_users": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$uid": {
+        ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales') && auth.uid === $uid"
+      }
+    },
+    "elaraby_directory": {
+      ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'"
+    },
+    "elaraby_treasury": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'"
+    },
+    "elaraby_system_v11_core": {
+      ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      ".validate": "!newData.hasChild('users') && !newData.hasChild('expenses') && !newData.hasChild('auditLog') && !newData.hasChild('passwordAlerts') && !newData.hasChild('globalCommConfig') && !newData.hasChild('villageCommissions')"
+    },
+    "elaraby_maintenance": {
+      ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
+      ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'"
+    },
+    "elaraby_system_v11_bookings": {
+      ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
+      "$id": {
+        ".write": "(auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')) && ((auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin') || (!data.exists() && newData.child('ownerUsername').val() === root.child('elaraby_private_users').child(auth.uid).child('username').val()) || (data.child('ownerUsername').val() === root.child('elaraby_private_users').child(auth.uid).child('username').val() && (!newData.exists() || newData.child('ownerUsername').val() === data.child('ownerUsername').val())))",
+        ".validate": "newData.hasChildren(['id','ownerUsername','chaletId','startDate','endDate']) && newData.child('id').val() === $id && newData.child('ownerUsername').isString() && ((auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin') || (newData.child('agentName').val() === root.child('elaraby_private_users').child(auth.uid).child('fullName').val() && ((!data.exists() && newData.child('createdBy').val() === root.child('elaraby_private_users').child(auth.uid).child('fullName').val()) || (data.exists() && newData.child('createdBy').val() === data.child('createdBy').val()))))"
+      }
+    },
+    "elaraby_v8_photos": {
+      ".read": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')",
+      "chalets": {
+        ".write": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'"
+      },
+      "bookings": {
+        "$id": {
+          ".write": "(auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')) && ((auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin') || root.child('elaraby_system_v11_bookings').child($id).child('ownerUsername').val() === root.child('elaraby_private_users').child(auth.uid).child('username').val())"
+        }
+      }
+    },
+    "online_presence": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$username": {
+        ".write": "auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales') && (auth.token.email === $username + '@elaraby.local')"
+      }
+    },
+    "elaraby_audit_log": {
+      ".read": "auth != null && root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin'",
+      "$id": {
+        ".write": "(auth != null && (root.child('elaraby_auth_roles').child(auth.uid).val() === 'admin' || root.child('elaraby_auth_roles').child(auth.uid).val() === 'sales')) && !data.exists() && newData.exists()",
+        ".validate": "newData.hasChildren(['actorUid','username','user','action','createdAt']) && newData.child('actorUid').val() === auth.uid && newData.child('username').val() === root.child('elaraby_private_users').child(auth.uid).child('username').val() && newData.child('user').val() === root.child('elaraby_private_users').child(auth.uid).child('fullName').val() && newData.child('action').isString() && newData.child('action').val().length <= 350 && newData.child('createdAt').val() === now"
+      }
+    }
+  }
+}
