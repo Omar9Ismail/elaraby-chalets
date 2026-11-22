@@ -184,6 +184,12 @@
     .form-control { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 600; background: var(--bg-surface); color: var(--text-main); }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    @media (max-width:900px){
+      #bookingModal .row-3 { grid-template-columns: minmax(0,1fr); gap: 10px; }
+      #bookingModal .form-control { min-height: 46px; font-size: 14px; box-sizing: border-box; }
+      #bookingModal input[type="date"].form-control { -webkit-appearance: none; appearance: none; display: block; width: 100%; }
+      #bookingModal label button { white-space: nowrap; flex: none; }
+    }
     .btn-submit { width: 100%; padding: 10px; background: var(--primary); color: #ffffff; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer; margin-top: 8px; }
 
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(9,13,22,0.82); z-index: 200; align-items: center; justify-content: center; padding: 14px; }
@@ -481,7 +487,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
             <div class="form-group"><label>الأهمية</label><select id="maintPriorityInp" class="form-control"><option value="مستعجل">🔴 مستعجل (فيه نزيل)</option><option value="عادي">🟡 عادي</option></select></div>
             <div class="form-group"><label>التكلفة المتوقعة (ج.م)</label><input type="number" id="maintCostInp" class="form-control" value="0" min="0"></div>
           </div>
-          <button type="button" class="btn-submit" style="background:#d97706;" onclick="addMaintenanceTicket()">➕ تسجيل العطل</button>
+          <input type="hidden" id="editingMaintenanceId">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn-submit" id="btnSaveMaintenance" style="background:#d97706;flex:1;margin-top:0;" onclick="addMaintenanceTicket()">➕ تسجيل العطل</button><button type="button" class="btn-submit" id="btnCancelMaintEdit" style="background:#64748b;margin-top:0;display:none;" onclick="cancelMaintenanceEdit()">إلغاء التعديل</button></div>
         </div>
         <div class="box-card">
           <h3 style="margin:0 0 10px;">🛠️ الأعطال المسجلة</h3>
@@ -1679,15 +1686,15 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function canManageBooking(b) { if (!currentUser || !b) return false; if (currentUser.role === 'admin') return true; return !!b.ownerUsername && b.ownerUsername === currentUser.username; }
 
     function getDepositRule(){var r=appDB.minimumDepositRule||{};return {enabled:r.enabled!==false,type:(r.type==='fixed'||r.type==='night')?r.type:'percent',value:Number.isFinite(Number(r.value))&&r.value!==undefined?Math.max(0,Number(r.value)):25};}
-    function depositThreshold(total,rule,nights){if(rule.type==='night'){return nights>0?Math.ceil(total/nights):0;}return rule.type==='fixed'?rule.value:total*rule.value/100;}
-    function needsDepositWarning(total,deposit,status,rule,nights){return status==='confirmed'&&rule.enabled&&(deposit<=0||deposit<depositThreshold(total,rule,nights));}
+    function depositThreshold(total,rule,nightPrice){if(rule.type==='night'){return Math.ceil(Number(nightPrice)||0);}return rule.type==='fixed'?rule.value:total*rule.value/100;}
+    function needsDepositWarning(total,deposit,status,rule,nightPrice){return status==='confirmed'&&rule.enabled&&(deposit<=0||deposit<depositThreshold(total,rule,nightPrice));}
     async function saveDepositRule(){
       if(!isAdminSession())return;var enabled=document.getElementById('depositRuleEnabled').checked,type=document.getElementById('depositRuleType').value,value=Number(document.getElementById('depositRuleValue').value);if(type==='night'){value=0;}if(!Number.isFinite(value)||value<0||(type==='percent'&&value>100)){showToast('النسبة من صفر لـ100، والمبلغ لازم يكون صفر أو أكتر');return;}
       var rule={enabled,type,value},patch={'elaraby_system_v11_core/minimumDepositRule':rule};patch['elaraby_audit_log/'+newAuditId()]=makeAuditEntry('تعديل تنبيه العربون: '+(enabled?(type==='night'?'سعر ليلة واحدة':value+(type==='percent'?'%':' ج.م')):'متوقف'));
       try{await dbWrite('/',patch,'PATCH');appDB.minimumDepositRule=rule;showToast('تم حفظ قاعدة العربون');}catch(e){showToast('الحفظ ما اكتملش: '+e.message);}
     }
-    function chooseDepositWarning(total,deposit,rule,nights){return new Promise(resolve=>{
-      var overlay=document.createElement('div');overlay.className='deposit-warning-overlay';overlay.innerHTML='<section role="dialog" aria-modal="true" aria-labelledby="depositWarningTitle" class="deposit-warning-card"><span style="font-size:28px;color:#b45309;">!</span><h3 id="depositWarningTitle">العربون أقل من الحد المطلوب</h3><p>قيمة الحجز <b>'+Number(total).toLocaleString()+' ج.م</b>، والعربون <b>'+Number(deposit).toLocaleString()+' ج.م</b>.</p><p>الحد الحالي <b>'+depositThreshold(total,rule,nights).toLocaleString()+' ج.م</b>'+(rule.type==='percent'?' ('+rule.value+'%)':(rule.type==='night'?' (سعر ليلة واحدة)':''))+'. الأفضل تخليه حجز مؤقت لحد ما العربون يكمل.</p><button type="button" data-choice="hold" class="btn-submit">خليه مؤقت</button><button type="button" data-choice="confirmed" class="btn-submit" style="background:#b45309;">كمّل مؤكد رغم التنبيه</button><button type="button" data-choice="cancel" class="btn-submit" style="background:#64748b;">رجوع للتعديل</button><small>الاستمرار كمؤكد بيتسجل في سجل النشاط.</small></section>';document.body.appendChild(overlay);overlay.querySelector('[data-choice="hold"]').focus();var finish=choice=>{document.removeEventListener('keydown',onKey);overlay.remove();resolve(choice);};var onKey=e=>{if(e.key==='Escape')finish('cancel');};document.addEventListener('keydown',onKey);overlay.querySelectorAll('button').forEach(b=>b.onclick=()=>finish(b.dataset.choice));
+    function chooseDepositWarning(total,deposit,rule,nightPrice){return new Promise(resolve=>{
+      var overlay=document.createElement('div');overlay.className='deposit-warning-overlay';overlay.innerHTML='<section role="dialog" aria-modal="true" aria-labelledby="depositWarningTitle" class="deposit-warning-card"><span style="font-size:28px;color:#b45309;">!</span><h3 id="depositWarningTitle">العربون أقل من الحد المطلوب</h3><p>قيمة الحجز <b>'+Number(total).toLocaleString()+' ج.م</b>، والعربون <b>'+Number(deposit).toLocaleString()+' ج.م</b>.</p><p>الحد الحالي <b>'+depositThreshold(total,rule,nightPrice).toLocaleString()+' ج.م</b>'+(rule.type==='percent'?' ('+rule.value+'%)':(rule.type==='night'?' (سعر ليلة واحدة)':''))+'. الأفضل تخليه حجز مؤقت لحد ما العربون يكمل.</p><button type="button" data-choice="hold" class="btn-submit">خليه مؤقت</button><button type="button" data-choice="confirmed" class="btn-submit" style="background:#b45309;">كمّل مؤكد رغم التنبيه</button><button type="button" data-choice="cancel" class="btn-submit" style="background:#64748b;">رجوع للتعديل</button><small>الاستمرار كمؤكد بيتسجل في سجل النشاط.</small></section>';document.body.appendChild(overlay);overlay.querySelector('[data-choice="hold"]').focus();var finish=choice=>{document.removeEventListener('keydown',onKey);overlay.remove();resolve(choice);};var onKey=e=>{if(e.key==='Escape')finish('cancel');};document.addEventListener('keydown',onKey);overlay.querySelectorAll('button').forEach(b=>b.onclick=()=>finish(b.dataset.choice));
     });}
 
     async function submitBooking(e) {
@@ -1707,7 +1714,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var price = parseFloat(document.getElementById('unitPrice').value)||0, dep = parseFloat(document.getElementById('deposit').value)||0;
       var total = rentPeriodType === 'monthly' ? (price * monthsCount) : (price * reqNights.length);
       var depositRule=getDepositRule(),depositAuditNote='';
-      if(needsDepositWarning(total,dep,statusType,depositRule,reqNights.length)){var choice=await chooseDepositWarning(total,dep,depositRule,reqNights.length);if(choice==='cancel')return;if(choice==='hold'){statusType='hold';document.getElementById('bookingStatusType').value='hold';toggleHoldOptions();depositAuditNote='، اختار مؤقت بسبب انخفاض العربون';}else{depositAuditNote='، أكد رغم انخفاض العربون عن '+depositThreshold(total,depositRule,reqNights.length).toLocaleString()+' ج.م';}}
+      var nightPriceNow = rentPeriodType === 'monthly' ? (reqNights.length ? total / reqNights.length : 0) : price;
+      if(needsDepositWarning(total,dep,statusType,depositRule,nightPriceNow)){var choice=await chooseDepositWarning(total,dep,depositRule,nightPriceNow);if(choice==='cancel')return;if(choice==='hold'){statusType='hold';document.getElementById('bookingStatusType').value='hold';toggleHoldOptions();depositAuditNote='، اختار مؤقت بسبب انخفاض العربون';}else{depositAuditNote='، أكد رغم انخفاض العربون عن '+depositThreshold(total,depositRule,nightPriceNow).toLocaleString()+' ج.م';}}
       var rem = Math.max(0, total - dep), method = document.getElementById('paymentMethod').value;
       var regDate = formatLocalDate(new Date()), actor = currentUser ? currentUser.fullName : agentName;
       var holdExpiresAt = statusType === 'hold' ? (Date.now() + holdHours * 3600000) : null;
@@ -2114,13 +2122,44 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         : '<div style="padding:20px;grid-column:1/-1;text-align:center;">لسه مفيش صور مرفوعة للشاليه ده.</div>';
     }
 
-    function addMaintenanceTicket() { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
+    async function addMaintenanceTicket() { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
       var chaletId = document.getElementById('maintChaletSel').value, cObj = appDB.chalets.find(c => c.id === chaletId);
       var desc = document.getElementById('maintDescInp').value.trim(), priority = document.getElementById('maintPriorityInp').value, cost = parseFloat(document.getElementById('maintCostInp').value) || 0;
       if (!cObj || !desc) { alert("اختار الشاليه واكتب المشكلة!"); return; }
       if (!appDB.maintenanceTickets) appDB.maintenanceTickets = [];
+      var editId = document.getElementById('editingMaintenanceId').value;
+      if (editId) {
+        var t = appDB.maintenanceTickets.find(x => x.id === editId); if (!t) { cancelMaintenanceEdit(); return; }
+        var oldDesc = t.desc;
+        t.chaletId = chaletId; t.village = cObj.village; t.chaletName = cObj.name; t.desc = desc; t.priority = priority; t.cost = cost;
+        if (await saveDB()) { await logAuditAction('تعديل عطل (' + oldDesc + ') في ' + cObj.village + ' - ' + cObj.name); showToast('✅ اتحفظ التعديل'); }
+        cancelMaintenanceEdit(); refreshAllUI(); return;
+      }
       appDB.maintenanceTickets.unshift({ id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: formatLocalDate(new Date()), chaletId, village: cObj.village, chaletName: cObj.name, desc, priority, cost, status: 'open' });
       saveDB(); refreshAllUI(); document.getElementById('maintDescInp').value = ''; document.getElementById('maintCostInp').value = 0;
+    }
+    function editMaintenanceTicket(id) { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+      var t = (appDB.maintenanceTickets || []).find(x => x.id === id); if (!t) return;
+      document.getElementById('maintChaletSel').value = t.chaletId; document.getElementById('maintDescInp').value = t.desc || '';
+      document.getElementById('maintPriorityInp').value = t.priority || 'عادي'; document.getElementById('maintCostInp').value = t.cost || 0;
+      document.getElementById('editingMaintenanceId').value = id;
+      document.getElementById('btnSaveMaintenance').innerHTML = '💾 حفظ التعديل'; document.getElementById('btnCancelMaintEdit').style.display = '';
+      document.getElementById('maintDescInp').focus(); window.scrollTo(0, 0);
+    }
+    function cancelMaintenanceEdit() {
+      var h = document.getElementById('editingMaintenanceId'); if (h) h.value = '';
+      document.getElementById('maintDescInp').value = ''; document.getElementById('maintCostInp').value = 0;
+      var b = document.getElementById('btnSaveMaintenance'); if (b) b.innerHTML = '➕ تسجيل العطل';
+      var c = document.getElementById('btnCancelMaintEdit'); if (c) c.style.display = 'none';
+    }
+    async function deleteMaintenanceTicket(id) { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+      var t = (appDB.maintenanceTickets || []).find(x => x.id === id); if (!t) return;
+      if (!confirm('حذف العطل (' + t.desc + ') من ' + t.village + ' - ' + t.chaletName + '؟')) return;
+      var backup = appDB.maintenanceTickets.slice();
+      appDB.maintenanceTickets = appDB.maintenanceTickets.filter(x => x.id !== id);
+      if (await saveDB()) { await logAuditAction('حذف عطل (' + t.desc + ') من ' + t.village + ' - ' + t.chaletName); showToast('✅ اتحذف العطل'); if (document.getElementById('editingMaintenanceId').value === id) cancelMaintenanceEdit(); }
+      else { appDB.maintenanceTickets = backup; }
+      renderMaintenanceTickets();
     }
     function closeMaintenanceTicket(idx) { if (!isAdminSession()) {showToast('للأدمن فقط');return;} 
       var t = appDB.maintenanceTickets[idx]; if (!t) return;
@@ -2132,7 +2171,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     }
     function renderMaintenanceTickets() {
       var div = document.getElementById('maintTicketsContainer'); if (!div) return;
-      div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;"><div><b>${t.status==='open'?'🔧':'✅'} ${t.village} - ${t.chaletName}</b> <span style="font-size:10.5px;">(${t.date} • ${t.priority})</span><br><span style="font-size:12px;">${t.desc} — التكلفة: <b>${t.cost} ج.م</b></span></div>${t.status==='open' && isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : `<span style="color:#16a34a; font-weight:800; font-size:11px;">مقفول</span>`}</div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
+      div.innerHTML = (appDB.maintenanceTickets || []).map((t, i) => `<div style="border:1.5px solid ${t.status==='open'?'#f59e0b':'#16a34a'}; border-radius:8px; padding:10px; margin-bottom:6px;"><div style="min-width:0;line-height:1.8;"><b>${t.status==='open'?'🔧':'✅'} ${esc(t.village)} - ${esc(t.chaletName)}</b> <span style="font-size:10.5px;">(${esc(t.date)} • ${esc(t.priority)})</span><br><span style="font-size:12px;overflow-wrap:anywhere;white-space:normal;display:inline-block;max-width:100%;">${esc(t.desc)} — التكلفة: <b>${Number(t.cost||0).toLocaleString()} ج.م</b></span></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;">${t.status==='open' && isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#16a34a;" onclick="closeMaintenanceTicket(${i})">✅ اتصلح خلاص</button>` : `<span style="color:#16a34a; font-weight:800; font-size:11px;align-self:center;">مقفول</span>`}${isAdminSession() ? `<button type="button" class="btn-hdr" style="background:#2563eb;" onclick="editMaintenanceTicket('${t.id}')">✏️ تعديل</button><button type="button" class="btn-hdr" style="background:#dc2626;" onclick="deleteMaintenanceTicket('${t.id}')">🗑️ حذف</button>` : ''}</div></div>`).join('') || '<div style="text-align:center; padding:16px;">مفيش أعطال مسجلة.</div>';
     }
 
     function switchTreasurySub(sub) { ['Main','Inv','Owner','Exp','Stats'].forEach(s => { document.getElementById('trSub'+s).style.display=(s.toLowerCase()===sub)?'block':'none'; document.getElementById('trTab'+s).classList.toggle('active', s.toLowerCase()===sub); }); }
@@ -2293,19 +2332,53 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var vRows = vArr.map(v => `<tr><td><b>🏖️ ${esc(v.name)}</b></td><td>${v.count}</td><td>${v.nights} ليلة</td><td>${v.rev.toLocaleString()} ج.م</td><td>${v.count ? Math.round(v.rev/v.count).toLocaleString() : 0} ج.م</td></tr>`).join('');
       var chRows = byRev.map(c => `<tr style="${c.count===0?'opacity:0.55;':''}"><td><b>${esc(c.label)}</b>${c.count===0?' <span style="font-size:10px;color:#dc2626;">(خامل)</span>':''}</td><td>${c.count}</td><td>${c.nights} ليلة</td><td>${c.rev.toLocaleString()} ج.م</td></tr>`).join('');
       var leadRows = leadArr.map(l => `<tr><td><b>${esc(l.name)}</b></td><td>${l.count}</td></tr>`).join('');
+      var showDed = localStorage.getItem('elaraby_stats_show_deductions') !== '0';
+      var statExps = (appDB.expenses || []).filter(x => x.date >= s && x.date <= e);
+      var statMaint = (appDB.maintenanceTickets || []).filter(t => t.date >= s && t.date <= e && t.status === 'open');
+      var expSum = statExps.reduce((sum, x) => sum + (parseFloat(x.amount) || 0), 0);
+      var maintSum = statMaint.reduce((sum, t) => sum + (parseFloat(t.cost) || 0), 0);
+      var dedTotal = expSum + maintSum;
+      var grossRev = list.reduce((sum, b) => sum + b.total, 0);
+      var expDedRows = statExps.map(x => `<tr><td>${esc(x.date)}</td><td>${esc(x.desc)}</td><td>${esc(expenseChaletLabel(x.chaletId))}</td><td style="font-weight:900;color:#dc2626;white-space:nowrap;">${(parseFloat(x.amount) || 0).toLocaleString()} ج.م</td></tr>`).join('');
+      var maintDedRows = statMaint.map(t => `<tr><td>${esc(t.date)}</td><td>${esc(t.desc)}</td><td>${esc(t.village)} - ${esc(t.chaletName)}</td><td>${esc(t.priority || '')}</td><td style="font-weight:900;color:#d97706;white-space:nowrap;">${(parseFloat(t.cost) || 0).toLocaleString()} ج.م</td></tr>`).join('');
+      var dedToggleHtml = `<label style="display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:13px;font-weight:800;cursor:pointer;"><input type="checkbox" id="statsShowDeductions" ${showDed ? 'checked' : ''} onchange="toggleStatsDeductions(this.checked)"> إظهار الخصومات والأعطال في الإحصائيات</label>`;
+      var dedCards = showDed && dedTotal > 0 ? `<div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        ${insightCard('🧾', 'إجمالي الخصومات في الفترة', dedTotal.toLocaleString() + ' ج.م', 'مصاريف: ' + expSum.toLocaleString() + ' — أعطال مفتوحة: ' + maintSum.toLocaleString(), '#dc2626')}
+        ${insightCard('💰', 'صافي الإيراد بعد الخصومات', (grossRev - dedTotal).toLocaleString() + ' ج.م', 'إيراد الحجوزات ' + grossRev.toLocaleString() + ' − الخصومات ' + dedTotal.toLocaleString(), '#0f766e')}
+      </div>` : '';
       document.getElementById('statsReportArea').innerHTML = `
         <div style="background:var(--bg-surface); border-radius:12px;">
           <p style="font-size:11.5px; color:var(--text-muted); margin:4px 0 10px;">إحصائيات الفترة من <b>${s}</b> لحد <b>${e}</b> (${filterField === 'regDate' ? 'حسب تاريخ تسجيل الحجز' : 'حسب تاريخ وصول العميل'}) — الحجوزات المؤقتة مش محسوبة.</p>
-          <h4 style="margin:0 0 8px;">🏆 الأقوى والأضعف في الفترة</h4>
-          <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">${cards || '<p>مفيش بيانات في الفترة دي</p>'}</div>
-          <div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">👥 أداء الموظفين (مين اشتغل ومين جاب إيه)</h4><table class="cal-table"><thead><tr><th>الموظف</th><th>مرات الدخول</th><th>الحركات</th><th>الحجوزات</th><th>الليالي</th><th>المبيعات</th><th>المحصل</th><th>عمولته</th><th>متوسط الحجز</th></tr></thead><tbody>${userRows || '<tr><td colspan="9" style="padding:12px;">مفيش نشاط في الفترة دي</td></tr>'}</tbody></table><p style="font-size:10.5px;color:var(--text-muted);margin:6px 0 0;">مرات الدخول والحركات من سجل الحركات المحفوظ. الحجز بينتحسب للموظف المكتوب اسمه في خانة "الموظف" وقت الحجز.</p></div>
-          <div class="row-2">
-            <div class="box-card"><h4 style="margin:0 0 8px;">🏖️ أداء القرى</h4><table class="cal-table"><thead><tr><th>القرية</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th><th>متوسط الحجز</th></tr></thead><tbody>${vRows || '<tr><td colspan="5" style="padding:12px;">مفيش</td></tr>'}</tbody></table></div>
+          <div id="statsSubTabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+            <button type="button" id="statsTab_overview" class="btn-hdr stats-sub-tab" onclick="switchStatsSub('overview')">🏆 نظرة عامة</button>
+            <button type="button" id="statsTab_users" class="btn-hdr stats-sub-tab" onclick="switchStatsSub('users')">👥 الموظفين والعمولات</button>
+            <button type="button" id="statsTab_villages" class="btn-hdr stats-sub-tab" onclick="switchStatsSub('villages')">🏖️ القرى والشاليهات</button>
+            <button type="button" id="statsTab_deductions" class="btn-hdr stats-sub-tab" onclick="switchStatsSub('deductions')">🧾 الخصومات والأعطال</button>
+          </div>
+          <div id="statsSub_overview">
+            <h4 style="margin:0 0 8px;">🏆 الأقوى والأضعف في الفترة</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">${cards || '<p>مفيش بيانات في الفترة دي</p>'}</div>
+            ${dedCards}
             <div class="box-card"><h4 style="margin:0 0 8px;">📣 مصادر الحجوزات</h4><table class="cal-table"><thead><tr><th>المصدر</th><th>عدد الحجوزات</th></tr></thead><tbody>${leadRows || '<tr><td colspan="2" style="padding:12px;">مفيش</td></tr>'}</tbody></table></div>
           </div>
-          <div class="box-card" style="margin-top:14px;"><h4 style="margin:0 0 8px;">🏠 كل الشاليهات مرتبة بالإيراد</h4><table class="cal-table"><thead><tr><th>الشاليه</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${chRows}</tbody></table></div>
+          <div id="statsSub_users" style="display:none;">
+            <div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">👥 أداء الموظفين والعمولات (مين اشتغل ومين جاب إيه)</h4><table class="cal-table"><thead><tr><th>الموظف</th><th>مرات الدخول</th><th>الحركات</th><th>الحجوزات</th><th>الليالي</th><th>المبيعات</th><th>المحصل</th><th>عمولته</th><th>متوسط الحجز</th></tr></thead><tbody>${userRows || '<tr><td colspan="9" style="padding:12px;">مفيش نشاط في الفترة دي</td></tr>'}</tbody></table><p style="font-size:10.5px;color:var(--text-muted);margin:6px 0 0;">مرات الدخول والحركات من سجل الحركات المحفوظ. الحجز بينتحسب للموظف المكتوب اسمه في خانة "الموظف" وقت الحجز. عمولة كل موظف حسب نظام عمولته المكتوب جنب اسمه.</p></div>
+          </div>
+          <div id="statsSub_villages" style="display:none;">
+            <div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">🏖️ أداء القرى</h4><table class="cal-table"><thead><tr><th>القرية</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th><th>متوسط الحجز</th></tr></thead><tbody>${vRows || '<tr><td colspan="5" style="padding:12px;">مفيش</td></tr>'}</tbody></table></div>
+            <div class="box-card"><h4 style="margin:0 0 8px;">🏠 كل الشاليهات مرتبة بالإيراد</h4><table class="cal-table"><thead><tr><th>الشاليه</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${chRows}</tbody></table></div>
+          </div>
+          <div id="statsSub_deductions" style="display:none;">
+            ${dedToggleHtml}
+            ${showDed ? `<div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">🧾 المصاريف في الفترة (${statExps.length}) — الإجمالي: ${expSum.toLocaleString()} ج.م</h4><table class="cal-table"><thead><tr><th>التاريخ</th><th>البيان</th><th>تبع إيه (الشاليه/الجهة)</th><th>المبلغ</th></tr></thead><tbody>${expDedRows || '<tr><td colspan="4" style="padding:12px;">مفيش مصاريف في الفترة دي</td></tr>'}</tbody></table></div>
+            <div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">🔧 الأعطال المفتوحة في الفترة (${statMaint.length}) — تكلفة متوقعة: ${maintSum.toLocaleString()} ج.م</h4><table class="cal-table"><thead><tr><th>التاريخ</th><th>المشكلة</th><th>الشاليه</th><th>الأهمية</th><th>التكلفة المتوقعة</th></tr></thead><tbody>${maintDedRows || '<tr><td colspan="5" style="padding:12px;">مفيش أعطال مفتوحة في الفترة دي</td></tr>'}</tbody></table><p style="font-size:10.5px;color:var(--text-muted);margin:6px 0 0;">العطل لما يتقفل بتتحول تكلفته الفعلية لمصروف تلقائيًا، عشان كده بنعرض هنا الأعطال المفتوحة بس عشان ما تتحسبش مرتين.</p></div>
+            <div style="background:#0b192c;color:#fef08a;border-radius:10px;padding:12px 16px;font-weight:900;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span>إجمالي الخصومات في الفترة</span><span>${dedTotal.toLocaleString()} ج.م</span></div>` : '<p style="padding:14px;text-align:center;color:var(--text-muted);font-size:12.5px;">الخصومات والأعطال مخفية من الإحصائيات. فعّل المربع فوق عشان تظهر وتتحسب في الإجمالي.</p>'}
+          </div>
         </div>`;
+      switchStatsSub('overview');
     }
+    function switchStatsSub(sub) { ['overview','users','villages','deductions'].forEach(k => { var el = document.getElementById('statsSub_' + k), tb = document.getElementById('statsTab_' + k); if (el) el.style.display = (k === sub) ? 'block' : 'none'; if (tb) { var on = (k === sub); tb.style.background = on ? 'var(--primary)' : 'var(--bg-subtle)'; tb.style.color = on ? '#fff' : 'var(--text-main)'; tb.style.border = '1px solid var(--border-color)'; } }); }
+    function toggleStatsDeductions(on) { localStorage.setItem('elaraby_stats_show_deductions', on ? '1' : '0'); calculateWorkStats(); switchStatsSub('deductions'); }
     function exportStatsImage() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
       var el = document.getElementById('statsReportArea');
       if (!el || !el.innerHTML.trim()) { calculateWorkStats(); el = document.getElementById('statsReportArea'); }
@@ -2368,7 +2441,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       document.getElementById('setSubBackup').innerHTML='<header class="settings-section-heading"><h3>النسخ الاحتياطي واسترجاع الحجوزات</h3><p>الملف فيه بيانات عملاء. احفظه في مكان خاص.</p></header><div class="settings-action-card"><b>تنزيل نسخة جديدة</b><p>نسخة من بيانات العمل، من غير كلمات مرور أو صلاحيات حسابات.</p><button type="button" class="btn-submit" onclick="downloadEncryptedBackup()">تنزيل نسخة JSON</button></div><div class="settings-action-card"><b>استرجاع الحجوزات الناقصة فقط</b><p>مش بيستبدل الحجوزات الموجودة أو إعدادات الموظفين، وبيطلب حفظ نسخة قبل الاسترجاع.</p><button type="button" class="btn-submit" style="background:#7c3aed;" onclick="restoreEncryptedBackup()">اختيار نسخة للاسترجاع</button></div>';
       document.getElementById('setSubSecurity').innerHTML='<header class="settings-section-heading"><h3>أمان الحساب</h3><p>إدارة كلمة مرور حسابك ومراجعة النشاط.</p></header><div class="settings-action-card"><b>كلمة مرور حسابي</b><p>تغيير كلمة المرور بيحتاج كلمة المرور الحالية. مفيش كلمات مرور محفوظة في ملفات البرنامج.</p><button type="button" class="btn-submit" onclick="openChangeMyPasswordModal()">تغيير كلمة مروري</button></div><div class="settings-action-card"><b>سجل النشاط</b><p>مراجعة عمليات الحجوزات والدخول وإدارة الموظفين المسجلة.</p><button type="button" class="btn-submit" style="background:#334155;" onclick="switchView(\'audit\')">فتح سجل النشاط</button></div>';
       document.getElementById('setSubAbout').innerHTML='<header class="settings-section-heading"><h3>Elaraby Pro</h3><p>إدارة حجوزات الشاليهات والخزينة والعمولات.</p></header><div class="settings-action-card"><h3>تصميم وتطوير: م. عمر إسماعيل</h3><p dir="ltr">01008743750</p><a href="https://fb.com/Omar9ismail" target="_blank" rel="noopener">Facebook</a><p>المزامنة وتسجيل الدخول محتاجين اتصال بالإنترنت.</p></div>';
-      document.getElementById('setSubDeposit').innerHTML='<header class="settings-section-heading"><h3>قاعدة العربون للحجز المؤكد</h3><p>تنبيه واقتراح حجز مؤقت، مش منع إجباري. تقدر تكمل مؤكد وقرارك بيتسجل.</p></header><div class="settings-action-card"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="depositRuleEnabled" checked> تفعيل تنبيه العربون</label><div class="row-2" style="margin:16px 0;"><label>نوع الحد الأدنى<select id="depositRuleType" class="form-control" onchange="document.getElementById(&quot;depositRuleValue&quot;).disabled=(this.value===&quot;night&quot;)"><option value="percent">نسبة من قيمة الحجز (%)</option><option value="fixed">مبلغ ثابت (ج.م)</option><option value="night">سعر ليلة واحدة</option></select></label><label>القيمة<input id="depositRuleValue" type="number" min="0" value="25" class="form-control"></label></div><p>الافتراضي: 25% من قيمة الحجز. اختيار "سعر ليلة واحدة" بيحسب الحد الأدنى تلقائياً = قيمة الحجز ÷ عدد الليالي. العربون صفر بيظهر التنبيه برضه طول ما القاعدة متفعلة. مش بيعدل الحجوزات القديمة تلقائياً.</p><button type="button" class="btn-submit" onclick="saveDepositRule()">حفظ قاعدة العربون</button></div>';
+      document.getElementById('setSubDeposit').innerHTML='<header class="settings-section-heading"><h3>قاعدة العربون للحجز المؤكد</h3><p>تنبيه واقتراح حجز مؤقت، مش منع إجباري. تقدر تكمل مؤكد وقرارك بيتسجل.</p></header><div class="settings-action-card"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="depositRuleEnabled" checked> تفعيل تنبيه العربون</label><div class="row-2" style="margin:16px 0;"><label>نوع الحد الأدنى<select id="depositRuleType" class="form-control" onchange="document.getElementById(&quot;depositRuleValue&quot;).disabled=(this.value===&quot;night&quot;)"><option value="percent">نسبة من قيمة الحجز (%)</option><option value="fixed">مبلغ ثابت (ج.م)</option><option value="night">سعر ليلة واحدة</option></select></label><label>القيمة<input id="depositRuleValue" type="number" min="0" value="25" class="form-control"></label></div><p>الافتراضي: 25% من قيمة الحجز. اختيار "سعر ليلة واحدة" بياخد الحد الأدنى من سعر الليلة المكتوب في فورمة الحجز نفسها (ولو اتعدلت يدويًا)، وفي الإيجار الشهري بيحسب متوسط الليلة = قيمة الحجز ÷ عدد الليالي. العربون صفر بيظهر التنبيه برضه طول ما القاعدة متفعلة. مش بيعدل الحجوزات القديمة تلقائياً.</p><button type="button" class="btn-submit" onclick="saveDepositRule()">حفظ قاعدة العربون</button></div>';
       var commRoot=document.getElementById('setSubComm'),commGrid=commRoot.querySelector('.panel-grid-2'),employeeCard=document.getElementById('individualUserCommList').parentElement,globalCard=commGrid.firstElementChild.firstElementChild,villageCard=document.getElementById('villageCommissionsList').parentElement;
       var globalSection=document.createElement('details');globalSection.className='commission-section';globalSection.innerHTML='<summary>تطبيق عمولة واحدة على كل السيلز</summary>';globalSection.appendChild(globalCard);var villageSection=document.createElement('details');villageSection.className='commission-section';villageSection.innerHTML='<summary>تخصيص عمولة لكل قرية (له الأولوية)</summary>';villageSection.appendChild(villageCard);commRoot.appendChild(employeeCard);commRoot.appendChild(globalSection);commRoot.appendChild(villageSection);commGrid.remove();employeeCard.classList.add('commission-employees');employeeCard.querySelector('h4').textContent='العمولة الأساسية لكل موظف';employeeCard.querySelector('p').textContent='اختار النوع والقيمة لكل موظف واحفظه لوحده. لو فيه تخصيص للقرية، هو اللي بيتطبق على حجوزات القرية دي.';commRoot.querySelector('.settings-section-heading p').textContent='ترتيب الأولوية: الموظف في القرية دي، ثم تخصيص القرية، ثم العمولة الأساسية للموظف، ثم الافتراضي. الإعدادات القديمة شغالة زي ما هي.';var baseSection=document.createElement('details');baseSection.className='commission-section';baseSection.innerHTML='<summary>العمولة الأساسية لكل موظف</summary>';baseSection.appendChild(employeeCard);commRoot.appendChild(baseSection);var matrixSection=document.createElement('section');matrixSection.className='settings-action-card commission-matrix';matrixSection.innerHTML='<h3>عمولة الموظف في كل قرية</h3><p>اختار الموظف، وحدد عمولته في أي قرية. اختيار الوراثة بيلغي التخصيص ده ويرجع للقواعد الأقل أولوية.</p><label>الموظف<select id="matrixEmployeeSelect" class="form-control" onchange="renderEmployeeVillageMatrix()"></select></label><div id="matrixVillageRules"></div>';commRoot.querySelector('.settings-section-heading').after(matrixSection);
       var title=document.createElement('header');title.className='settings-page-heading';title.innerHTML='<div><h2>الإعدادات</h2><p>اختار القسم، وهتلاقي كل أدواته لوحدها.</p></div><span>للإدارة فقط</span>';root.prepend(title);
@@ -2659,9 +2732,17 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       return doc;
     }
     function stripCardTableClasses(root) { root.querySelectorAll('.financial-card-table').forEach(t => t.classList.remove('financial-card-table')); return root; }
+    var A4_EXPORT_RESET_CSS = '#offscreenExportWrapper thead,#offscreenExportWrapper tfoot,#offscreenExportWrapper tbody,#offscreenExportWrapper tr,#offscreenExportWrapper th,#offscreenExportWrapper td{position:static!important;}'
+      + '#offscreenExportWrapper .cal-table th,#offscreenExportWrapper .cal-table td{min-width:0!important;height:auto!important;white-space:normal!important;padding:6px 5px!important;overflow-wrap:anywhere;}'
+      + '#offscreenExportWrapper .row-2{display:block!important;}'
+      + '#offscreenExportWrapper .row-2>*{width:100%!important;margin-bottom:12px;}'
+      + '#offscreenExportWrapper .box-card{box-shadow:none!important;break-inside:avoid;}'
+      + '#offscreenExportWrapper #statsSubTabs{display:none!important;}'
+      + '#offscreenExportWrapper #statsSub_overview,#offscreenExportWrapper #statsSub_users,#offscreenExportWrapper #statsSub_villages,#offscreenExportWrapper #statsSub_deductions{display:block!important;}';
     function cloneForA4Export(srcEl, landscape) {
       var wrap = document.getElementById('offscreenExportWrapper'); if (!wrap) return null;
       wrap.innerHTML = '';
+      var st = document.createElement('style'); st.textContent = A4_EXPORT_RESET_CSS; wrap.appendChild(st);
       var clone = srcEl.cloneNode(true);
       stripCardTableClasses(clone);
       clone.style.width = (landscape ? 1123 : 794) + 'px'; clone.style.maxWidth = 'none'; clone.style.margin = '0';
