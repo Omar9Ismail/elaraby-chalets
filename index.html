@@ -198,6 +198,12 @@
     .dev-footer a { color: #fef08a; font-weight: 800; text-decoration: none; }
 
     .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+    .cat-village-group { border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 12px; background: var(--bg-app); overflow: hidden; }
+    .cat-village-group > summary { cursor: pointer; padding: 12px 14px; font-weight: 900; color: var(--primary); font-size: 14px; background: var(--bg-subtle); list-style: none; }
+    .cat-village-group > summary::-webkit-details-marker { display: none; }
+    .cat-village-group > summary small { color: var(--text-muted); font-weight: 600; }
+    .cat-village-group[open] > summary { border-bottom: 1px solid var(--border-color); }
+    .cat-village-group > .catalog-grid { padding: 12px; }
     .cat-card { background: var(--bg-surface); border: 1.5px solid var(--border-color); border-radius: 12px; overflow: hidden; }
     .cat-cover { width: 100%; height: 185px; background: #000; cursor: pointer; position: relative; }
     .cat-cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -214,6 +220,13 @@
 
     @media (max-width: 900px) {
       .mobile-collapse-bar { display: flex; }
+      .collapsible-top-zone { position: static; box-shadow: none; }
+      .top-header { padding: 4px 8px; gap: 5px; }
+      .brand-logo { width: 58px; height: 30px; }
+      .brand-title { font-size: 11.5px; }
+      .brand-sub { font-size: 9.5px; }
+      .top-header .btn-hdr { min-height: 34px; font-size: 11px; padding: 4px 10px; }
+      .online-pill { font-size: 10px; padding: 3px 8px; }
       .main-stage { padding: 6px 8px 65px !important; }
       .sheet-box { height: 74vh !important; }
       .kpi-strip { grid-template-columns: repeat(2, 1fr); gap: 5px; padding: 5px 8px 2px; }
@@ -268,11 +281,12 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 .financial-card-table tbody td:before{content:attr(data-label);font-size:10px;color:#64748b;font-weight:600;}
 .financial-card-table tbody td[colspan]:before{display:none;}
 #viewTreasury .grid-toolbar .toolbar-left{width:100%;min-width:0;flex-wrap:wrap;}
+#viewTreasury .grid-toolbar .toolbar-left .tab-btn{flex:1 1 42%;font-size:11.5px;white-space:normal;min-height:44px;padding:8px 6px;}
 #viewTreasury .ctrl-select{max-width:100%;min-width:0;}
 }
 .notifications-bell{position:relative;background:#24384f;display:inline-flex;align-items:center;gap:7px;min-height:32px;border:1px solid #6c8094!important;}.notifications-bell svg{width:18px;height:18px;}.notification-count{background:#dc2626;color:#fff;min-width:17px;height:17px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;}.notifications-panel{position:fixed;z-index:500;top:65px;left:18px;width:min(370px,calc(100vw - 24px));max-height:min(65vh,540px);overflow:auto;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 16px 50px #0004;padding:12px;}.notifications-panel[hidden]{display:none;}.notification-item{display:block;width:100%;font-family:inherit;text-align:right;color:var(--text-main);background:var(--bg-subtle);border:1px solid var(--border-color);padding:11px;border-radius:8px;margin-top:8px;cursor:pointer;line-height:1.8;}.notification-item:hover,.notification-item:focus{border-color:#0f766e;outline:2px solid #0f766e;}.notification-item small{display:block;color:var(--text-muted);font-size:11px;}@media(max-width:900px){.notifications-panel{top:52px;left:12px;right:12px;margin:0 auto;}.notifications-bell{padding:5px 8px;}}#viewSettings{position:relative;}.settings-page-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 18px;}.settings-page-heading h2{margin:0;color:var(--primary);font-size:23px;}.settings-page-heading p,.settings-section-heading p{font-size:12px;color:var(--text-muted);margin:5px 0;}.settings-page-heading>span{font-size:11px;background:var(--bg-subtle);border:1px solid var(--border-color);padding:6px 12px;border-radius:20px;}.settings-navigation{float:right;width:205px;position:sticky;top:180px;margin-left:18px;}.settings-navigation .toolbar-left{display:flex;flex-direction:column;align-items:stretch;gap:6px;width:100%;}.settings-navigation .tab-btn{text-align:right;justify-content:flex-start;padding:12px;font-size:12px;white-space:normal;}.settings-content{margin-right:223px;min-width:0;}.settings-content>.box-card{margin-top:0;}.settings-section-heading{border-bottom:1px solid var(--border-color);padding:0 0 14px;margin-bottom:18px;}.settings-section-heading h3{font-size:18px;color:var(--primary);margin:0;}.settings-action-card{padding:16px;border:1px solid var(--border-color);border-radius:10px;margin-bottom:12px;background:var(--bg-subtle);}.settings-action-card p{font-size:12px;line-height:1.9;color:var(--text-muted);}.settings-action-card .btn-submit{max-width:300px;}#viewSettings:after{content:'';display:table;clear:both;}@media(max-width:900px){.settings-navigation{float:none;width:auto;position:static;margin:0 0 12px;}.settings-navigation .toolbar-left{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}.settings-navigation .tab-btn{font-size:11px;min-height:44px;padding:9px;}.settings-content{margin:0;}.settings-page-heading h2{font-size:20px;}.settings-section-heading h3{font-size:16px;}#quickSideDrawer{z-index:350;max-height:calc(100dvh - 88px);}.settings-content .box-card{padding:12px;}.settings-content .row-3{grid-template-columns:minmax(0,1fr);}#individualUserCommList>div,#villageCommissionsList>div,#villageLocationsList>div{display:flex!important;flex-wrap:wrap;}#individualUserCommList>div>b,#villageCommissionsList>div>b,#villageLocationsList>div>b{flex:1 0 100%;}#individualUserCommList .form-control,#villageCommissionsList .form-control,#villageLocationsList .form-control{flex:1 1 120px;min-width:0;}}.village-create-bar{display:flex;align-items:end;gap:10px;padding:14px;background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:10px;margin-bottom:18px;}.village-create-bar>label{font-size:12px;font-weight:800;white-space:nowrap;align-self:center;}.village-create-bar input{max-width:350px;}.village-create-bar .btn-submit{width:auto;margin:0;padding:9px 20px;}.settings-village-card{border:1px solid var(--border-color);border-radius:12px;margin-bottom:12px;overflow:hidden;}.settings-village-card>summary{padding:16px;background:var(--bg-subtle);cursor:pointer;color:var(--primary);font-size:15px;font-weight:800;}.settings-village-card>summary small{font-size:11px;color:var(--text-muted);margin-right:12px;}.village-card-body{padding:14px;}.village-rename-row{display:flex;align-items:end;gap:8px;padding-bottom:15px;border-bottom:1px solid var(--border-color);}.village-rename-row>label{flex:1;max-width:360px;font-size:11px;color:var(--text-muted);}.village-rename-row .btn-hdr{min-height:38px;}.chalet-list-heading{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px;margin:15px 0 10px;}.settings-chalet-card{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:10px;padding:12px;margin:10px 0;border:1px solid var(--border-color);border-radius:9px;background:var(--bg-subtle);}.settings-chalet-card label{font-size:10px;color:var(--text-muted);}.settings-chalet-card input{margin-top:4px;}.settings-chalet-card input[type=checkbox]{width:15px;height:15px;vertical-align:middle;}.chalet-actions{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;}.chalet-add-inline{display:flex;gap:10px;align-items:end;padding-top:12px;}.chalet-add-inline label{flex:1;font-size:11px;font-weight:700;}.chalet-add-inline .btn-submit{width:auto;margin:0;}.settings-bulk-prices{padding:14px;background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:10px;}.settings-bulk-prices>summary{cursor:pointer;font-size:12px;font-weight:800;margin-bottom:10px;}@media(max-width:900px){.village-create-bar{flex-wrap:wrap;}.village-create-bar>label{flex:1 0 100%;}.village-create-bar input{flex:1;min-width:0;}.village-create-bar .btn-submit{padding:8px 12px;}.settings-chalet-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}.settings-chalet-card .chalet-name-field{grid-column:1/-1;}.village-rename-row{flex-wrap:wrap;}.village-rename-row>label{flex:1 0 100%;}.village-rename-row .btn-hdr{flex:1;justify-content:center;}.village-card-body{padding:10px;}.chalet-add-inline{flex-wrap:wrap;}.chalet-add-inline label,.chalet-add-inline .btn-submit{width:100%;flex:1 0 100%;}.settings-page-heading{margin-top:10px;}}.village-bulk-bar{padding:12px;margin-bottom:12px;border:1px solid #8cc5bf;background:var(--bg-subtle);border-radius:9px;}.village-bulk-bar>b{display:block;font-size:12px;color:var(--primary);margin-bottom:8px;}.village-bulk-bar label{font-size:11px;}.village-bulk-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}.village-bulk-actions .btn-hdr{min-height:36px;}.village-bulk-bar small{display:block;font-size:10px;color:var(--text-muted);margin-top:8px;}@media(max-width:900px){.village-bulk-actions .btn-hdr{flex:1;justify-content:center;font-size:11px;}}.deposit-warning-overlay{position:fixed;inset:0;z-index:12000;background:#071321b8;display:flex;align-items:center;justify-content:center;padding:18px;}.deposit-warning-card{background:var(--bg-surface);color:var(--text-main);padding:25px;border:1px solid #d4a448;border-radius:16px;width:min(440px,100%);box-shadow:0 20px 60px #0005;}.deposit-warning-card h3{margin:6px 0;color:#a16207;}.deposit-warning-card p{font-size:13px;line-height:1.9;}.deposit-warning-card small{display:block;font-size:11px;color:var(--text-muted);margin-top:15px;text-align:center;}.commission-section{border:1px solid var(--border-color);border-radius:10px;background:var(--bg-subtle);margin-top:15px;padding:14px;}.commission-section>summary{font-size:13px;font-weight:800;cursor:pointer;color:var(--primary);}.commission-section>div{margin-top:14px;}.commission-employees{padding:15px!important;}#individualUserCommList>div{grid-template-columns:1fr 1.5fr 100px auto!important;padding:12px!important;gap:12px!important;}#individualUserCommList select,#villageCommissionsList select{font-size:12px!important;min-height:40px;}#individualUserCommList input,#villageCommissionsList input{min-height:40px;}@media(max-width:900px){#individualUserCommList>div .btn-hdr{width:100%;justify-content:center;min-height:38px;}#individualUserCommList>div select{flex:2 1 150px!important;}#individualUserCommList>div input{flex:1 1 65px!important;}.deposit-warning-card{padding:20px;}.commission-section{padding:11px;}.commission-employees{padding:10px!important;}}
 .settings-content,.settings-content input,.settings-content select{min-width:0;}#individualUserCommList>div{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) 100px auto!important;}.matrix-village-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(0,1.5fr) 100px auto;gap:12px;align-items:end;border:1px solid var(--border-color);padding:12px;margin-top:12px;border-radius:9px;background:var(--bg-surface);}.matrix-village-row label{font-size:11px;}.matrix-village-row>b{align-self:center;font-size:13px;}.matrix-village-row button{min-height:39px;}.commission-matrix h3{margin:0;color:var(--primary);font-size:16px;}.commission-matrix>label{font-size:12px;font-weight:800;display:block;max-width:400px;}.commission-section>summary{padding:4px;}.settings-content select{max-width:100%;}@media(max-width:900px){.matrix-village-row{grid-template-columns:minmax(0,1fr) 85px;gap:10px;}.matrix-village-row>b{grid-column:1/-1;}.matrix-village-row button{grid-column:1/-1;justify-content:center;}.commission-matrix{padding:12px;}}
-@media(max-width:900px){body{padding-bottom:92px!important;}.dev-footer{position:fixed!important;bottom:54px;left:0;right:0;z-index:99;padding:7px 8px!important;min-height:35px;box-sizing:border-box;background:#0b192c!important;}.dev-footer .developer-credit{flex-wrap:nowrap;white-space:nowrap;justify-content:center;gap:3px 5px;font-size:9px!important;}.dev-footer .developer-credit b{font-size:12px!important;}.dev-footer .developer-credit a{font-size:9px!important;}.dev-footer .developer-credit>span{font-size:9px!important;}}
+@media(max-width:900px){body{padding-bottom:66px!important;}.dev-footer{position:static!important;padding:7px 8px!important;min-height:35px;box-sizing:border-box;background:#0b192c!important;}.dev-footer .developer-credit{flex-wrap:nowrap;white-space:nowrap;justify-content:center;gap:3px 5px;font-size:9px!important;}.dev-footer .developer-credit b{font-size:12px!important;}.dev-footer .developer-credit a{font-size:9px!important;}.dev-footer .developer-credit>span{font-size:9px!important;}}
 #btnThemeToggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:69px;min-height:30px;color:#fff!important}#btnThemeToggle svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}#btnThemeToggle span{font-size:11px}
 </style>
 </head>
@@ -324,6 +338,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <div>
           <div class="brand-title">Elaraby Pro • شركة العربي للاستثمار العقاري</div>
           <div class="brand-sub" id="dbSyncStatus">متصل أونلاين ✓</div>
+          <div class="brand-sub" id="headerClock" style="color:#fef08a;font-weight:800;"></div>
         </div>
       </div>
 
@@ -364,7 +379,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       <div class="kpi-card"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
     </div>
 
-    <section id="notificationsPanel" class="notifications-panel" aria-label="قائمة التنبيهات" hidden><div style="display:flex;justify-content:space-between;align-items:center;"><b>التنبيهات</b><button type="button" class="btn-hdr" style="background:#475569;" onclick="toggleNotifications(false)">إغلاق ×</button></div><div id="notificationsList"></div></section>
+    <section id="notificationsPanel" class="notifications-panel" aria-label="قائمة التنبيهات" hidden><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><b>التنبيهات</b><span style="display:flex;gap:6px;"><button type="button" class="btn-hdr" style="background:#0f766e;" onclick="markAllActionNotificationsSeen()">✓ تعليم الكل كمقروء</button><button type="button" class="btn-hdr" style="background:#475569;" onclick="toggleNotifications(false)">إغلاق ×</button></span></div><div id="notificationsList"></div></section>
   </div>
 
   <main class="main-stage">
@@ -409,7 +424,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         </div>
         <button type="button" class="btn-hdr admin-only" style="background:#0284c7;" onclick="openCatEditorForChalet()">➕ إضافة / تعديل صور شاليه</button>
       </div>
-      <div class="catalog-grid" id="catalogCardsContainer"></div>
+      <div id="catalogCardsContainer"></div>
     </div>
 
     <div id="viewAvail" class="panel-container">
@@ -579,6 +594,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
             <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="statsStartDate" class="ctrl-select">
             <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="statsEndDate" class="ctrl-select">
             <button type="button" class="btn-hdr" style="background:var(--primary);" onclick="calculateWorkStats()">📈 احسب الإحصائيات</button>
+            <button type="button" class="btn-hdr" style="background:#059669;" onclick="exportStatsImage()">📸 حفظ صورة</button>
           </div>
         </div>
         <div id="statsReportArea"></div>
@@ -587,7 +603,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     </div>
 
     <div id="viewAudit" class="panel-container admin-only">
-      <div class="box-card" style="max-width:850px; margin:0 auto;"><h3 style="margin:0 0 10px;">🛡️ سجل النشاط المحفوظ</h3><div id="auditLogContainer"></div></div>
+      <div class="box-card" style="max-width:850px; margin:0 auto;"><div style="display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;flex-wrap:wrap;gap:8px;"><h3 style="margin:0;">🛡️ سجل النشاط المحفوظ</h3><label style="font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:5px;cursor:pointer;margin:0;"><input type="checkbox" id="auditShowLogins" onchange="renderAuditLog()"> عرض تسجيلات الدخول</label></div><div id="auditLogContainer"></div></div>
     </div>
 
     <div id="viewSettings" class="panel-container admin-only">
@@ -987,6 +1003,11 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     }
 
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    var CAIRO_TZ = 'Africa/Cairo';
+    function fmtCairo(ts, withSeconds) { try { return new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', ...(withSeconds ? { second:'2-digit' } : {}), hour12: true }).format(new Date(ts)); } catch (e) { return new Date(ts).toLocaleString('ar-EG'); } }
+    function fmtCairoDate(d) { try { return new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(d); } catch (e) { return d.toLocaleDateString('ar-EG'); } }
+    function fmtStayDate(iso) { try { var d = new Date(iso + 'T12:00:00Z'); var wd = new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, weekday: 'long' }).format(d); var p = new Intl.DateTimeFormat('en-GB', { timeZone: CAIRO_TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d).split('/'); return wd + ' \u2066' + p[0] + '-' + p[1] + '-' + p[2] + '\u2069'; } catch (e) { return iso; } }
+    function updateHeaderClock() { var el = document.getElementById('headerClock'); if (el) { var now = new Date(); el.textContent = '🕐 ' + fmtCairoDate(now) + ' — ' + new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(now); } }
     function formatLocalDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
     function parseLocalDate(s) { var p = s.split('-'); return new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10)); }
 
@@ -1384,6 +1405,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       setTimeout(()=>{document.getElementById('creditStage').style.display='none';document.getElementById('loadingStage').style.display='flex';},1800);
       setTimeout(()=>{var sp=document.getElementById('splashScreen');if(sp){sp.style.opacity='0';setTimeout(()=>sp.style.display='none',350);}},3650);
       arrangeSettingsLayout();installSafeIcons();
+      updateHeaderClock(); setInterval(updateHeaderClock, 1000);
       if (localStorage.getItem('ELARABY_THEME') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); syncThemeControl(); }
       var today = formatLocalDate(new Date());
       ['startDate','endDate','checkStart','checkEnd','tStartDate','tEndDate','ownStartDate','ownEndDate','expDate','invEndDate','statsEndDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = today; });
@@ -1410,6 +1432,16 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var panel=document.getElementById('notificationsPanel'),button=document.getElementById('notificationsBell');
       var open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));
       if(open){var first=panel.querySelector('button');if(first)first.focus();}
+    }
+    function markAllActionNotificationsSeen(){ if (currentUser) { localStorage.setItem('elaraby_notif_seen_' + currentUser.username, String(Date.now())); updateKPIsAndAlerts(); } }
+    function openAuditNotification(index){
+      var item = notificationBookings[index]; if (!item || !item.audit) return;
+      markAllActionNotificationsSeen();
+      toggleNotifications(false);
+      var m = /(\d{4}-\d{4,6})/.exec(item.entry.action || '');
+      var b = m ? appDB.bookings.find(x => (x.receiptNumber || '') === m[1]) : null;
+      if (b) { switchView('grid'); selectedAgentFilter='all'; document.getElementById('gridYear').value=b.startDate.slice(0,4); document.getElementById('gridMonth').value=String(Number(b.startDate.slice(5,7))); document.getElementById('gridVillageFilter').value=''; renderCalendarGrid(); showQuickDrawer(b.id,true); }
+      else { switchView('audit'); }
     }
     function openBookingNotification(index){
       var item=notificationBookings[index];if(!item)return;
@@ -1440,9 +1472,14 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         if(reasons.length)notificationBookings.push({id:b.id,title:reasons.join('، '),booking:b});
       });
       if(openMaint.length&&isAdminSession())notificationBookings.push({maintenance:true,title:openMaint.length+' أعطال مفتوحة'});
+      if (isAdminSession()) {
+        var seenMark = Number(localStorage.getItem('elaraby_notif_seen_' + (currentUser ? currentUser.username : '')) || 0);
+        (appDB.auditLog || []).filter(a => a.action && String(a.action).indexOf('تسجيل دخول') !== 0 && Number(a.createdAt || 0) > seenMark).slice(0, 12).forEach(a => notificationBookings.push({audit: true, entry: a}));
+      }
       document.getElementById('notificationsCount').textContent=notificationBookings.length;
       document.getElementById('notificationsBell').setAttribute('aria-label','التنبيهات: '+notificationBookings.length);
       document.getElementById('notificationsList').innerHTML=notificationBookings.map((item,index)=>{
+        if (item.audit) { var ae=item.entry; return `<button type="button" class="notification-item" onclick="openAuditNotification(${index})"><b>🆕 ${esc(ae.user)}: ${esc(ae.action)}</b><small>${esc(ae.createdAt ? fmtCairo(ae.createdAt) : '')}</small></button>`; }
         var b=item.booking;return `<button type="button" class="notification-item" onclick="openBookingNotification(${index})"><b>${esc(item.title)}</b>${b?`<small>${esc(b.village)}، ${esc(b.chaletName)} • ${esc(b.clientName)}</small><small>المسؤول: ${esc(b.agentName||b.ownerUsername||'غير محدد')} • <span dir="ltr">${esc(b.receiptNumber||b.id)}</span></small>`:''}</button>`;
       }).join('')||'<p style="text-align:center;color:var(--text-muted);padding:20px 5px;">مفيش تنبيهات محتاجة متابعة دلوقتي.</p>';
 
@@ -1641,16 +1678,16 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
     function canManageBooking(b) { if (!currentUser || !b) return false; if (currentUser.role === 'admin') return true; return !!b.ownerUsername && b.ownerUsername === currentUser.username; }
 
-    function getDepositRule(){var r=appDB.minimumDepositRule||{};return {enabled:r.enabled!==false,type:r.type==='fixed'?'fixed':'percent',value:Number.isFinite(Number(r.value))&&r.value!==undefined?Math.max(0,Number(r.value)):25};}
-    function depositThreshold(total,rule){return rule.type==='fixed'?rule.value:total*rule.value/100;}
-    function needsDepositWarning(total,deposit,status,rule){return status==='confirmed'&&rule.enabled&&(deposit<=0||deposit<depositThreshold(total,rule));}
+    function getDepositRule(){var r=appDB.minimumDepositRule||{};return {enabled:r.enabled!==false,type:(r.type==='fixed'||r.type==='night')?r.type:'percent',value:Number.isFinite(Number(r.value))&&r.value!==undefined?Math.max(0,Number(r.value)):25};}
+    function depositThreshold(total,rule,nights){if(rule.type==='night'){return nights>0?Math.ceil(total/nights):0;}return rule.type==='fixed'?rule.value:total*rule.value/100;}
+    function needsDepositWarning(total,deposit,status,rule,nights){return status==='confirmed'&&rule.enabled&&(deposit<=0||deposit<depositThreshold(total,rule,nights));}
     async function saveDepositRule(){
-      if(!isAdminSession())return;var enabled=document.getElementById('depositRuleEnabled').checked,type=document.getElementById('depositRuleType').value,value=Number(document.getElementById('depositRuleValue').value);if(!Number.isFinite(value)||value<0||(type==='percent'&&value>100)){showToast('النسبة من صفر لـ100، والمبلغ لازم يكون صفر أو أكتر');return;}
-      var rule={enabled,type,value},patch={'elaraby_system_v11_core/minimumDepositRule':rule};patch['elaraby_audit_log/'+newAuditId()]=makeAuditEntry('تعديل تنبيه العربون: '+(enabled?value+(type==='percent'?'%':' ج.م'):'متوقف'));
+      if(!isAdminSession())return;var enabled=document.getElementById('depositRuleEnabled').checked,type=document.getElementById('depositRuleType').value,value=Number(document.getElementById('depositRuleValue').value);if(type==='night'){value=0;}if(!Number.isFinite(value)||value<0||(type==='percent'&&value>100)){showToast('النسبة من صفر لـ100، والمبلغ لازم يكون صفر أو أكتر');return;}
+      var rule={enabled,type,value},patch={'elaraby_system_v11_core/minimumDepositRule':rule};patch['elaraby_audit_log/'+newAuditId()]=makeAuditEntry('تعديل تنبيه العربون: '+(enabled?(type==='night'?'سعر ليلة واحدة':value+(type==='percent'?'%':' ج.م')):'متوقف'));
       try{await dbWrite('/',patch,'PATCH');appDB.minimumDepositRule=rule;showToast('تم حفظ قاعدة العربون');}catch(e){showToast('الحفظ ما اكتملش: '+e.message);}
     }
-    function chooseDepositWarning(total,deposit,rule){return new Promise(resolve=>{
-      var overlay=document.createElement('div');overlay.className='deposit-warning-overlay';overlay.innerHTML='<section role="dialog" aria-modal="true" aria-labelledby="depositWarningTitle" class="deposit-warning-card"><span style="font-size:28px;color:#b45309;">!</span><h3 id="depositWarningTitle">العربون أقل من الحد المطلوب</h3><p>قيمة الحجز <b>'+Number(total).toLocaleString()+' ج.م</b>، والعربون <b>'+Number(deposit).toLocaleString()+' ج.م</b>.</p><p>الحد الحالي <b>'+depositThreshold(total,rule).toLocaleString()+' ج.م</b>'+(rule.type==='percent'?' ('+rule.value+'%)':'')+'. الأفضل تخليه حجز مؤقت لحد ما العربون يكمل.</p><button type="button" data-choice="hold" class="btn-submit">خليه مؤقت</button><button type="button" data-choice="confirmed" class="btn-submit" style="background:#b45309;">كمّل مؤكد رغم التنبيه</button><button type="button" data-choice="cancel" class="btn-submit" style="background:#64748b;">رجوع للتعديل</button><small>الاستمرار كمؤكد بيتسجل في سجل النشاط.</small></section>';document.body.appendChild(overlay);overlay.querySelector('[data-choice="hold"]').focus();var finish=choice=>{document.removeEventListener('keydown',onKey);overlay.remove();resolve(choice);};var onKey=e=>{if(e.key==='Escape')finish('cancel');};document.addEventListener('keydown',onKey);overlay.querySelectorAll('button').forEach(b=>b.onclick=()=>finish(b.dataset.choice));
+    function chooseDepositWarning(total,deposit,rule,nights){return new Promise(resolve=>{
+      var overlay=document.createElement('div');overlay.className='deposit-warning-overlay';overlay.innerHTML='<section role="dialog" aria-modal="true" aria-labelledby="depositWarningTitle" class="deposit-warning-card"><span style="font-size:28px;color:#b45309;">!</span><h3 id="depositWarningTitle">العربون أقل من الحد المطلوب</h3><p>قيمة الحجز <b>'+Number(total).toLocaleString()+' ج.م</b>، والعربون <b>'+Number(deposit).toLocaleString()+' ج.م</b>.</p><p>الحد الحالي <b>'+depositThreshold(total,rule,nights).toLocaleString()+' ج.م</b>'+(rule.type==='percent'?' ('+rule.value+'%)':(rule.type==='night'?' (سعر ليلة واحدة)':''))+'. الأفضل تخليه حجز مؤقت لحد ما العربون يكمل.</p><button type="button" data-choice="hold" class="btn-submit">خليه مؤقت</button><button type="button" data-choice="confirmed" class="btn-submit" style="background:#b45309;">كمّل مؤكد رغم التنبيه</button><button type="button" data-choice="cancel" class="btn-submit" style="background:#64748b;">رجوع للتعديل</button><small>الاستمرار كمؤكد بيتسجل في سجل النشاط.</small></section>';document.body.appendChild(overlay);overlay.querySelector('[data-choice="hold"]').focus();var finish=choice=>{document.removeEventListener('keydown',onKey);overlay.remove();resolve(choice);};var onKey=e=>{if(e.key==='Escape')finish('cancel');};document.addEventListener('keydown',onKey);overlay.querySelectorAll('button').forEach(b=>b.onclick=()=>finish(b.dataset.choice));
     });}
 
     async function submitBooking(e) {
@@ -1670,7 +1707,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var price = parseFloat(document.getElementById('unitPrice').value)||0, dep = parseFloat(document.getElementById('deposit').value)||0;
       var total = rentPeriodType === 'monthly' ? (price * monthsCount) : (price * reqNights.length);
       var depositRule=getDepositRule(),depositAuditNote='';
-      if(needsDepositWarning(total,dep,statusType,depositRule)){var choice=await chooseDepositWarning(total,dep,depositRule);if(choice==='cancel')return;if(choice==='hold'){statusType='hold';document.getElementById('bookingStatusType').value='hold';toggleHoldOptions();depositAuditNote='، اختار مؤقت بسبب انخفاض العربون';}else{depositAuditNote='، أكد رغم انخفاض العربون عن '+depositThreshold(total,depositRule).toLocaleString()+' ج.م';}}
+      if(needsDepositWarning(total,dep,statusType,depositRule,reqNights.length)){var choice=await chooseDepositWarning(total,dep,depositRule,reqNights.length);if(choice==='cancel')return;if(choice==='hold'){statusType='hold';document.getElementById('bookingStatusType').value='hold';toggleHoldOptions();depositAuditNote='، اختار مؤقت بسبب انخفاض العربون';}else{depositAuditNote='، أكد رغم انخفاض العربون عن '+depositThreshold(total,depositRule,reqNights.length).toLocaleString()+' ج.م';}}
       var rem = Math.max(0, total - dep), method = document.getElementById('paymentMethod').value;
       var regDate = formatLocalDate(new Date()), actor = currentUser ? currentUser.fullName : agentName;
       var holdExpiresAt = statusType === 'hold' ? (Date.now() + holdHours * 3600000) : null;
@@ -1774,7 +1811,9 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <div class="d-row"><span>العميل:</span><b>${esc(b.clientName)}</b></div>
         <div class="d-row"><span>التليفون:</span><b dir="ltr">${phone}</b></div>
         <div class="d-row"><span>تاريخ الحجز:</span><b>${b.regDate || '-'}</b></div>
-        <div class="d-row"><span>الوصول ⬅️ المغادرة:</span><b>${b.startDate} ⬅️ ${b.endDate} (${b.rentType||''})</b></div>
+        <div class="d-row"><span>تاريخ الوصول:</span><b>${fmtStayDate(b.startDate)}</b></div>
+        <div class="d-row"><span>تاريخ المغادرة:</span><b>${fmtStayDate(b.endDate)}</b></div>
+        <div class="d-row"><span>المدة:</span><b>${getStayNights(b.startDate, b.endDate).length} ليلة (${b.rentType||'-'})</b></div>
         <div class="d-row"><span>المسؤول:</span><b>${b.agentName}</b></div>
         <div class="d-sec">💰 الحساب</div>
         <div class="d-row"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
@@ -1818,7 +1857,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var v=document.getElementById('ledgerVillageFilter').value,p=document.getElementById('ledgerPermitFilter').value,q=(document.getElementById('ledgerSearchInput').value||'').trim().toLowerCase();
       var list=appDB.bookings.filter(b=>(!v||b.village===v)&&(p==='all'||(b.permitStatus||((b.idPhotoCount&&b.idPhotoCount>0)?'ready':'missing'))===p)&&(!q||String(b.clientName).toLowerCase().includes(q)||String(b.clientPhone).includes(q)||String(b.id).toLowerCase().includes(q)||String(b.receiptNumber||'').toLowerCase().includes(q)));
       var groups=sortedLedgerGroups(list,formatLocalDate(new Date())),container=document.getElementById('ledgerListContainer');var prev=container.querySelector('details');var wasOpen=prev&&prev.open;
-      var row=(b,group)=>{var status=group==='staying'?'ساكن':group==='finished'?(b.status==='hold'?'هولد منتهي':'انتهت الإقامة'):(b.status==='hold'?'هولد، لم يتأكد':'قادم');var color=group==='staying'?'#15803d':group==='finished'?'#64748b':'#b45309';return `<div class="ledger-row-card" onmouseenter="showLedgerCard('${b.id}',false)" onclick="showLedgerCard('${b.id}',true)"><div><span style="display:inline-block;color:${color};background:var(--bg-subtle);border:1px solid ${color};padding:3px 9px;font-size:11px;font-weight:900;margin-bottom:6px;">${status}</span> <span dir="ltr" style="font-weight:900;font-size:12px;">${esc(b.receiptNumber||b.id)}</span><br><b>${esc(b.village)} (${esc(b.chaletName)}) - ${esc(b.clientName)}</b> <span dir="ltr" style="font-size:11px;">[${maskPhoneForViewer(b)}]</span><br><span style="font-size:11px;color:var(--text-muted);">من ${esc(b.startDate)} لحد ${esc(b.endDate)} | المسؤول: ${esc(b.agentName)} | الإجمالي: ${Number(b.total||0).toLocaleString()} ج.م</span></div>${canManageBooking(b)?`<button type="button" class="btn-hdr" style="background:#0284c7;" onclick="event.stopPropagation();openPermitModal('${b.id}')">🪪 البطايق (${b.idPhotoCount||0})</button>`:`<span style="font-size:10px;">🔒 خاص بـ ${esc(b.agentName)}</span>`}</div>`;};
+      var row=(b,group)=>{var status=group==='staying'?'ساكن':group==='finished'?(b.status==='hold'?'هولد منتهي':'انتهت الإقامة'):(b.status==='hold'?'هولد، لم يتأكد':'قادم');var color=group==='staying'?'#15803d':group==='finished'?'#64748b':'#b45309';return `<div class="ledger-row-card" onmouseenter="showLedgerCard('${b.id}',false)" onclick="showLedgerCard('${b.id}',true)"><div><span style="display:inline-block;color:${color};background:var(--bg-subtle);border:1px solid ${color};padding:3px 9px;font-size:11px;font-weight:900;margin-bottom:6px;">${status}</span> <span dir="ltr" style="font-weight:900;font-size:12px;">${esc(b.receiptNumber||b.id)}</span><br><b>${esc(b.village)} (${esc(b.chaletName)}) - ${esc(b.clientName)}</b> <span dir="ltr" style="font-size:11px;">[${maskPhoneForViewer(b)}]</span><br><span style="font-size:11px;color:var(--text-muted);">من ${esc(fmtStayDate(b.startDate))} لحد ${esc(fmtStayDate(b.endDate))} | المسؤول: ${esc(b.agentName)} | الإجمالي: ${Number(b.total||0).toLocaleString()} ج.م</span></div>${canManageBooking(b)?`<button type="button" class="btn-hdr" style="background:#0284c7;" onclick="event.stopPropagation();openPermitModal('${b.id}')">🪪 البطايق (${b.idPhotoCount||0})</button>`:`<span style="font-size:10px;">🔒 خاص بـ ${esc(b.agentName)}</span>`}</div>`;};
       var section=(title,key,empty)=>`<section style="margin-bottom:18px;"><h3 style="font-size:14px;margin:12px 0;">${title} (${groups[key].length})</h3>${groups[key].map(b=>row(b,key)).join('')||`<div style="padding:12px;color:var(--text-muted);font-size:12px;">${empty}</div>`}</section>`;
       container.innerHTML=`<div style="padding:10px 0;font-size:12px;color:var(--text-muted);">الترتيب: ساكن حاليًا، ثم الأقرب وصولًا. الإقامات المنتهية في القسم المقفول تحت.</div>`+section('🏠 ساكن حاليًا','staying','مفيش إقامة جارية مطابقة.')+section('📅 القادم، الأقرب وصولًا أولًا','upcoming','مفيش حجوزات قادمة مطابقة.')+`<details ${wasOpen||q?'open':''} style="border-top:1px solid var(--border-color);padding-top:12px;"><summary style="cursor:pointer;font-weight:800;padding:10px;background:var(--bg-subtle);">الإقامات والهولد المنتهي (${groups.finished.length})، عرض / إخفاء</summary><div style="padding-top:10px;font-size:11px;color:var(--text-muted);">الأحدث انتهاءً أولًا</div>${groups.finished.map(b=>row(b,'finished')).join('')||'<p>مفيش حجوزات منتهية مطابقة.</p>'}</details>`;
     }
@@ -1859,8 +1898,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
           <div style="display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #d9d2bf;padding-bottom:18px;gap:12px;"><div style="font-size:20px;font-weight:900;">${esc(b.clientName)}</div><div dir="ltr" style="font-size:14px;color:#475569;">${esc(b.clientPhone)}</div></div>
           <div style="font-size:10px;color:#8a7130;margin:19px 0 8px;">الوحدة السياحية</div><div style="font-size:17px;font-weight:900;line-height:1.7;">${esc(b.village)} • ${esc(b.chaletName)}</div>
           <div style="display:flex;gap:12px;margin-top:18px;">
-            <div style="flex:1;background:#eeebe3;border-right:3px solid #b89a49;padding:13px 14px;"><div style="font-size:11px;color:#68717c;margin-bottom:8px;">الوصول</div><div dir="ltr" style="font-size:17px;font-weight:900;">${esc(b.startDate)}</div></div>
-            <div style="flex:1;background:#eeebe3;border-right:3px solid #18232f;padding:13px 14px;"><div style="font-size:11px;color:#68717c;margin-bottom:8px;">المغادرة</div><div dir="ltr" style="font-size:17px;font-weight:900;">${esc(b.endDate)}</div></div>
+            <div style="flex:1;background:#eeebe3;border-right:3px solid #b89a49;padding:13px 14px;"><div style="font-size:11px;color:#68717c;margin-bottom:8px;">الوصول</div><div style="font-size:15px;font-weight:900;">${esc(fmtStayDate(b.startDate))}</div></div>
+            <div style="flex:1;background:#eeebe3;border-right:3px solid #18232f;padding:13px 14px;"><div style="font-size:11px;color:#68717c;margin-bottom:8px;">المغادرة</div><div style="font-size:15px;font-weight:900;">${esc(fmtStayDate(b.endDate))}</div></div>
           </div><div style="font-size:12px;color:#68717c;margin-top:11px;">مدة الإقامة: <b style="color:#18232f;">${esc(b.rentType||'-')}</b></div>
         </div>
         <div style="margin:4px 30px 20px;border-top:2px solid #b89a49;">
@@ -2032,7 +2071,10 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function renderCatalogCards() {
       var v = document.getElementById('catViewVillageFilter').value, q = (document.getElementById('catViewSearch').value||'').toLowerCase(), box = document.getElementById('catalogCardsContainer'); if (!box) return;
       var isAdmin = currentUser && currentUser.role === 'admin';
-      box.innerHTML = appDB.chalets.filter(c=>(!v||c.village===v)&&(!q||c.name.toLowerCase().includes(q)||(c.desc||'').toLowerCase().includes(q))).map(c => {
+      var filteredChalets = appDB.chalets.filter(c=>(!v||c.village===v)&&(!q||c.name.toLowerCase().includes(q)||(c.desc||'').toLowerCase().includes(q)));
+      var villageOrder = [], chaletsByVillage = {};
+      filteredChalets.forEach(c => { if (!chaletsByVillage[c.village]) { chaletsByVillage[c.village] = []; villageOrder.push(c.village); } chaletsByVillage[c.village].push(c); });
+      function renderCatCard(c) {
         var cover = chaletCoverCache[c.id] || APP_LOGO_SRC;
         return `<div class="cat-card">
           <div class="cat-cover" onclick="openGallery('${c.id}')">
@@ -2050,7 +2092,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
             <div style="font-size:11px;color:var(--text-muted);margin:5px 0;">${c.desc||'اضغط لعرض الصور وتحميلها أو مشاركتها باللوجو'}</div>
           </div>
         </div>`;
-      }).join('');
+      }
+      box.innerHTML = villageOrder.map(vil => `<details class="cat-village-group" open><summary>🏖️ ${esc(vil)} <small>(${chaletsByVillage[vil].length} شاليه)</small></summary><div class="catalog-grid">${chaletsByVillage[vil].map(renderCatCard).join('')}</div></details>`).join('');
       appDB.chalets.forEach(c => {
         if ((c.photoCount||0) > 0 && !chaletCoverCache[c.id]) {
           dbUrl(`/elaraby_v8_photos/chalets/${c.id}/0.json`).then(u => fetch(u)).then(r=>r.json()).then(src => { if (src) { chaletCoverCache[c.id] = src; var img = document.getElementById('catCoverImg_'+c.id); if (img) img.src = src; } }).catch(()=>{});
@@ -2154,7 +2197,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     }
 
     function exportTreasuryAsA4Image() { var el = document.getElementById('treasuryCaptureArea'); if (!el) { calculateTreasury(); el = document.getElementById('treasuryCaptureArea'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`جرد-الخزينة-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
-    function exportOwnerStatementA4() { var el = document.getElementById('ownerA4Card'); if (!el) { generateOwnerStatement(); el = document.getElementById('ownerA4Card'); } html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`كشف-حساب-مالك-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
+    function exportOwnerStatementA4() { var el = document.getElementById('ownerA4Card'); if (!el) { generateOwnerStatement(); el = document.getElementById('ownerA4Card'); } if (!el) return; var node = cloneForA4Export(el, false); if (!node) return; html2canvas(node, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => { downloadCanvasPaginated(c, `كشف-حساب-مالك-${formatLocalDate(new Date())}`); clearA4ExportNode(); }); }
     function calculateChaletInventory() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
       var s = document.getElementById('invStartDate').value, e = document.getElementById('invEndDate').value;
       var filterField = (document.getElementById('invFilterByType') && document.getElementById('invFilterByType').value) || 'regDate';
@@ -2201,7 +2244,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
           <div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div>
         </div>`;
     }
-    function exportInventoryImage() { var el = document.getElementById('inventoryCaptureArea'); if (!el) { calculateChaletInventory(); el = document.getElementById('inventoryCaptureArea'); } if (!el) return; html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`جرد-الشاليهات-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
+    function exportInventoryImage() { var el = document.getElementById('inventoryCaptureArea'); if (!el) { calculateChaletInventory(); el = document.getElementById('inventoryCaptureArea'); } if (!el) return; var node = cloneForA4Export(el, true); if (!node) return; html2canvas(node, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => { downloadCanvasPaginated(c, `جرد-الشاليهات-${formatLocalDate(new Date())}`); clearA4ExportNode(); }); }
     function calculateWorkStats() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
       var s = document.getElementById('statsStartDate').value, e = document.getElementById('statsEndDate').value;
       var filterField = (document.getElementById('statsFilterByType') && document.getElementById('statsFilterByType').value) || 'regDate';
@@ -2253,6 +2296,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       document.getElementById('statsReportArea').innerHTML = `
         <div style="background:var(--bg-surface); border-radius:12px;">
           <p style="font-size:11.5px; color:var(--text-muted); margin:4px 0 10px;">إحصائيات الفترة من <b>${s}</b> لحد <b>${e}</b> (${filterField === 'regDate' ? 'حسب تاريخ تسجيل الحجز' : 'حسب تاريخ وصول العميل'}) — الحجوزات المؤقتة مش محسوبة.</p>
+          <h4 style="margin:0 0 8px;">🏆 الأقوى والأضعف في الفترة</h4>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">${cards || '<p>مفيش بيانات في الفترة دي</p>'}</div>
           <div class="box-card" style="margin-bottom:14px;"><h4 style="margin:0 0 8px;">👥 أداء الموظفين (مين اشتغل ومين جاب إيه)</h4><table class="cal-table"><thead><tr><th>الموظف</th><th>مرات الدخول</th><th>الحركات</th><th>الحجوزات</th><th>الليالي</th><th>المبيعات</th><th>المحصل</th><th>عمولته</th><th>متوسط الحجز</th></tr></thead><tbody>${userRows || '<tr><td colspan="9" style="padding:12px;">مفيش نشاط في الفترة دي</td></tr>'}</tbody></table><p style="font-size:10.5px;color:var(--text-muted);margin:6px 0 0;">مرات الدخول والحركات من سجل الحركات المحفوظ. الحجز بينتحسب للموظف المكتوب اسمه في خانة "الموظف" وقت الحجز.</p></div>
           <div class="row-2">
@@ -2261,6 +2305,13 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
           </div>
           <div class="box-card" style="margin-top:14px;"><h4 style="margin:0 0 8px;">🏠 كل الشاليهات مرتبة بالإيراد</h4><table class="cal-table"><thead><tr><th>الشاليه</th><th>الحجوزات</th><th>الليالي</th><th>الإيراد</th></tr></thead><tbody>${chRows}</tbody></table></div>
         </div>`;
+    }
+    function exportStatsImage() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
+      var el = document.getElementById('statsReportArea');
+      if (!el || !el.innerHTML.trim()) { calculateWorkStats(); el = document.getElementById('statsReportArea'); }
+      if (!el || !el.innerHTML.trim()) return;
+      var node = cloneForA4Export(el, true); if (!node) return;
+      html2canvas(node, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => { downloadCanvasPaginated(c, `إحصائيات-الشغل-${formatLocalDate(new Date())}`); clearA4ExportNode(); });
     }
     function onSelectOwnerVillage() { var v = document.getElementById('ownVillageSel').value, sel = document.getElementById('ownChaletSel'); if (!sel) return; sel.innerHTML = ''; appDB.chalets.filter(c => c.village === v).forEach(c => { var o = document.createElement('option'); o.value = c.id; o.innerText = c.name; sel.appendChild(o); }); }
     function generateOwnerStatement() {
@@ -2317,7 +2368,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       document.getElementById('setSubBackup').innerHTML='<header class="settings-section-heading"><h3>النسخ الاحتياطي واسترجاع الحجوزات</h3><p>الملف فيه بيانات عملاء. احفظه في مكان خاص.</p></header><div class="settings-action-card"><b>تنزيل نسخة جديدة</b><p>نسخة من بيانات العمل، من غير كلمات مرور أو صلاحيات حسابات.</p><button type="button" class="btn-submit" onclick="downloadEncryptedBackup()">تنزيل نسخة JSON</button></div><div class="settings-action-card"><b>استرجاع الحجوزات الناقصة فقط</b><p>مش بيستبدل الحجوزات الموجودة أو إعدادات الموظفين، وبيطلب حفظ نسخة قبل الاسترجاع.</p><button type="button" class="btn-submit" style="background:#7c3aed;" onclick="restoreEncryptedBackup()">اختيار نسخة للاسترجاع</button></div>';
       document.getElementById('setSubSecurity').innerHTML='<header class="settings-section-heading"><h3>أمان الحساب</h3><p>إدارة كلمة مرور حسابك ومراجعة النشاط.</p></header><div class="settings-action-card"><b>كلمة مرور حسابي</b><p>تغيير كلمة المرور بيحتاج كلمة المرور الحالية. مفيش كلمات مرور محفوظة في ملفات البرنامج.</p><button type="button" class="btn-submit" onclick="openChangeMyPasswordModal()">تغيير كلمة مروري</button></div><div class="settings-action-card"><b>سجل النشاط</b><p>مراجعة عمليات الحجوزات والدخول وإدارة الموظفين المسجلة.</p><button type="button" class="btn-submit" style="background:#334155;" onclick="switchView(\'audit\')">فتح سجل النشاط</button></div>';
       document.getElementById('setSubAbout').innerHTML='<header class="settings-section-heading"><h3>Elaraby Pro</h3><p>إدارة حجوزات الشاليهات والخزينة والعمولات.</p></header><div class="settings-action-card"><h3>تصميم وتطوير: م. عمر إسماعيل</h3><p dir="ltr">01008743750</p><a href="https://fb.com/Omar9ismail" target="_blank" rel="noopener">Facebook</a><p>المزامنة وتسجيل الدخول محتاجين اتصال بالإنترنت.</p></div>';
-      document.getElementById('setSubDeposit').innerHTML='<header class="settings-section-heading"><h3>قاعدة العربون للحجز المؤكد</h3><p>تنبيه واقتراح حجز مؤقت، مش منع إجباري. تقدر تكمل مؤكد وقرارك بيتسجل.</p></header><div class="settings-action-card"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="depositRuleEnabled" checked> تفعيل تنبيه العربون</label><div class="row-2" style="margin:16px 0;"><label>نوع الحد الأدنى<select id="depositRuleType" class="form-control"><option value="percent">نسبة من قيمة الحجز (%)</option><option value="fixed">مبلغ ثابت (ج.م)</option></select></label><label>القيمة<input id="depositRuleValue" type="number" min="0" value="25" class="form-control"></label></div><p>الافتراضي: 25% من قيمة الحجز. العربون صفر بيظهر التنبيه برضه طول ما القاعدة متفعلة. مش بيعدل الحجوزات القديمة تلقائياً.</p><button type="button" class="btn-submit" onclick="saveDepositRule()">حفظ قاعدة العربون</button></div>';
+      document.getElementById('setSubDeposit').innerHTML='<header class="settings-section-heading"><h3>قاعدة العربون للحجز المؤكد</h3><p>تنبيه واقتراح حجز مؤقت، مش منع إجباري. تقدر تكمل مؤكد وقرارك بيتسجل.</p></header><div class="settings-action-card"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="depositRuleEnabled" checked> تفعيل تنبيه العربون</label><div class="row-2" style="margin:16px 0;"><label>نوع الحد الأدنى<select id="depositRuleType" class="form-control" onchange="document.getElementById(&quot;depositRuleValue&quot;).disabled=(this.value===&quot;night&quot;)"><option value="percent">نسبة من قيمة الحجز (%)</option><option value="fixed">مبلغ ثابت (ج.م)</option><option value="night">سعر ليلة واحدة</option></select></label><label>القيمة<input id="depositRuleValue" type="number" min="0" value="25" class="form-control"></label></div><p>الافتراضي: 25% من قيمة الحجز. اختيار "سعر ليلة واحدة" بيحسب الحد الأدنى تلقائياً = قيمة الحجز ÷ عدد الليالي. العربون صفر بيظهر التنبيه برضه طول ما القاعدة متفعلة. مش بيعدل الحجوزات القديمة تلقائياً.</p><button type="button" class="btn-submit" onclick="saveDepositRule()">حفظ قاعدة العربون</button></div>';
       var commRoot=document.getElementById('setSubComm'),commGrid=commRoot.querySelector('.panel-grid-2'),employeeCard=document.getElementById('individualUserCommList').parentElement,globalCard=commGrid.firstElementChild.firstElementChild,villageCard=document.getElementById('villageCommissionsList').parentElement;
       var globalSection=document.createElement('details');globalSection.className='commission-section';globalSection.innerHTML='<summary>تطبيق عمولة واحدة على كل السيلز</summary>';globalSection.appendChild(globalCard);var villageSection=document.createElement('details');villageSection.className='commission-section';villageSection.innerHTML='<summary>تخصيص عمولة لكل قرية (له الأولوية)</summary>';villageSection.appendChild(villageCard);commRoot.appendChild(employeeCard);commRoot.appendChild(globalSection);commRoot.appendChild(villageSection);commGrid.remove();employeeCard.classList.add('commission-employees');employeeCard.querySelector('h4').textContent='العمولة الأساسية لكل موظف';employeeCard.querySelector('p').textContent='اختار النوع والقيمة لكل موظف واحفظه لوحده. لو فيه تخصيص للقرية، هو اللي بيتطبق على حجوزات القرية دي.';commRoot.querySelector('.settings-section-heading p').textContent='ترتيب الأولوية: الموظف في القرية دي، ثم تخصيص القرية، ثم العمولة الأساسية للموظف، ثم الافتراضي. الإعدادات القديمة شغالة زي ما هي.';var baseSection=document.createElement('details');baseSection.className='commission-section';baseSection.innerHTML='<summary>العمولة الأساسية لكل موظف</summary>';baseSection.appendChild(employeeCard);commRoot.appendChild(baseSection);var matrixSection=document.createElement('section');matrixSection.className='settings-action-card commission-matrix';matrixSection.innerHTML='<h3>عمولة الموظف في كل قرية</h3><p>اختار الموظف، وحدد عمولته في أي قرية. اختيار الوراثة بيلغي التخصيص ده ويرجع للقواعد الأقل أولوية.</p><label>الموظف<select id="matrixEmployeeSelect" class="form-control" onchange="renderEmployeeVillageMatrix()"></select></label><div id="matrixVillageRules"></div>';commRoot.querySelector('.settings-section-heading').after(matrixSection);
       var title=document.createElement('header');title.className='settings-page-heading';title.innerHTML='<div><h2>الإعدادات</h2><p>اختار القسم، وهتلاقي كل أدواته لوحدها.</p></div><span>للإدارة فقط</span>';root.prepend(title);
@@ -2406,7 +2457,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         }).join('')||'<p>ابدأ بإضافة أول قرية من فوق.</p>';
       }
 
-      var depositRule=getDepositRule();if(!document.getElementById('setSubDeposit').contains(document.activeElement)){document.getElementById('depositRuleEnabled').checked=depositRule.enabled;document.getElementById('depositRuleType').value=depositRule.type;document.getElementById('depositRuleValue').value=depositRule.value;}
+      var depositRule=getDepositRule();if(!document.getElementById('setSubDeposit').contains(document.activeElement)){document.getElementById('depositRuleEnabled').checked=depositRule.enabled;document.getElementById('depositRuleType').value=depositRule.type;document.getElementById('depositRuleValue').value=depositRule.value;document.getElementById('depositRuleValue').disabled=(depositRule.type==='night');}
       if (appDB.globalCommConfig) {
         var gT = document.getElementById('globalCommTypeInp'), gV = document.getElementById('globalCommValInp');
         if (gT) gT.value = appDB.globalCommConfig.type || 'pct';
@@ -2597,8 +2648,71 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <div style="margin-top:10px;">${getTransparentExportFooterHTML()}</div>
       </div>`;
     }
-    function exportMyCommissionsImage() { if (!currentUser) return; var el = document.getElementById('myCommCaptureArea'); if (!el) { renderMyCommissions(); el = document.getElementById('myCommCaptureArea'); } if (!el) return; html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => triggerUniversalImageDownload(`عمولات-${currentUser.fullName}-${formatLocalDate(new Date())}.png`, c.toDataURL('image/png'))); }
-    function renderAuditLog() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}  var d = document.getElementById('auditLogContainer'); if (d) d.innerHTML = (appDB.auditLog||[]).map(a => `<div style="padding:6px;border-bottom:1px solid var(--border-color);font-size:11.5px;display:flex;justify-content:space-between;"><span><b>${esc(a.user)}:</b> ${esc(a.action)}</span><span>${esc(a.createdAt ? new Date(a.createdAt).toLocaleString('ar-EG') : (a.time||''))}</span></div>`).join(''); }
+    function mountA4ExportNode(innerHTML, landscape) {
+      var wrap = document.getElementById('offscreenExportWrapper'); if (!wrap) return null;
+      wrap.innerHTML = '';
+      var doc = document.createElement('div');
+      doc.className = 'a4-export-doc';
+      doc.style.cssText = 'width:' + (landscape ? 1123 : 794) + 'px;background:#ffffff;color:#0f172a;position:relative;overflow:hidden;padding:26px 24px 0;box-sizing:border-box;';
+      doc.innerHTML = innerHTML;
+      wrap.appendChild(doc);
+      return doc;
+    }
+    function stripCardTableClasses(root) { root.querySelectorAll('.financial-card-table').forEach(t => t.classList.remove('financial-card-table')); return root; }
+    function cloneForA4Export(srcEl, landscape) {
+      var wrap = document.getElementById('offscreenExportWrapper'); if (!wrap) return null;
+      wrap.innerHTML = '';
+      var clone = srcEl.cloneNode(true);
+      stripCardTableClasses(clone);
+      clone.style.width = (landscape ? 1123 : 794) + 'px'; clone.style.maxWidth = 'none'; clone.style.margin = '0';
+      wrap.appendChild(clone);
+      return clone;
+    }
+    function downloadCanvasPaginated(canvas, baseName) {
+      var pageH = Math.round(canvas.width * 1123 / 794);
+      if (canvas.height <= pageH * 1.05) { triggerUniversalImageDownload(baseName + '.png', canvas.toDataURL('image/png')); return; }
+      var pages = Math.ceil(canvas.height / pageH);
+      for (var i = 0; i < pages; i++) {
+        var pc = document.createElement('canvas'); pc.width = canvas.width; pc.height = Math.min(pageH, canvas.height - i * pageH);
+        pc.getContext('2d').drawImage(canvas, 0, i * pageH, canvas.width, pc.height, 0, 0, canvas.width, pc.height);
+        triggerUniversalImageDownload(baseName + '-صفحة-' + (i + 1) + '.png', pc.toDataURL('image/png'));
+      }
+    }
+    function clearA4ExportNode() { var wrap = document.getElementById('offscreenExportWrapper'); if (wrap) wrap.innerHTML = ''; }
+    function exportMyCommissionsImage() { if (!currentUser) return;
+      var myBooks = appDB.bookings.filter(b => b.status !== 'hold' && b.ownerUsername === currentUser.username).sort((a,b) => (b.regDate||'').localeCompare(a.regDate||''));
+      if (!myBooks.length) { showToast('⚠️ مفيش حجوزات مسجلة باسمك لسه'); return; }
+      var totalSales = myBooks.reduce((s, b) => s + b.total, 0), totalComm = myBooks.reduce((s, b) => s + calculateUserCommission(currentUser, b), 0), totalCollected = myBooks.reduce((s, b) => s + (b.total - (b.remaining||0)), 0);
+      var thS = 'padding:9px 7px;background:#0b192c;color:#fef08a;font-size:12px;border:1px solid #0b192c;';
+      var tdS = 'padding:8px 7px;border:1px solid #e2e8f0;font-size:12px;';
+      var rows = myBooks.map((b, i) => `<tr style="background:${i % 2 ? '#f8fafc' : '#ffffff'};"><td style="${tdS}" dir="ltr">#${esc(b.receiptNumber||b.id)}</td><td style="${tdS}">${esc(b.village)} - ${esc(b.chaletName)}</td><td style="${tdS}">${esc(b.clientName)}</td><td style="${tdS}" dir="ltr">${esc(b.regDate||'-')}</td><td style="${tdS}">${getStayNights(b.startDate, b.endDate).length} ليلة</td><td style="${tdS}">${b.total.toLocaleString()}</td><td style="${tdS}color:#16a34a;font-weight:900;">${calculateUserCommission(currentUser, b).toLocaleString()} ج.م</td></tr>`).join('');
+      var node = mountA4ExportNode(`
+        ${getMultiWatermarkHTML()}
+        <div style="position:relative;z-index:2;">
+          <div style="background:#0b192c;color:#fff;padding:14px 18px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div><b style="color:#fef08a;font-size:17px;">كشف عمولات ${esc(currentUser.fullName)}</b><div style="font-size:11px;margin-top:4px;">نظام العمولة: ${esc(getCommissionLabelForUser(currentUser))} — تاريخ الإصدار: ${formatLocalDate(new Date())}</div></div>
+            <img src="${APP_LOGO_SRC}" style="height:50px;background:#000;padding:3px;border-radius:6px;">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px;">
+            <div style="flex:1;border:1.5px solid #cbd5e1;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:11px;color:#64748b;">حجوزاتي</div><div style="font-size:19px;font-weight:900;color:#0b192c;">${myBooks.length}</div></div>
+            <div style="flex:1;border:1.5px solid #cbd5e1;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:11px;color:#64748b;">مبيعاتي (المحصل: ${totalCollected.toLocaleString()})</div><div style="font-size:19px;font-weight:900;color:#0b192c;">${totalSales.toLocaleString()} ج.م</div></div>
+            <div style="flex:1;border:1.5px solid #16a34a;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:11px;color:#64748b;">عمولتي المستحقة (${esc(getCommissionLabelForUser(currentUser))})</div><div style="font-size:19px;font-weight:900;color:#16a34a;">${totalComm.toLocaleString()} ج.م</div></div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;text-align:right;">
+            <thead><tr><th style="${thS}">الإيصال</th><th style="${thS}">الشاليه</th><th style="${thS}">العميل</th><th style="${thS}">التسجيل</th><th style="${thS}">المدة</th><th style="${thS}">قيمة الحجز</th><th style="${thS}">عمولتي</th></tr></thead>
+            <tbody>${rows}</tbody>
+            <tfoot><tr><td colspan="5" style="${tdS}background:#0b192c;color:#fef08a;font-weight:900;">الإجمالي</td><td style="${tdS}background:#0b192c;color:#fef08a;font-weight:900;">${totalSales.toLocaleString()} ج.م</td><td style="${tdS}background:#0b192c;color:#fef08a;font-weight:900;">${totalComm.toLocaleString()} ج.م</td></tr></tfoot>
+          </table>
+        </div>
+        <div style="margin-top:14px;">${getTransparentExportFooterHTML()}</div>`);
+      if (!node) return;
+      html2canvas(node, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(c => { downloadCanvasPaginated(c, `كشف-عمولات-${currentUser.fullName}-${formatLocalDate(new Date())}`); clearA4ExportNode(); });
+    }
+    function renderAuditLog() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}  var d = document.getElementById('auditLogContainer'); if (!d) return;
+      var showLogins = !!((document.getElementById('auditShowLogins')||{}).checked);
+      var entries = (appDB.auditLog||[]).filter(a => showLogins || String(a.action||'').indexOf('تسجيل دخول') !== 0);
+      d.innerHTML = entries.map(a => `<div style="padding:6px;border-bottom:1px solid var(--border-color);font-size:11.5px;display:flex;justify-content:space-between;"><span><b>${esc(a.user)}:</b> ${esc(a.action)}</span><span>${esc(a.createdAt ? fmtCairo(a.createdAt) : (a.time||''))}</span></div>`).join('') || '<div style="padding:14px;text-align:center;color:var(--text-muted);font-size:12px;">مفيش حركات لعرضها</div>';
+    }
     function expenseChaletLabel(chaletId) { if (chaletId === 'general') return 'مصروف مكتب عام'; var c = (appDB.chalets || []).find(c => c.id === chaletId); return c ? (c.village + ' - ' + c.name) : 'شاليه محذوف'; }
     function ensureExpenseIds() { var changed = false; (appDB.expenses || []).forEach((x, i) => { if (!x.id) { x.id = 'EXP-' + Date.now() + '-' + i; changed = true; } }); return changed; }
     async function addExpense() { if (!isAdminSession()) {showToast('للأدمن فقط');return;}
