@@ -304,7 +304,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
 .startup-phone,.startup-phone:visited,.startup-phone:hover,.startup-phone:active{display:block!important;color:#ffe49b!important;-webkit-text-fill-color:#ffe49b!important;font-size:21px!important;font-weight:800!important;font-family:Arial,sans-serif!important;letter-spacing:1px;text-decoration:none!important;margin:14px 0 12px!important;line-height:1.4}.startup-contact-actions{display:flex;gap:10px;justify-content:center;margin:0 0 14px}.startup-contact-actions a,.startup-contact-actions a:visited{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;min-width:86px;padding:6px 12px;border:1px solid #d4af37;border-radius:10px;background:#203447;color:#fff!important;-webkit-text-fill-color:#fff!important;text-decoration:none;font-size:13px;font-weight:800}.startup-enter{display:inline-block;margin-top:26px;min-height:46px;padding:10px 54px;border:0;border-radius:12px;background:linear-gradient(135deg,#e2c577,#c9a227);color:#1a1207;font-family:'Cairo','IBM Plex Sans Arabic',Tahoma,sans-serif;font-size:17px;font-weight:900;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 24px rgba(212,175,55,.28);transition:transform .15s ease}.startup-enter:active{transform:scale(.96)}.startup-social{display:flex;gap:14px;justify-content:center;margin-top:0}.startup-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(212,175,55,.6);border-radius:50%;color:#e2c577;background:rgba(212,175,55,.08);text-decoration:none}.startup-social a svg{width:20px;height:20px}.startup-contact-actions .startup-whatsapp{background:#075e54;border-color:#34d399}.startup-credit-card a.startup-contact{color:#e2e8f0!important;-webkit-text-fill-color:#e2e8f0!important}
 </style>
-<style>.cost-item{border:1.5px solid var(--border-color);border-radius:12px;padding:14px;margin:12px 0;overflow-wrap:anywhere}.cost-item small{display:block;color:var(--text-muted);margin-top:7px}.cost-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.cost-actions button{min-height:40px;white-space:nowrap}.cost-item p{line-height:1.7}</style></head>
+<style>.cost-item{border:1.5px solid var(--border-color);border-radius:12px;padding:14px;margin:12px 0;overflow-wrap:anywhere}.cost-item small{display:block;color:var(--text-muted);margin-top:7px}.cost-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.cost-actions button{background:#2563eb;min-height:40px;white-space:nowrap}.cost-item p{line-height:1.7}</style></head>
 <body>
 <div class="toast-banner" id="toastBanner">✅ تم الحجز والتخزين بنجاح!</div>
 <div aria-label="بدء التشغيل" class="splash-overlay" id="splashScreen">
@@ -371,7 +371,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 </header>
 <nav class="top-nav-bar">
 <div class="nav-group">
-<button class="tab-btn active" id="tabGrid" onclick="switchView('grid')" type="button">📅 جدول الحجوزات</button><button class="tab-btn" id="tabMaint" onclick="switchView('maint')" type="button">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button><button class="tab-btn" id="tabExpenses" onclick="switchView('expenses')" type="button">💸 المصاريف</button>
+<button class="tab-btn active" id="tabGrid" onclick="switchView('grid')" type="button">📅 جدول الحجوزات</button><button class="tab-btn" id="tabMaint" onclick="switchView('maint')" type="button">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
 <button class="tab-btn gold-tab" id="tabNewBook" onclick="openQuickBookingModal()" type="button">➕ حجز جديد</button>
 <button class="tab-btn" id="tabCatalog" onclick="switchView('catalog')" type="button">🖼️ صور الشاليهات</button>
 <button class="tab-btn" id="tabAvail" onclick="switchView('avail')" type="button">🔍 إيه المتاح؟</button>
@@ -487,11 +487,11 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <div id="permitOverdue"></div>
 <p style="color:var(--text-muted);font-size:12px;line-height:1.8;">القائمة بتتجدد تلقائيًا مع بداية اليوم بتوقيت مصر، والأيام السابقة في الأرشيف حسب تاريخ تجهيز التصريح. التنبيه بيظهر جوه الموقع وهو مفتوح أو أول ما تفتحه. حالة «اتبعت للأمن» معناها إتمام المشاركة أو تأكيد الأدمن، مش تأكيد استلام من واتساب أو موافقة الأمن.</p>
 </div>
-<div class="panel-container" id="viewMaint">
+<div class="panel-container" id="viewMaint"><div style="display:flex;gap:8px;margin-bottom:14px"><button class="tab-btn" id="maintSubTickets" onclick="switchMaintSub('tickets')" type="button">🔧 الصيانة والأعطال</button><button class="tab-btn" id="maintSubExpenses" onclick="switchMaintSub('expenses')" type="button">💸 المصاريف</button></div><div id="maintTicketsSection">
 <div class="panel-grid-2">
 <div class="box-card">
 <h3>🔧 الصيانة والأعطال</h3><p style="color:var(--text-muted);line-height:1.8">سجّل الأعطال والصيانة وتكلفتها، وكل سيلز يشوف ويعدل تسجيلاته بس.</p>
-<div class="form-group"><label>نوع التسجيل</label><select class="form-control" id="maintEntryType" onchange="switchMaintAddType(this.value)"><option value="fault">🔴 عطل</option><option value="maintenance">🛠️ صيانة</option></select></div>
+
 <div class="" id="maintPaneTicket">
 <div class="form-group"><label>التاريخ:</label><input class="form-control" id="maintDate" type="date"/></div>
 <div class="form-group"><label>الشاليه *</label><select class="form-control" id="maintChaletSel"></select></div>
@@ -505,17 +505,17 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 </div>
 <div class="box-card">
 <div class="exp-filter-bar">
-<div class="form-group"><label>النوع:</label><select class="form-control" id="opsFilterType" onchange="renderOperations()"><option value="">كل الأنواع</option><option value="fault">عطل</option><option value="maintenance">صيانة</option></select></div>
+
 <div class="form-group"><label>الجهة:</label><select class="form-control" id="maintFilterChalet" onchange="renderOperations()"></select></div>
 <div class="form-group"><label>من يوم:</label><input class="form-control" id="maintFilterFrom" onchange="renderOperations()" type="date"/></div>
 <div class="form-group"><label>لحد يوم:</label><input class="form-control" id="maintFilterTo" onchange="renderOperations()" type="date"/></div>
 <div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="maintFilterText" oninput="renderOperations()"/></div>
 <button class="btn-hdr exp-filter-clear" onclick="resetMaintenanceFilters()" type="button">✖ مسح الفلتر</button>
-<button class="btn-hdr" onclick="filterCostsToday('maint')" type="button">📅 النهاردة</button></div>
+<button class="btn-hdr" onclick="filterCostsToday('maint')" style="background:#0f766e" type="button">📅 النهاردة</button></div>
 <div id="operationsList"></div><div id="maintTicketsContainer" style="display:none"></div>
 </div>
 </div>
-</div><div class="panel-container" id="viewExpenses"><div class="panel-grid-2"><div class="box-card"><h3>💸 المصاريف</h3><p style="color:var(--text-muted);line-height:1.8">سجّل مصروفك الشخصي أو مصروف الشاليه. الأدمن يشوف الكل، والسيلز يشوف تسجيلاته بس.</p><div class="" id="maintPaneExp">
+</div><div class="" id="viewExpenses" style="display:none"><div class="panel-grid-2"><div class="box-card"><h3>💸 المصاريف</h3><p style="color:var(--text-muted);line-height:1.8">سجّل مصروفك الشخصي أو مصروف الشاليه. الأدمن يشوف الكل، والسيلز يشوف تسجيلاته بس.</p><div class="" id="maintPaneExp">
 <div class="form-group"><label>التاريخ:</label><input class="form-control" id="expDate" type="date"/></div>
 <div class="form-group"><label>تبع شاليه إيه؟:</label><select class="form-control" id="expChaletSel"></select></div>
 <div class="form-group"><label>اتصرف في إيه؟:</label><input class="form-control" id="expDesc"/></div>
@@ -529,7 +529,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <div class="form-group"><label>لحد يوم:</label><input class="form-control" id="expFilterTo" onchange="renderExpenses()" type="date"/></div>
 <div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="expFilterText" oninput="renderExpenses()"/></div>
 <button class="btn-hdr exp-filter-clear" onclick="resetExpenseFilters()" type="button">✖ مسح الفلتر</button>
-<button class="btn-hdr" onclick="filterCostsToday('exp')" type="button">📅 النهاردة</button></div><div id="expensesListContainer" style="overflow-x:auto;max-width:100%"></div></div></div><div class="box-card admin-only" id="costSummary" style="margin-top:14px"></div></div>
+<button class="btn-hdr" onclick="filterCostsToday('exp')" style="background:#0f766e" type="button">📅 النهاردة</button></div><div id="expensesListContainer" style="overflow-x:auto;max-width:100%"></div></div></div><div class="box-card admin-only" id="costSummary" style="margin-top:14px"></div></div></div>
 <div class="modal-overlay" id="maintHistoryModal" onclick="if(event.target===this) this.style.display='none'">
 <div class="modal-box" style="max-width:520px;max-height:80vh;overflow:auto;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -881,6 +881,6 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 </div>
 </div>
 <div id="offscreenExportWrapper"></div>
-<script src="3-elaraby-runtime-v13.js"></script>
+<script src="6-elaraby-runtime-v14.js"></script>
 </body>
 </html>
