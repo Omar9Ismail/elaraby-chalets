@@ -300,6 +300,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 .settings-content,.settings-content input,.settings-content select{min-width:0;}#individualUserCommList>div{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) 100px auto!important;}.matrix-village-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(0,1.5fr) 100px auto;gap:12px;align-items:end;border:1px solid var(--border-color);padding:12px;margin-top:12px;border-radius:9px;background:var(--bg-surface);}.matrix-village-row label{font-size:11px;}.matrix-village-row>b{align-self:center;font-size:13px;}.matrix-village-row button{min-height:39px;}.commission-matrix h3{margin:0;color:var(--primary);font-size:16px;}.commission-matrix>label{font-size:12px;font-weight:800;display:block;max-width:400px;}.commission-section>summary{padding:4px;}.settings-content select{max-width:100%;}@media(max-width:900px){.matrix-village-row{grid-template-columns:minmax(0,1fr) 85px;gap:10px;}.matrix-village-row>b{grid-column:1/-1;}.matrix-village-row button{grid-column:1/-1;justify-content:center;}.commission-matrix{padding:12px;}}
 @media(max-width:900px){body{padding-bottom:66px!important;}.dev-footer{position:static!important;padding:7px 8px!important;min-height:35px;box-sizing:border-box;background:#0b192c!important;}.dev-footer .developer-credit{flex-wrap:nowrap;white-space:nowrap;justify-content:center;gap:3px 5px;font-size:9px!important;}.dev-footer .developer-credit b{font-size:12px!important;}.dev-footer .developer-credit a{font-size:9px!important;}.dev-footer .developer-credit>span{font-size:9px!important;}}
 #btnThemeToggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:69px;min-height:30px;color:#fff!important}#btnThemeToggle svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}#btnThemeToggle span{font-size:11px}
+
+    .permit-page-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:16px;flex-wrap:wrap}.permit-banner{padding:14px 16px;border:1px solid #99d9d2;border-radius:12px;background:#eaf8f6;color:#115e59;line-height:1.8;margin-bottom:14px}.permit-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.permit-stat{background:var(--card-bg,#fff);border:1px solid var(--border-color);border-radius:12px;padding:14px}.permit-stat strong{display:block;font-size:26px;margin-top:6px}.permit-toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}.permit-toolbar label{display:grid;gap:6px;min-width:180px;font-size:13px;font-weight:700}.permit-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.permit-card{border:1px solid var(--border-color);border-right:5px solid #d97706;border-radius:12px;padding:17px;background:var(--card-bg,#fff);line-height:1.8}.permit-card.sent{border-right-color:#059669}.permit-card h3{margin:0 0 8px;font-size:17px}.permit-status{display:inline-block;padding:3px 10px;border-radius:7px;font-size:12px;font-weight:800;background:#fff4dd;color:#92400e}.permit-card.sent .permit-status{background:#dcfce7;color:#166534}.permit-card small{display:block;color:var(--text-muted)}.permit-card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.permit-card-actions button{border:0;border-radius:8px;padding:10px 12px;cursor:pointer;font-family:inherit;font-weight:700}.permit-confirm{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:13px}.permit-empty{padding:30px;text-align:center;border:1px dashed var(--border-color);border-radius:12px;color:var(--text-muted);grid-column:1/-1}@media(max-width:640px){.permit-cards{grid-template-columns:1fr}.permit-summary{gap:6px}.permit-stat{padding:10px;font-size:11px}.permit-stat strong{font-size:23px}.permit-toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.permit-toolbar label{min-width:0}.permit-toolbar select{width:100%;min-width:0;font-size:12px}.permit-page-head h2{font-size:21px}.permit-card{padding:14px}}
 </style>
 </head>
 <body>
@@ -375,7 +377,9 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <button type="button" id="tabNewBook" class="tab-btn gold-tab" onclick="openQuickBookingModal()">➕ حجز جديد</button>
         <button type="button" id="tabCatalog" class="tab-btn" onclick="switchView('catalog')">🖼️ صور الشاليهات</button>
         <button type="button" id="tabAvail" class="tab-btn" onclick="switchView('avail')">🔍 إيه المتاح؟</button>
-        <button type="button" id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 الحجوزات والبطايق</button>
+        <button type="button" id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 الحجوزات</button>
+        <button type="button" id="tabIdphotos" class="tab-btn" onclick="switchView('idphotos')">🪪 صور البطايق</button>
+        <button type="button" id="tabPermits" class="tab-btn admin-only" onclick="switchView('permits')">🛡️ تصاريح الأمن <span id="permitNavCount"></span></button>
         <button type="button" id="tabMaint" class="tab-btn" onclick="switchView('maint')">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
         <button type="button" id="tabMyComm" class="tab-btn" onclick="switchView('mycomm')">💵 عمولاتي</button>
         <button type="button" id="tabTreasury" class="tab-btn admin-only" onclick="switchView('treasury')">💰 الخزينة والملاك</button>
@@ -385,10 +389,10 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     </nav>
 
     <div class="kpi-strip">
-      <div class="kpi-card"><div><div class="kpi-lbl">📊 نسبة الشغل الشهر ده</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">⏳ حجوزات هولد مؤقتة</div><div class="kpi-val" style="color:#d97706;" id="kpiHolds">0</div></div><span>⏱️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">🪪 دخول قريب من غير بطاقة</div><div class="kpi-val" style="color:#dc2626;" id="kpiMissingIds">0</div></div><span>🛡️</span></div>
-      <div class="kpi-card"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
+      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('occupancy')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('occupancy');}"><div><div class="kpi-lbl">📊 نسبة الشغل الشهر ده</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
+      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('holds')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('holds');}"><div><div class="kpi-lbl">⏳ حجوزات هولد مؤقتة</div><div class="kpi-val" style="color:#d97706;" id="kpiHolds">0</div></div><span>⏱️</span></div>
+      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('missing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('missing');}"><div><div class="kpi-lbl">🪪 دخول قريب من غير بطاقة</div><div class="kpi-val" style="color:#dc2626;" id="kpiMissingIds">0</div></div><span>🛡️</span></div>
+      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('money')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('money');}"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
     </div>
 
     <section id="notificationsPanel" class="notifications-panel" aria-label="قائمة التنبيهات" hidden><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><b>التنبيهات</b><span style="display:flex;gap:6px;"><button type="button" class="btn-hdr" style="background:#0f766e;" onclick="markAllActionNotificationsSeen()">✓ تعليم الكل كمقروء</button><button type="button" class="btn-hdr" style="background:#475569;" onclick="toggleNotifications(false)">إغلاق ×</button></span></div><div id="notificationsList"></div></section>
@@ -462,7 +466,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       <div class="grid-toolbar">
         <div class="toolbar-left">
           <select id="ledgerVillageFilter" class="ctrl-select" onchange="renderLedgerList()"></select>
-          <select id="ledgerPermitFilter" class="ctrl-select" onchange="renderLedgerList()">
+          <select id="ledgerPermitFilter" style="display:none;" aria-hidden="true" tabindex="-1" onchange="renderLedgerList()">
             <option value="all">كل الحجوزات</option>
             <option value="missing">🔴 لسه من غير بطايق</option>
             <option value="ready">🟡 البطايق اترفعت وجاهزة</option>
@@ -481,6 +485,18 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
           <div class="drawer-body" id="ldcContent"></div>
         </aside>
       </div>
+    </div>
+
+    <div id="viewKpidetail" class="panel-container" style="display:none;"><h2 id="kpiDetailTitle"></h2><p id="kpiDetailSummary"></p><div id="kpiDetailCards" class="permit-cards"></div></div>
+    <div id="viewIdphotos" class="panel-container" style="display:none;"><h2>🪪 صور البطايق</h2><p style="color:var(--text-muted);">ارفع صور بطايق حجوزاتك قبل التسكين بيوم أو يومين. إرسال التصريح للأمن من حساب الأدمن بس.</p><div id="idPhotoCards" class="permit-cards"></div></div>
+    <div id="viewPermits" class="panel-container admin-only" style="display:none;">
+      <div class="permit-page-head"><div><h2 style="margin:0 0 6px;">🛡️ تصاريح الأمن</h2><p id="permitDayLabel" style="margin:0;color:var(--text-muted);"></p></div><button type="button" class="btn-hdr" style="background:#0f766e;" onclick="showPermitToday()">قائمة النهاردة</button></div>
+      <div id="permitDailyBanner" class="permit-banner"></div>
+      <div id="permitSummary" class="permit-summary"></div>
+      <div class="permit-toolbar"><label>عرض القائمة <select id="permitDaySelect" class="form-control" onchange="renderDailyPermits()"><option value="today">النهاردة: تسكين بكرة</option></select></label><label>الحالة <select id="permitStateFilter" class="form-control" onchange="renderDailyPermits()"><option value="all">كل الحالات</option><option value="pending">لسه متبعتش</option><option value="sent">اتبعت للأمن</option></select></label></div>
+      <div id="permitCards" class="permit-cards"></div>
+      <div id="permitOverdue"></div>
+      <p style="color:var(--text-muted);font-size:12px;line-height:1.8;">القائمة بتتجدد تلقائيًا مع بداية اليوم بتوقيت مصر، والأيام السابقة في الأرشيف حسب تاريخ تجهيز التصريح. التنبيه بيظهر جوه الموقع وهو مفتوح أو أول ما تفتحه. حالة «اتبعت للأمن» معناها إتمام المشاركة أو تأكيد الأدمن، مش تأكيد استلام من واتساب أو موافقة الأمن.</p>
     </div>
 
     <div id="viewMaint" class="panel-container">
@@ -1044,7 +1060,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function fmtCairo(ts, withSeconds) { try { return new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', ...(withSeconds ? { second:'2-digit' } : {}), hour12: true }).format(new Date(ts)); } catch (e) { return new Date(ts).toLocaleString('ar-EG'); } }
     function fmtCairoDate(d) { try { return new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(d); } catch (e) { return d.toLocaleDateString('ar-EG'); } }
     function fmtStayDate(iso) { try { var d = new Date(iso + 'T12:00:00Z'); var wd = new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, weekday: 'long' }).format(d); var p = new Intl.DateTimeFormat('en-GB', { timeZone: CAIRO_TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d).split('/'); return wd + ' \u2066' + p[0] + '-' + p[1] + '-' + p[2] + '\u2069'; } catch (e) { return iso; } }
-    function updateHeaderClock() { var el = document.getElementById('headerClock'); if (el) { var now = new Date(); el.textContent = '🕐 ' + fmtCairoDate(now) + ' — ' + new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(now); } }
+    function updateHeaderClock() { checkPermitDayRollover(); var el = document.getElementById('headerClock'); if (el) { var now = new Date(); el.textContent = '🕐 ' + fmtCairoDate(now) + ' — ' + new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(now); } }
     function formatLocalDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
     function parseLocalDate(s) { var p = s.split('-'); return new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10)); }
     function cairoDateStr(d) { try { var p = new Intl.DateTimeFormat('en-GB', { timeZone: CAIRO_TZ, year:'numeric', month:'2-digit', day:'2-digit' }).format(d || new Date()).split('/'); return p[2] + '-' + p[1] + '-' + p[0]; } catch (e) { return formatLocalDate(d || new Date()); } }
@@ -1456,16 +1472,31 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     };
 
     function switchView(v) {
-      if (['treasury','audit','settings'].includes(v) && !isAdminSession()) {showToast('للأدمن فقط');return;}
-      ['viewGrid','viewCatalog','viewAvail','viewLedger','viewMaint','viewMycomm','viewTreasury','viewAudit','viewSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.style.display='none'; });
-      ['tabGrid','tabCatalog','tabAvail','tabLedger','tabMaint','tabMyComm','tabTreasury','tabAudit','tabSettings'].forEach(id => { var el = document.getElementById(id); if (el) el.classList.remove('active'); });
+      if (['treasury','audit','settings','permits'].includes(v) && !isAdminSession()) {showToast('للأدمن فقط');return;}
+      ['viewGrid','viewCatalog','viewAvail','viewLedger','viewMaint','viewMycomm','viewTreasury','viewAudit','viewSettings','viewPermits','viewIdphotos','viewKpidetail'].forEach(id => { var el = document.getElementById(id); if (el) el.style.display='none'; });
+      ['tabGrid','tabCatalog','tabAvail','tabLedger','tabMaint','tabMyComm','tabTreasury','tabAudit','tabSettings','tabPermits','tabIdphotos'].forEach(id => { var el = document.getElementById(id); if (el) el.classList.remove('active'); });
       var t = document.getElementById('view' + v.charAt(0).toUpperCase() + v.slice(1)), b = document.getElementById('tab' + v.charAt(0).toUpperCase() + v.slice(1));
       if (t) t.style.display = 'block'; if (b) b.classList.add('active');
-      if (v==='catalog') renderCatalogCards(); if (v==='ledger') renderLedgerList(); if (v==='maint') renderMaintenanceTickets();
+      if(v==='idphotos')renderIdPhotoList(); if(v==='permits')renderDailyPermits(); if (v==='catalog') renderCatalogCards(); if (v==='ledger') renderLedgerList(); if (v==='maint') renderMaintenanceTickets();
       if (v==='mycomm') renderMyCommissions(); if (v==='treasury') { calculateTreasury(); renderExpenses(); calculateChaletInventory(); calculateWorkStats(); } if (v==='audit') renderAuditLog(); if (v==='settings') renderSettingsLists();
     }
 
-    function refreshAllUI() { populateDropdowns(); updateKPIsAndAlerts(); renderCalendarGrid(); renderCatalogCards(); renderLedgerList(); renderMaintenanceTickets(); if(isAdminSession())renderSettingsLists(); }
+
+    function openKpiDetail(kind){if(kind==='missing'){if(isAdminSession()){switchView('permits');showPermitToday();}else switchView('idphotos');return;}var today=cairoDateStr(),month=today.slice(0,7),list=(appDB.bookings||[]).filter(b=>isAdminSession()||canManageBooking(b));if(kind==='holds')list=list.filter(b=>b.status==='hold');else if(kind==='money')list=list.filter(b=>b.status!=='hold'&&b.startDate===today&&Number(b.remaining)>0);else list=list.filter(b=>b.status!=='hold'&&b.startDate.slice(0,7)<=month&&b.endDate.slice(0,7)>=month);switchView('kpidetail');document.getElementById('kpiDetailTitle').textContent=kind==='money'?'💰 فلوس هتتحصل النهاردة':kind==='holds'?'⏳ حجوزات الهولد المؤقتة':'📊 حجوزات الشهر';document.getElementById('kpiDetailSummary').textContent=kind==='money'?list.length+' حجز · الإجمالي '+list.reduce((n,b)=>n+Number(b.remaining||0),0).toLocaleString()+' ج.م':list.length+' حجز';document.getElementById('kpiDetailCards').innerHTML=list.map(b=>{var id=encodeURIComponent(b.id).replace(/'/g,'%27');return `<article class="permit-card"><h3>${esc(b.village)} · شاليه ${esc(b.chaletName)}</h3><b>${esc(b.clientName)}</b><small>تسكين <bdi>${esc(b.startDate)}</bdi> لحد <bdi>${esc(b.endDate)}</bdi></small>${kind==='money'?`<strong style="font-size:22px;color:#0f766e;">الباقي: ${Number(b.remaining||0).toLocaleString()} ج.م</strong>`:''}<small>المسؤول: ${esc(b.agentName||'')} · ${esc(b.receiptNumber||b.id)}</small><div class="permit-card-actions"><button type="button" onclick="switchView('ledger');showLedgerCard(decodeURIComponent('${id}'),true)">فتح الحجز</button>${kind==='money'&&canManageBooking(b)?`<button type="button" style="background:#059669;color:#fff;" onclick="openSettleModal(decodeURIComponent('${id}'))">تحصيل الباقي</button>`:''}</div></article>`;}).join('')||'<div class="permit-empty">مفيش حجوزات في القائمة دي.</div>';}
+
+    function renderIdPhotoList(){var el=document.getElementById('idPhotoCards');if(!el)return;var list=(appDB.bookings||[]).filter(b=>canManageBooking(b)&&b.status!=='hold').slice().sort((a,b)=>b.startDate.localeCompare(a.startDate));el.innerHTML=list.map(b=>{var id=encodeURIComponent(b.id).replace(/'/g,'%27');return `<article class="permit-card ${b.idPhotoCount?'sent':''}"><h3>${esc(b.village)} · شاليه ${esc(b.chaletName)}</h3><span class="permit-status">${b.idPhotoCount?'✅ '+esc(b.idPhotoCount)+' صورة مرفوعة':'⚠️ البطايق لسه مترفعتش'}</span><div>التسكين: <b dir="ltr">${esc(b.startDate)}</b></div><small>${esc(b.clientName)} · إيصال ${esc(b.receiptNumber||b.id)}</small><div class="permit-card-actions"><button type="button" style="background:#0f766e;color:#fff;" onclick="openPermitModal(decodeURIComponent('${id}'))">رفع وعرض صور البطايق</button></div></article>`;}).join('')||'<div class="permit-empty">مفيش حجوزات متاحة لحسابك.</div>';}
+
+    var permitLastCairoDay = '';
+    function permitShiftDate(day,offset){var d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+offset);return d.toISOString().slice(0,10);}
+    function permitDayBookings(day){var arrival=permitShiftDate(day,1);return (appDB.bookings||[]).filter(b=>b.status!=='hold'&&b.status!=='cancelled'&&b.startDate===arrival).sort((a,b)=>String(a.village+' '+a.chaletName).localeCompare(String(b.village+' '+b.chaletName),'ar'));}
+    function showPermitToday(){if(!isAdminSession())return;document.getElementById('permitDaySelect').value='today';document.getElementById('permitStateFilter').value='all';renderDailyPermits();}
+    function checkPermitDayRollover(){if(typeof currentUser==='undefined'||!currentUser||!isAdminSession())return;var today=cairoDateStr();if(permitLastCairoDay===today)return;var previous=permitLastCairoDay;permitLastCairoDay=today;var select=document.getElementById('permitDaySelect');if(select)select.value='today';if(typeof appDB!=='undefined'&&appDB.bookings){renderDailyPermits();updateKPIsAndAlerts();if(previous)showToast('🛡️ بدأ يوم جديد: قائمة التصاريح اتجددت، واليوم اللي فات في الأرشيف');}}
+    async function persistPermitSent(id,method){if(!isAdminSession()){showToast('للأدمن فقط');return false;}var b=appDB.bookings.find(x=>x.id===id);if(!b)return false;var updated=Object.assign({},b,{permitStatus:'sent',permitSentAt:Date.now(),permitSentBy:currentUser.fullName||currentUser.username,permitSentMethod:method||'manual'});try{await saveSingleBookingCloud(updated,0,' - تأكيد إرسال تصريح الأمن');Object.assign(b,updated);refreshAllUI();showToast('✅ اتسجل إن البطايق اتبعتت للأمن');return true;}catch(e){renderDailyPermits();return false;}}
+    async function confirmPermitCard(id,check){if(!check.checked)return;check.disabled=true;await persistPermitSent(id,'manual');}
+    function permitCardHTML(b,archived){var sent=b.permitStatus==='sent',id=encodeURIComponent(b.id).replace(/'/g,'%27');return `<article class="permit-card ${sent?'sent':''}"><h3>${esc(b.village)} · شاليه ${esc(b.chaletName)}</h3><span class="permit-status">${sent?'✅ البطايق اتبعتت للأمن':'⏳ لسه مخدش التصريح، متبعتش للأمن'}</span><div style="margin-top:10px;">التسكين: <b dir="ltr">${esc(b.startDate)}</b></div><small>العميل: ${esc(b.clientName)} · المسؤول: ${esc(b.agentName||b.ownerUsername||'غير محدد')}</small><small>${b.idPhotoCount?esc(b.idPhotoCount)+' صورة مرفوعة':'البطايق لسه مترفعتش'} · إيصال ${esc(b.receiptNumber||b.id)}</small>${sent&&b.permitSentAt?`<small>اتأكد الإرسال: ${esc(fmtCairo(b.permitSentAt))}</small>`:''}<div class="permit-card-actions"><button type="button" style="background:#0f766e;color:white;" onclick="openPermitModal(decodeURIComponent('${id}'))">${sent?'عرض البطايق والتصريح':'البطايق وإرسال التصريح'}</button></div>${!sent?`<label class="permit-confirm"><input type="checkbox" onchange="confirmPermitCard(decodeURIComponent('${id}'),this)"> بأكد إن البطايق اتبعتت للأمن</label>`:''}${archived?'<small style="margin-top:8px;">من قائمة يوم سابق</small>':''}</article>`;}
+    function renderDailyPermits(){var box=document.getElementById('permitCards');if(!box)return;if(!isAdminSession()){box.innerHTML='';document.getElementById('permitOverdue').innerHTML='';document.getElementById('viewPermits').style.display='none';return;}var today=cairoDateStr(),select=document.getElementById('permitDaySelect'),selected=select.value||'today',days=[...new Set((appDB.bookings||[]).filter(b=>b.status!=='hold'&&b.startDate).map(b=>permitShiftDate(b.startDate,-1)).filter(d=>d<today))].sort().reverse();select.innerHTML='<option value="today">النهاردة: تسكين بكرة</option>'+days.map(d=>`<option value="${esc(d)}">أرشيف ${esc(d)} · تسكين ${esc(permitShiftDate(d,1))}</option>`).join('');select.value=selected==='today'||days.includes(selected)?selected:'today';var day=select.value==='today'?today:select.value,archived=day!==today,list=permitDayBookings(day),pending=list.filter(b=>b.permitStatus!=='sent').length,filter=document.getElementById('permitStateFilter').value;document.getElementById('permitDayLabel').innerHTML=(archived?'أرشيف تجهيز تصاريح يوم ':'قائمة تجهيز تصاريح النهاردة: ')+'<bdi>'+esc(day)+'</bdi> · التسكين <bdi>'+esc(permitShiftDate(day,1))+'</bdi>';document.getElementById('permitDailyBanner').textContent=archived?'بتعرض قائمة يوم سابق. الحالة المعروضة هي آخر حالة محفوظة للحجز.':'تصاريح تسكين بكرة '+permitShiftDate(today,1)+' جاهزة للمتابعة. '+(pending?pending+' تصريح لسه متبعتش للأمن.':'مفيش تصاريح معلقة في قائمة النهاردة.');document.getElementById('permitSummary').innerHTML=[['إجمالي الشاليهات',list.length],['لسه متبعتش',pending],['اتبعت للأمن',list.length-pending]].map(x=>`<div class="permit-stat">${x[0]}<strong>${x[1]}</strong></div>`).join('');var shown=list.filter(b=>filter==='all'||(filter==='sent'?b.permitStatus==='sent':b.permitStatus!=='sent'));box.innerHTML=shown.map(b=>permitCardHTML(b,archived)).join('')||'<div class="permit-empty">'+(list.length?'مفيش حجوزات بالحالة دي.':'مفيش شاليهات تسكينها في اليوم ده.')+'</div>';var overdue=(appDB.bookings||[]).filter(b=>b.status!=='hold'&&b.startDate<=today&&b.endDate>today&&b.permitStatus!=='sent');document.getElementById('permitOverdue').innerHTML=!archived&&overdue.length?'<h3 style="margin-top:26px;color:#b45309;">⚠️ متابعة من الأيام السابقة، لسه متبعتش</h3><div class="permit-cards">'+overdue.map(b=>permitCardHTML(b,true)).join('')+'</div>':'';var nav=document.getElementById('permitNavCount');if(nav)nav.textContent=permitDayBookings(today).filter(b=>b.permitStatus!=='sent').length||'';}
+
+    function refreshAllUI() { renderIdPhotoList(); populateDropdowns(); updateKPIsAndAlerts(); renderCalendarGrid(); renderCatalogCards(); renderLedgerList(); renderMaintenanceTickets(); if(isAdminSession()){renderSettingsLists();renderDailyPermits();} }
 
     var notificationBookings=[];
     function toggleNotifications(force){
@@ -1486,7 +1517,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function openBookingNotification(index){
       var item=notificationBookings[index];if(!item)return;
       toggleNotifications(false);
-      if(item.maintenance){switchView('maint');return;}
+      if(item.idphotos){toggleNotifications(false);switchView('idphotos');return;} if(item.permits){switchView('permits');showPermitToday();return;} if(item.maintenance){switchView('maint');return;}
       var b=appDB.bookings.find(x=>x.id===item.id);if(!b){showToast('الحجز مش موجود دلوقتي');return;}
       switchView('grid');selectedAgentFilter='all';document.getElementById('gridYear').value=b.startDate.slice(0,4);document.getElementById('gridMonth').value=String(Number(b.startDate.slice(5,7)));document.getElementById('gridVillageFilter').value='';renderCalendarGrid();showQuickDrawer(b.id,true);
     }
@@ -1495,9 +1526,10 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
     function updateKPIsAndAlerts() {
       var today = cairoDateStr(), tomorrow = cairoOffsetDateStr(1), now = Date.now();
-      var activeHolds = appDB.bookings.filter(b => b.status === 'hold'), expiredHolds = activeHolds.filter(b => b.holdExpiresAt && now > b.holdExpiresAt);
-      var checkInsToday = appDB.bookings.filter(b => b.startDate === today);
-      var missingIdsSoon = appDB.bookings.filter(b => (b.startDate === today || b.startDate === tomorrow) && (!b.idPhotoCount || b.idPhotoCount === 0));
+      var kpiBooks=appDB.bookings.filter(b=>isAdminSession()||canManageBooking(b));
+      var activeHolds = kpiBooks.filter(b => b.status === 'hold'), expiredHolds = activeHolds.filter(b => b.holdExpiresAt && now > b.holdExpiresAt);
+      var checkInsToday = kpiBooks.filter(b => b.status!=='hold'&&b.startDate === today);
+      var missingIdsSoon = kpiBooks.filter(b => b.status!=='hold'&&(b.startDate === today || b.startDate === tomorrow) && (!b.idPhotoCount || b.idPhotoCount === 0));
       var openMaint = (appDB.maintenanceTickets || []).filter(m => m.status === 'open');
       document.getElementById('kpiHolds').innerText = activeHolds.length;
       document.getElementById('kpiMissingIds').innerText = missingIdsSoon.length;
@@ -1505,10 +1537,12 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var mb = document.getElementById('maintBadgeCount'); if (mb) mb.innerText = openMaint.length;
 
       notificationBookings=[];
+      if(isAdminSession()){var duePermits=permitDayBookings(today),pendingPermits=duePermits.filter(b=>b.permitStatus!=='sent');notificationBookings.push({permits:true,title:'🛡️ تصاريح النهاردة: '+duePermits.length+' شاليه لتسكين بكرة، '+pendingPermits.length+' لسه متبعتش للأمن'});}
       appDB.bookings.forEach(b=>{var reasons=[];
+        if(!isAdminSession()&&canManageBooking(b)&&b.status!=='hold'&&b.startDate<=permitShiftDate(today,2)&&b.endDate>today&&(!b.idPhotoCount||b.idPhotoCount===0)){notificationBookings.push({idphotos:true,id:b.id,booking:b,title:'🪪 لازم ترفع صور البطايق قبل التسكين بيوم أو يومين، التسكين '+b.startDate});}
         if(b.status==='hold'&&b.holdExpiresAt&&now>b.holdExpiresAt)reasons.push('وقت الهولد خلص');
         if(b.status!=='hold'&&b.startDate===today)reasons.push('دخول النهاردة');
-        if(isAdminSession()&&b.status!=='hold'&&b.startDate<=tomorrow&&b.endDate>today){var noIds=(!b.idPhotoCount||b.idPhotoCount===0),notSent=b.permitStatus!=='sent';if(noIds||notSent){var whenTxt=b.startDate===today?'التسكين النهاردة':(b.startDate===tomorrow?'التسكين بكرة':'العميل ساكن دلوقتي');reasons.push('🪪 '+whenTxt+' و'+(noIds?'لسة البطايق مترفعتش':'البطايق جاهزة بس التصريح لسه متبعتش للأمن'));}}
+        if(isAdminSession()&&b.status!=='hold'&&b.startDate<=tomorrow&&b.endDate>today){var noIds=(!b.idPhotoCount||b.idPhotoCount===0),notSent=b.permitStatus!=='sent';if(notSent){var whenTxt=b.startDate===today?'التسكين النهاردة':(b.startDate===tomorrow?'التسكين بكرة':'العميل ساكن دلوقتي');reasons.push('🪪 '+whenTxt+' و'+(noIds?'لسة البطايق مترفعتش':'البطايق جاهزة بس التصريح لسه متبعتش للأمن'));}}
         if(reasons.length)notificationBookings.push({id:b.id,title:reasons.join('، '),booking:b});
       });
       if(openMaint.length&&isAdminSession())notificationBookings.push({maintenance:true,title:openMaint.length+' أعطال مفتوحة'});
@@ -1830,19 +1864,19 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var cObj = appDB.chalets.find(c => c.id === b.chaletId) || {}, secPhone = (cObj.securityPhone || '').replace(/\D/g, '');
       if (secPhone.startsWith('01') && secPhone.length === 11) secPhone = '2' + secPhone;
       var txt = `🛡️ *طلب تصريح دخول - شركة العربي للاستثمار العقاري*\n🏖️ *القرية:* ${b.village} (${b.chaletName})\n👤 *المفوض:* أحمد العربي\n📅 *من:* ${b.startDate} *لحد:* ${b.endDate}`;
-      function markPermitSent() { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); }
-      if (isDesktopBridge() && typeof window.pywebview.api.copy_images_to_clipboard_and_whatsapp === 'function') { markPermitSent(); window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentOpenedPermitPhotos, txt, cObj.securityPhone || "").then(() => showToast("✅ تم نسخ البطايق وفتح واتساب الأمن!")); return; }
+      async function markPermitSent() { return await persistPermitSent(b.id, 'share'); }
+      if (isDesktopBridge() && typeof window.pywebview.api.copy_images_to_clipboard_and_whatsapp === 'function') { try { await window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentOpenedPermitPhotos, txt, cObj.securityPhone || ""); await markPermitSent(); showToast('✅ تم نسخ البطايق وفتح واتساب الأمن!'); } catch(e) { showToast('تعذر الإرسال، حاول تاني'); } return; }
       var files = [];
       try { for (var i = 0; i < currentOpenedPermitPhotos.length; i++) { var blob = await (await fetch(currentOpenedPermitPhotos[i])).blob(); files.push(new File([blob], 'ID-' + (i + 1) + '.jpg', { type: blob.type || 'image/jpeg' })); } } catch (e) { files = []; }
       if (files.length && navigator.canShare && navigator.canShare({ files: files })) {
-        try { await navigator.share({ files: files, text: txt, title: 'تصريح أمن' }); markPermitSent(); showToast('✅ اختار واتساب من القائمة وابعت للأمن'); return; }
+        try { await navigator.share({ files: files, text: txt, title: 'تصريح أمن' }); await markPermitSent(); showToast('✅ اختار واتساب من القائمة وابعت للأمن'); return; }
         catch (e) { if (e && e.name === 'AbortError') { showToast('⚠️ اتلغت المشاركة — الحجز لسه متعلمش كمُرسل'); return; } }
       }
-      markPermitSent();
       window.open(`https://api.whatsapp.com/send?phone=${secPhone}&text=${encodeURIComponent(txt)}`, '_blank');
-      showToast('⚠️ المتصفح ده مش بيدعم إرفاق الصور في المشاركة — النص اتبعت، نزّل الصور وابعتها يدوي');
+      showToast('⚠️ المتصفح ده مش بيدعم إرفاق الصور في المشاركة — نزّل الصور وابعتها يدوي وبعدها علّم «اتبعت خلاص»');
     }
-    function markPermitAsSentOnly() { if (!isAdminSession()) { showToast('⛔ التأكيد متاح للأدمن بس'); return; } var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (b) { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); document.getElementById('permitModal').style.display = 'none'; } }
+    async function markPermitAsSentOnly() { if(await persistPermitSent(document.getElementById('permitBookingId').value,'manual'))document.getElementById('permitModal').style.display='none'; }
+
 
     function sendWelcomeLocationWhatsApp(bId) {
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
@@ -1852,7 +1886,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    function buildBookingCardHTML(b, photosArr) {
+    function buildBookingCardHTML(b, photosArr, bookingsOnly) {
       var isAdmin = currentUser && currentUser.role === 'admin', isAllowed = canManageBooking(b);
       var phone = maskPhoneForViewer(b)||'غير مسجل';
       var photosHtml = '';
@@ -1877,10 +1911,10 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <div class="d-row"><span>الإجمالي:</span><b>${b.total.toLocaleString()} ج.م</b></div>
         <div class="d-row"><span>المدفوع (${esc(b.method||"غير محدد")}):</span><b style="color:#16a34a;">${b.deposit.toLocaleString()} ج.م</b></div>
         <div class="d-row"><span>الباقي:</span><b style="color:#dc2626;">${b.remaining.toLocaleString()} ج.م</b></div>
-        ${photosHtml}
+        ${bookingsOnly ? '' : photosHtml}
         ${isAllowed ? `
           <div class="row-2" style="margin-top:8px;">
-            <button type="button" class="btn-submit" style="background:#0284c7;margin-top:0;font-size:11px;" onclick="openPermitModal('${b.id}')">🪪 إدارة البطايق والأمن</button>
+            <button type="button" class="btn-submit" style="background:#0284c7;margin-top:0;font-size:11px;" onclick="switchView('idphotos')">🪪 قسم صور البطايق</button>
             <button type="button" class="btn-submit" style="background:#16a34a;margin-top:0;font-size:11px;" onclick="exportReceiptA5WithMultiWatermark('${b.id}')">📸 إيصال العميل</button>
           </div>
           <div class="row-2" style="margin-top:6px;">
@@ -1927,16 +1961,11 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var card = document.getElementById('ledgerDetailCard');
       document.getElementById('ldcTitle').innerText = `${b.village} - ${b.chaletName}`;
       document.getElementById('ldcSubId').innerText = `${b.receiptNumber||b.id} | #${b.id}`;
-      document.getElementById('ldcContent').innerHTML = buildBookingCardHTML(b, []);
+      document.getElementById('ldcContent').innerHTML = buildBookingCardHTML(b, [], true);
       card.style.display = 'flex';
-      if (canManageBooking(b) && (b.idPhotoCount || 0) > 0) {
-        var phs = await fetchBookingPhotosCloud(b.id);
-        if (document.getElementById('ldcSubId').innerText.includes(b.id)) {
-          document.getElementById('ldcContent').innerHTML = buildBookingCardHTML(b, phs);
-        }
-      }
     }
 
+    
     function exportReceiptA5WithMultiWatermark(bId) {
       var b=appDB.bookings.find(x=>x.id===bId);if(!b)return;
       var w=document.getElementById('offscreenExportWrapper');w.style.width='600px';
