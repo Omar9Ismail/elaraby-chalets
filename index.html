@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar" data-theme="light">
+
+<html data-theme="light" dir="rtl" lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="سيستم إدارة حجوزات الشاليهات والخزينة والعمولات - شركة العربي للاستثمار العقاري والسياحي، العين السخنة">
-  <meta property="og:title" content="Elaraby Pro - سيستم إدارة الحجوزات والخزينة">
-  <meta property="og:description" content="إدارة حجوزات الشاليهات والخزينة والعمولات - شركة العربي للاستثمار العقاري والسياحي">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="Elaraby.png">
-  <link rel="icon" type="image/webp" href="Elaraby.webp">
-  <title>Elaraby Pro V11 - سيستم إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
-  <script src="html2canvas.min.js"></script>
-  <script src="2-elaraby-firebase-v12.js"></script>
-  
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="سيستم إدارة حجوزات الشاليهات والخزينة والعمولات - شركة العربي للاستثمار العقاري والسياحي، العين السخنة" name="description"/>
+<meta content="Elaraby Pro - سيستم إدارة الحجوزات والخزينة" property="og:title"/>
+<meta content="إدارة حجوزات الشاليهات والخزينة والعمولات - شركة العربي للاستثمار العقاري والسياحي" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="Elaraby.png" property="og:image"/>
+<link href="Elaraby.webp" rel="icon" type="image/webp"/>
+<title>Elaraby Pro V11 - سيستم إدارة الحجوزات والخزينة | شركة العربي للاستثمار العقاري</title>
+<script src="html2canvas.min.js"></script>
+<script src="2-elaraby-firebase-v12.js"></script>
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
 
     :root {
@@ -304,627 +304,583 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
 .startup-phone,.startup-phone:visited,.startup-phone:hover,.startup-phone:active{display:block!important;color:#ffe49b!important;-webkit-text-fill-color:#ffe49b!important;font-size:21px!important;font-weight:800!important;font-family:Arial,sans-serif!important;letter-spacing:1px;text-decoration:none!important;margin:14px 0 12px!important;line-height:1.4}.startup-contact-actions{display:flex;gap:10px;justify-content:center;margin:0 0 14px}.startup-contact-actions a,.startup-contact-actions a:visited{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;min-width:86px;padding:6px 12px;border:1px solid #d4af37;border-radius:10px;background:#203447;color:#fff!important;-webkit-text-fill-color:#fff!important;text-decoration:none;font-size:13px;font-weight:800}.startup-enter{display:inline-block;margin-top:26px;min-height:46px;padding:10px 54px;border:0;border-radius:12px;background:linear-gradient(135deg,#e2c577,#c9a227);color:#1a1207;font-family:'Cairo','IBM Plex Sans Arabic',Tahoma,sans-serif;font-size:17px;font-weight:900;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 24px rgba(212,175,55,.28);transition:transform .15s ease}.startup-enter:active{transform:scale(.96)}.startup-social{display:flex;gap:14px;justify-content:center;margin-top:0}.startup-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(212,175,55,.6);border-radius:50%;color:#e2c577;background:rgba(212,175,55,.08);text-decoration:none}.startup-social a svg{width:20px;height:20px}.startup-contact-actions .startup-whatsapp{background:#075e54;border-color:#34d399}.startup-credit-card a.startup-contact{color:#e2e8f0!important;-webkit-text-fill-color:#e2e8f0!important}
 </style>
-</head>
+<style>.cost-item{border:1.5px solid var(--border-color);border-radius:12px;padding:14px;margin:12px 0;overflow-wrap:anywhere}.cost-item small{display:block;color:var(--text-muted);margin-top:7px}.cost-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.cost-actions button{min-height:40px;white-space:nowrap}.cost-item p{line-height:1.7}</style></head>
 <body>
-
-  <div id="toastBanner" class="toast-banner">✅ تم الحجز والتخزين بنجاح!</div>
-
-  <div id="splashScreen" class="splash-overlay" aria-label="بدء التشغيل">
-    <div id="creditStage" class="startup-stage"><div class="startup-credit-card"><div class="startup-credit-label">تصميم وتطوير</div><div class="startup-author">م. عمر إسماعيل</div><div class="startup-credit-rule"></div><div class="startup-social"><a class="startup-wa" href="https://wa.me/201008743750" target="_blank" rel="noopener" aria-label="واتساب عمر إسماعيل"><svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-4.7A8.5 8.5 0 1 1 20.5 11.5Z"/><path d="M8 7.5c-.8 1-.2 3.5 2 5.7s4.7 2.8 5.7 2l.8-1.5-2.8-1.3-.8.9c-1.4-.6-2.6-1.8-3.2-3.2l.9-.8-1.3-2.8Z"/></svg></a><a href="https://facebook.com/Omar9ismail" target="_blank" rel="noopener" aria-label="فيسبوك عمر إسماعيل"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5V11H8.5v3H11v7h2.5Z"/></svg></a><a href="https://instagram.com/Omar9ismail" target="_blank" rel="noopener" aria-label="إنستجرام عمر إسماعيل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a></div><button type="button" id="startupEnter" class="startup-enter">دخول</button></div></div>
-    <div id="loadingStage" class="startup-stage" style="display:none;">
-      <div class="startup-logo"><img src="Elaraby.webp" alt="شركة العربي"></div>
-      <div class="startup-app">ELARABY <span>PRO</span></div>
-      <div class="startup-owner">إدارة أحمد العربي</div>
-      <div class="startup-description">إدارة الحجوزات والخزينة</div>
-      <div class="startup-progress"><span></span></div>
-      <div class="startup-loading-label">جاري تجهيز البرنامج</div>
-      <div class="startup-signature">تصميم وتطوير <b>م. عمر إسماعيل</b></div>
-    </div>
-  </div>
-
-  <div id="loginScreen" class="login-overlay">
-    <div class="login-card">
-      <div style="width:140px;height:75px;background:#000;border-radius:12px;margin:0 auto 10px;padding:6px;display:flex;align-items:center;justify-content:center;">
-        <img class="app-logo-img" src="Elaraby.webp" style="max-width:100%;max-height:100%;">
-      </div>
-      <div style="font-size:18px; font-weight:900; color:#0b192c;">شركة العربي للاستثمار العقاري</div>
-      <div style="font-size:11.5px; color:#64748b; margin-bottom:12px;" id="cloudInitBadge">جاري الاتصال بالسيرفر...</div>
-      <div class="form-group" style="text-align:right;"><label style="color:#334155;">👤 اسم الدخول:</label><input type="text" id="loginUsername" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
-      <div style="text-align:right; color:#64748b; font-size:11px; margin-top:-8px;">اكتب اسم الدخول بس من غير @ (مثال: ahmed)</div>
-      <div class="form-group" style="text-align:right;"><label style="color:#334155;">🔑 الباسورد:</label><input type="password" id="loginPassword" class="form-control" style="background:#fff;color:#0f172a;" dir="ltr" onkeyup="if(event.key==='Enter') handleLogin()"></div>
-      <button type="button" class="btn-submit" onclick="handleLogin()">🔓 دخول السيستم</button>
-      <div id="loginErrorMsg" style="color:#dc2626; font-size:11.5px; font-weight:800; margin-top:8px; display:none;"></div>
-      <div style="margin-top:12px; padding-top:8px; border-top:1px solid #e2e8f0; font-size:10.5px; color:#64748b;">
+<div class="toast-banner" id="toastBanner">✅ تم الحجز والتخزين بنجاح!</div>
+<div aria-label="بدء التشغيل" class="splash-overlay" id="splashScreen">
+<div class="startup-stage" id="creditStage"><div class="startup-credit-card"><div class="startup-credit-label">تصميم وتطوير</div><div class="startup-author">م. عمر إسماعيل</div><div class="startup-credit-rule"></div><div class="startup-social"><a aria-label="واتساب عمر إسماعيل" class="startup-wa" href="https://wa.me/201008743750" rel="noopener" target="_blank"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-4.7A8.5 8.5 0 1 1 20.5 11.5Z"></path><path d="M8 7.5c-.8 1-.2 3.5 2 5.7s4.7 2.8 5.7 2l.8-1.5-2.8-1.3-.8.9c-1.4-.6-2.6-1.8-3.2-3.2l.9-.8-1.3-2.8Z"></path></svg></a><a aria-label="فيسبوك عمر إسماعيل" href="https://facebook.com/Omar9ismail" rel="noopener" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5V11H8.5v3H11v7h2.5Z" fill="currentColor"></path></svg></a><a aria-label="إنستجرام عمر إسماعيل" href="https://instagram.com/Omar9ismail" rel="noopener" target="_blank"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><rect height="17" rx="5" width="17" x="3.5" y="3.5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" fill="currentColor" r="1.1" stroke="none"></circle></svg></a></div><button class="startup-enter" id="startupEnter" type="button">دخول</button></div></div>
+<div class="startup-stage" id="loadingStage" style="display:none;">
+<div class="startup-logo"><img alt="شركة العربي" src="Elaraby.webp"/></div>
+<div class="startup-app">ELARABY <span>PRO</span></div>
+<div class="startup-owner">إدارة أحمد العربي</div>
+<div class="startup-description">إدارة الحجوزات والخزينة</div>
+<div class="startup-progress"><span></span></div>
+<div class="startup-loading-label">جاري تجهيز البرنامج</div>
+<div class="startup-signature">تصميم وتطوير <b>م. عمر إسماعيل</b></div>
+</div>
+</div>
+<div class="login-overlay" id="loginScreen">
+<div class="login-card">
+<div style="width:140px;height:75px;background:#000;border-radius:12px;margin:0 auto 10px;padding:6px;display:flex;align-items:center;justify-content:center;">
+<img class="app-logo-img" src="Elaraby.webp" style="max-width:100%;max-height:100%;"/>
+</div>
+<div style="font-size:18px; font-weight:900; color:#0b192c;">شركة العربي للاستثمار العقاري</div>
+<div id="cloudInitBadge" style="font-size:11.5px; color:#64748b; margin-bottom:12px;">جاري الاتصال بالسيرفر...</div>
+<div class="form-group" style="text-align:right;"><label style="color:#334155;">👤 اسم الدخول:</label><input class="form-control" dir="ltr" id="loginUsername" onkeyup="if(event.key==='Enter') handleLogin()" style="background:#fff;color:#0f172a;" type="text"/></div>
+<div style="text-align:right; color:#64748b; font-size:11px; margin-top:-8px;">اكتب اسم الدخول بس من غير @ (مثال: ahmed)</div>
+<div class="form-group" style="text-align:right;"><label style="color:#334155;">🔑 الباسورد:</label><input class="form-control" dir="ltr" id="loginPassword" onkeyup="if(event.key==='Enter') handleLogin()" style="background:#fff;color:#0f172a;" type="password"/></div>
+<button class="btn-submit" onclick="handleLogin()" type="button">🔓 دخول السيستم</button>
+<div id="loginErrorMsg" style="color:#dc2626; font-size:11.5px; font-weight:800; margin-top:8px; display:none;"></div>
+<div style="margin-top:12px; padding-top:8px; border-top:1px solid #e2e8f0; font-size:10.5px; color:#64748b;">
         تطوير: <b>عمر إسماعيل</b> • <span dir="ltr">fb.com/Omar9ismail</span> • <span dir="ltr">01008743750</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="mobile-collapse-bar">
-    <span style="font-size:12px; font-weight:900;">🏢 Elaraby Pro</span>
-    <button type="button" id="btnToggleMobileHeader" onclick="toggleMobileTopZone()" style="background:#d97706; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-family:inherit; font-size:11px; font-weight:800; cursor:pointer;">
+</div>
+</div>
+</div>
+<div class="mobile-collapse-bar">
+<span style="font-size:12px; font-weight:900;">🏢 Elaraby Pro</span>
+<button id="btnToggleMobileHeader" onclick="toggleMobileTopZone()" style="background:#d97706; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-family:inherit; font-size:11px; font-weight:800; cursor:pointer;" type="button">
       🔼 إخفاء القائمة اللي فوق لتكبير الجدول
     </button>
-  </div>
-
-  <div id="collapsibleTopZone" class="collapsible-top-zone">
-    <header class="top-header">
-      <div class="brand-box">
-        <div class="brand-logo"><img class="app-logo-img" src="Elaraby.webp" alt="Logo"></div>
-        <div>
-          <div class="brand-title">Elaraby Pro • شركة العربي للاستثمار العقاري</div>
-          <div class="brand-sub" id="dbSyncStatus">متصل أونلاين ✓</div>
-          <div class="brand-sub" id="headerClock" style="color:#fef08a;font-weight:800;"></div>
-        </div>
-      </div>
-
-      <div id="onlineRadarPill" class="online-pill admin-only" style="display:none;">🟢 فاتحين دلوقتي: <span id="onlineUsersListText">...</span></div>
-
-      <div class="header-actions">
-        <button type="button" id="notificationsBell" class="btn-hdr notifications-bell" aria-label="التنبيهات" aria-expanded="false" aria-controls="notificationsPanel" onclick="toggleNotifications()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>التنبيهات</span><span id="notificationsCount" class="notification-count">0</span></button>
-        <div class="global-search-wrap" id="globalSearchWrap">
-          <input type="text" id="globalQuickSearch" class="global-search-inp" placeholder="دور بالاسم أو رقم التليفون" aria-label="بحث سريع" oninput="document.getElementById('globalSearchWrap').classList.toggle('has-text', !!this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();handleGlobalQuickSearch(this.value);}">
-          <button type="button" class="global-search-btn gsq-clear" aria-label="مسح البحث" onclick="var i=document.getElementById('globalQuickSearch');i.value='';document.getElementById('globalSearchWrap').classList.remove('has-text');i.focus();">✕</button>
-          <button type="button" class="global-search-btn" aria-label="بحث" onclick="handleGlobalQuickSearch(document.getElementById('globalQuickSearch').value)">🔎</button>
-        </div>
-        <button type="button" class="btn-hdr" style="background:#334155;" onclick="toggleDarkMode()" id="btnThemeToggle">🌙</button>
-        <span id="currentUserBadge" style="background:rgba(212,175,55,0.2); border:1px solid var(--gold); padding:4px 9px; border-radius:7px; font-size:11px; font-weight:800; color:#fef08a;">👤 ...</span>
-        <button type="button" class="btn-hdr" style="background:#475569;" onclick="openChangeMyPasswordModal()">🔑 تغيير الباسورد</button>
-        <button type="button" class="btn-hdr admin-only" style="background:#059669;" onclick="exportToExcelCSV()">📊 شيت Excel</button>
-        <button type="button" class="btn-hdr admin-only" style="background:#2563eb;" onclick="downloadEncryptedBackup()">💾 حفظ نسخة JSON</button>
-        <button type="button" class="btn-hdr admin-only" style="background:#7c3aed;" onclick="restoreEncryptedBackup()">📂 استرجاع حجوزات ناقصة</button>
-        <button type="button" class="btn-hdr" style="background:#dc2626;" onclick="handleLogout()">🚪 خروج</button>
-      </div>
-    </header>
-
-    <nav class="top-nav-bar">
-      <div class="nav-group">
-        <button type="button" id="tabGrid" class="tab-btn active" onclick="switchView('grid')">📅 جدول الحجوزات</button>
-        <button type="button" id="tabNewBook" class="tab-btn gold-tab" onclick="openQuickBookingModal()">➕ حجز جديد</button>
-        <button type="button" id="tabCatalog" class="tab-btn" onclick="switchView('catalog')">🖼️ صور الشاليهات</button>
-        <button type="button" id="tabAvail" class="tab-btn" onclick="switchView('avail')">🔍 إيه المتاح؟</button>
-        <button type="button" id="tabLedger" class="tab-btn" onclick="switchView('ledger')">📑 الحجوزات</button>
-        <button type="button" id="tabIdphotos" class="tab-btn" onclick="switchView('idphotos')">🪪 صور البطايق</button>
-        <button type="button" id="tabPermits" class="tab-btn admin-only" onclick="switchView('permits')">🛡️ تصاريح الأمن <span id="permitNavCount"></span></button>
-        <button type="button" id="tabMaint" class="tab-btn" onclick="switchView('maint')">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
-        <button type="button" id="tabMyComm" class="tab-btn" onclick="switchView('mycomm')">💵 عمولاتي</button>
-        <button type="button" id="tabTreasury" class="tab-btn admin-only" onclick="switchView('treasury')">💰 الخزينة والملاك</button>
-        <button type="button" id="tabAudit" class="tab-btn admin-only" onclick="switchView('audit')">🛡️ سجل الحركات</button>
-        <button type="button" id="tabSettings" class="tab-btn admin-only" onclick="switchView('settings')">⚙️ الإعدادات</button>
-      </div>
-    </nav>
-
-    <div class="kpi-strip" id="scheduleKpis">
-      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('occupancy')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('occupancy');}"><div><div class="kpi-lbl">📊 نسبة الشغل الشهر ده</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
-      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('holds')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('holds');}"><div><div class="kpi-lbl">⏳ حجوزات هولد مؤقتة</div><div class="kpi-val" style="color:#d97706;" id="kpiHolds">0</div></div><span>⏱️</span></div>
-      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('missing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('missing');}"><div><div class="kpi-lbl">🪪 دخول قريب من غير بطاقة</div><div class="kpi-val" style="color:#dc2626;" id="kpiMissingIds">0</div></div><span>🛡️</span></div>
-      <div class="kpi-card" role="button" tabindex="0" style="cursor:pointer;" onclick="openKpiDetail('money')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('money');}"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" style="color:#0d9488;" id="kpiTodayRem">0 ج.م</div></div><span>💵</span></div>
-    </div>
-
-    <section id="notificationsPanel" class="notifications-panel" aria-label="قائمة التنبيهات" hidden><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><b>التنبيهات</b><span style="display:flex;gap:6px;"><button type="button" class="btn-hdr" style="background:#0f766e;" onclick="markAllActionNotificationsSeen()">✓ تعليم الكل كمقروء</button><button type="button" class="btn-hdr" style="background:#475569;" onclick="toggleNotifications(false)">إغلاق ×</button></span></div><div id="notificationsList"></div></section>
-  </div>
-
-  <main class="main-stage">
-    <div id="viewGrid">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <select id="gridYear" class="ctrl-select" onchange="renderCalendarGrid()"><option value="2026" selected>2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
-          <select id="gridMonth" class="ctrl-select" onchange="renderCalendarGrid()">
-            <option value="all">كل شهور السنة</option>
-            <option value="1">1 - يناير</option><option value="2">2 - فبراير</option><option value="3">3 - مارس</option>
-            <option value="4">4 - أبريل</option><option value="5">5 - مايو</option><option value="6">6 - يونيو</option>
-            <option value="7">7 - يوليو</option><option value="8">8 - أغسطس</option><option value="9">9 - سبتمبر</option>
-            <option value="10">10 - أكتوبر</option><option value="11" selected>11 - نوفمبر</option><option value="12">12 - ديسمبر</option>
-          </select>
-          <select id="gridVillageFilter" class="ctrl-select" onchange="renderCalendarGrid()"></select>
-          <button type="button" class="btn-hdr" style="background:#f59e0b; color:#0f172a; font-weight:900;" onclick="scrollToTodayRow()">📍 النهاردة</button>
-          <button type="button" id="btnExportGridImg" class="btn-hdr" style="background:#0d9488;" onclick="exportCurrentGridAsA4Image()">📸 حفظ الجدول صورة ملونة</button>
-        </div>
-        <div class="toolbar-right" id="agentFilterPills"></div>
-      </div>
-
-      <div class="grid-workspace">
-        <div class="sheet-box" id="calendarScrollBox">
-          <div class="grid-live-watermark"><img class="app-logo-img" src="Elaraby.webp"></div>
-          <table class="cal-table" id="mainCalendarTable"></table>
-        </div>
-        <aside id="quickSideDrawer" class="side-drawer">
-          <div class="drawer-hdr">
-            <div><div style="font-size:13px; font-weight:900; color:#fef08a;" id="qsdTitle">تفاصيل الحجز</div><div style="font-size:10px; color:#cbd5e1;" id="qsdSubId">#INV-000</div></div>
-            <button type="button" onclick="closeQuickDrawer()" style="background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:6px;padding:3px 8px;cursor:pointer;">✖</button>
-          </div>
-          <div class="drawer-body" id="qsdContent"></div>
-        </aside>
-      </div>
-    </div>
-
-    <div id="viewCatalog" class="panel-container">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <select id="catViewVillageFilter" class="ctrl-select" onchange="renderCatalogCards()"></select>
-          <input type="text" id="catViewSearch" class="form-control" style="width:220px;" placeholder="🔎 دور باسم الشاليه أو مواصفاته..." oninput="renderCatalogCards()">
-        </div>
-        <button type="button" class="btn-hdr admin-only" style="background:#0284c7;" onclick="openCatEditorForChalet()">➕ إضافة / تعديل صور شاليه</button>
-      </div>
-      <div id="catalogCardsContainer"></div>
-    </div>
-
-    <div id="viewAvail" class="panel-container">
-      <div class="panel-grid-2">
-        <div class="box-card">
-          <h3 style="margin:0 0 10px; font-size:15px; color:var(--primary);">🔍 شوف الشاليهات الفاضية</h3>
-          <div class="form-group"><label>القرية:</label><select id="checkVillage" class="form-control"></select></div>
-          <div class="row-2">
-            <div class="form-group"><label>تاريخ الدخول:</label><input type="date" id="checkStart" class="form-control"></div>
-            <div class="form-group"><label>تاريخ الخروج الصبح:</label><input type="date" id="checkEnd" class="form-control"></div>
-          </div>
-          <button type="button" class="btn-submit" onclick="checkAllAvailableChalets()">🔍 عرض الفاضي وتجهيز رسالة واتساب</button>
-          <div id="waAvailCopyBox" style="display:none; margin-top:10px;">
-            <textarea id="waAvailText" class="form-control" rows="6" style="font-size:11px;"></textarea>
-            <button type="button" class="btn-submit" style="background:#16a34a;" onclick="navigator.clipboard.writeText(document.getElementById('waAvailText').value); showToast('✅ تم نسخ الرسالة!');">📋 نسخ الرسالة للواتساب</button>
-          </div>
-        </div>
-        <div class="box-card" id="availResult"></div>
-      </div>
-    </div>
-
-    <div id="viewLedger" class="panel-container">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <select id="ledgerVillageFilter" class="ctrl-select" onchange="renderLedgerList()"></select>
-          <select id="ledgerPermitFilter" style="display:none;" aria-hidden="true" tabindex="-1" onchange="renderLedgerList()">
-            <option value="all">كل الحجوزات</option>
-            <option value="missing">🔴 لسه من غير بطايق</option>
-            <option value="ready">🟡 البطايق اترفعت وجاهزة</option>
-            <option value="sent">🟢 اتبعتت للأمن خلاص</option>
-          </select>
-          <input type="text" id="ledgerSearchInput" class="form-control" style="width:210px;" placeholder="🔎 العميل، التليفون، رقم الإيصال..." oninput="renderLedgerList()">
-        </div>
-      </div>
-      <div class="grid-workspace">
-        <div id="ledgerListContainer" class="box-card" style="flex:1;"></div>
-        <aside id="ledgerDetailCard" class="side-drawer" style="display:none;">
-          <div class="drawer-hdr">
-            <div><div style="font-size:13px; font-weight:900; color:#fef08a;" id="ldcTitle">بطاقة الحجز</div><div style="font-size:10px; color:#cbd5e1;" id="ldcSubId">#INV-000</div></div>
-            <button type="button" onclick="document.getElementById('ledgerDetailCard').style.display='none'" style="background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:6px;padding:3px 8px;cursor:pointer;">✖</button>
-          </div>
-          <div class="drawer-body" id="ldcContent"></div>
-        </aside>
-      </div>
-    </div>
-
-    <div id="viewKpidetail" class="panel-container" style="display:none;"><h2 id="kpiDetailTitle"></h2><p id="kpiDetailSummary"></p><div id="kpiDetailCards" class="permit-cards"></div></div>
-    <div id="viewIdphotos" class="panel-container" style="display:none;"><h2>🪪 صور البطايق</h2><p style="color:var(--text-muted);">ارفع صور بطايق حجوزاتك قبل التسكين بيوم أو يومين. إرسال التصريح للأمن من حساب الأدمن بس.</p><div id="idPhotoCards" class="permit-cards"></div></div>
-    <div id="viewPermits" class="panel-container admin-only" style="display:none;">
-      <div class="permit-page-head"><div><h2 style="margin:0 0 6px;">🛡️ تصاريح الأمن</h2><p id="permitDayLabel" style="margin:0;color:var(--text-muted);"></p></div><button type="button" class="btn-hdr" style="background:#0f766e;" onclick="showPermitToday()">قائمة النهاردة</button></div>
-      <div id="permitDailyBanner" class="permit-banner"></div>
-      <div id="permitSummary" class="permit-summary"></div>
-      <div class="permit-day-bar"><label class="permit-day-search">اختار اليوم <input type="date" id="permitDayPicker" class="form-control" onchange="permitPickDate(this.value)"></label><button type="button" class="permit-today-btn" onclick="permitPickDay('today')">النهاردة</button></div><div class="permit-toolbar"><label style="display:none">عرض القائمة <select id="permitDaySelect" class="form-control" onchange="renderDailyPermits()"><option value="today">النهاردة: تسكين بكرة</option></select></label><label>الحالة <select id="permitStateFilter" class="form-control" onchange="renderDailyPermits()"><option value="all">كل الحالات</option><option value="pending">لسه متبعتش</option><option value="sent">اتبعت للأمن</option></select></label></div>
-      <div id="permitCards" class="permit-cards"></div>
-      <div id="permitOverdue"></div>
-      <p style="color:var(--text-muted);font-size:12px;line-height:1.8;">القائمة بتتجدد تلقائيًا مع بداية اليوم بتوقيت مصر، والأيام السابقة في الأرشيف حسب تاريخ تجهيز التصريح. التنبيه بيظهر جوه الموقع وهو مفتوح أو أول ما تفتحه. حالة «اتبعت للأمن» معناها إتمام المشاركة أو تأكيد الأدمن، مش تأكيد استلام من واتساب أو موافقة الأمن.</p>
-    </div>
-
-    <div id="viewMaint" class="panel-container">
-      <div class="panel-grid-2">
-        <div class="box-card">
-          <h3>🔧 الصيانة والأعطال والمصاريف</h3>
-          <div class="form-group"><label>نوع التسجيل</label><select id="maintEntryType" class="form-control" onchange="switchMaintAddType(this.value)"><option value="expense" class="admin-only">💸 مصروف</option><option value="fault">🔴 عطل</option><option value="maintenance">🛠️ صيانة</option></select></div>
-          <div id="maintPaneExp" class="admin-only">
-            <div class="form-group"><label>التاريخ:</label><input type="date" id="expDate" class="form-control"></div>
-            <div class="form-group"><label>تبع شاليه إيه؟:</label><select id="expChaletSel" class="form-control"></select></div>
-            <div class="form-group"><label>اتصرف في إيه؟:</label><input id="expDesc" class="form-control"></div>
-            <div class="form-group"><label>المبلغ (ج.م):</label><input type="number" min="0" id="expAmount" class="form-control"></div>
-            <input type="hidden" id="editingExpenseId">
-            <button type="button" id="btnSaveExpense" class="btn-submit" style="background:#dc2626" onclick="addExpense()">💾 حفظ المصروف</button>
-            <button type="button" id="btnCancelExpEdit" class="btn-submit" style="display:none" onclick="cancelExpenseEdit()">إلغاء التعديل</button>
-          </div>
-          <div id="maintPaneTicket" class="maint-type-hidden">
-            <div class="form-group"><label>التاريخ:</label><input type="date" id="maintDate" class="form-control"></div>
-            <div class="form-group"><label>الشاليه *</label><select id="maintChaletSel" class="form-control"></select></div>
-            <div class="form-group"><label>البيان / المشكلة *</label><input id="maintDescInp" class="form-control"></div>
-            <div class="form-group"><label>التكلفة المتوقعة (ج.م)</label><input type="number" min="0" id="maintCostInp" value="0" class="form-control"></div>
-            <div class="form-group"><label>الأهمية</label><select id="maintPriorityInp" class="form-control"><option value="مستعجل">🔴 مستعجل (فيه نزيل)</option><option value="عادي">🟡 عادي</option></select></div>
-            <input type="hidden" id="editingMaintenanceId">
-            <button type="button" id="btnSaveMaintenance" class="btn-submit" style="background:#d97706" onclick="addMaintenanceTicket()">💾 حفظ التسجيل</button>
-            <button type="button" id="btnCancelMaintEdit" class="btn-submit" style="display:none" onclick="cancelMaintenanceEdit()">إلغاء التعديل</button>
-          </div>
-        </div>
-        <div class="box-card">
-          <div class="exp-filter-bar">
-            <div class="form-group"><label>النوع:</label><select id="opsFilterType" class="form-control" onchange="renderOperations()"><option value="">كل الأنواع</option><option value="expense" class="admin-only">مصروف</option><option value="fault">عطل</option><option value="maintenance">صيانة</option></select></div>
-            <div class="form-group"><label>الجهة:</label><select id="expFilterChalet" class="form-control" onchange="renderOperations()"></select></div>
-            <div class="form-group"><label>من يوم:</label><input type="date" id="expFilterFrom" class="form-control" onchange="renderOperations()"></div>
-            <div class="form-group"><label>لحد يوم:</label><input type="date" id="expFilterTo" class="form-control" onchange="renderOperations()"></div>
-            <div class="form-group"><label>بحث في البيان:</label><input id="expFilterText" class="form-control" oninput="renderOperations()"></div>
-            <button type="button" class="btn-hdr exp-filter-clear" onclick="resetExpenseFilters()">✖ مسح الفلتر</button>
-          </div>
-          <div id="operationsList"></div><div id="expensesListContainer" style="display:none"></div><div id="maintTicketsContainer" style="display:none"></div>
-        </div>
-      </div>
-    </div>
-
-    <div id="maintHistoryModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-      <div class="modal-box" style="max-width:520px;max-height:80vh;overflow:auto;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-          <b style="font-size:14px;">🕓 سجل التعديلات</b>
-          <button type="button" onclick="document.getElementById('maintHistoryModal').style.display='none'" style="background:#475569;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;">✖</button>
-        </div>
-        <div id="maintHistoryBody"></div>
-      </div>
-    </div>
-
-    <div id="viewMycomm" class="panel-container">
-      <div class="box-card" style="max-width:850px; margin:0 auto;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap;">
-          <h3 style="margin:0; color:var(--primary);">💵 شغلي وعمولاتي المستحقة</h3>
-          <button type="button" class="btn-hdr" style="background:#059669;" onclick="exportMyCommissionsImage()">📸 حفظ كشف العمولات صورة</button>
-        </div>
-        <div id="myCommContent"></div>
-      </div>
-    </div>
-
-    <div id="viewTreasury" class="panel-container admin-only">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <button type="button" class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')">💰 الجرد المفصّل والعمولات وإيراد القرى</button>
-          <button type="button" class="tab-btn" id="trTabInv" onclick="switchTreasurySub('inv')">🧾 جرد الشاليهات المالي</button>
-          <button type="button" class="tab-btn" id="trTabOwner" onclick="switchTreasurySub('owner')">📑 كشف حساب مالك شاليه</button>
-          <button type="button" class="tab-btn" id="trTabStats" onclick="switchTreasurySub('stats')">📈 إحصائيات الشغل</button>
-        </div>
-      </div>
-
-      <div id="trSubMain">
-        <div class="grid-toolbar">
-          <div class="toolbar-left">
-            <select id="tFilterByType" class="ctrl-select" onchange="calculateTreasury()">
-              <option value="regDate">حسب تاريخ تسجيل الحجز</option>
-              <option value="startDate">حسب تاريخ وصول العميل</option>
-            </select>
-            <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="tStartDate" class="ctrl-select">
-            <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="tEndDate" class="ctrl-select">
-            <button type="button" class="btn-hdr" style="background:var(--primary);" onclick="calculateTreasury()">💰 احسب الجرد</button>
-            <button type="button" class="btn-hdr" style="background:#059669;" onclick="exportTreasuryAsA4Image()">📸 حفظ صورة</button>
-            <button type="button" class="btn-hdr" style="background:#334155;" onclick="printElementClean('treasuryCaptureArea')">🖨️ طباعة / PDF</button>
-          </div>
-        </div>
-        <div id="treasuryReportArea"></div>
-      </div>
-      <div id="trSubInv" style="display:none;">
-        <div class="grid-toolbar">
-          <div class="toolbar-left">
-            <select id="invFilterByType" class="ctrl-select" onchange="calculateChaletInventory()">
-              <option value="regDate">حسب تاريخ تسجيل الحجز</option>
-              <option value="startDate">حسب تاريخ وصول العميل</option>
-            </select>
-            <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="invStartDate" class="ctrl-select">
-            <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="invEndDate" class="ctrl-select">
-            <button type="button" class="btn-hdr" style="background:var(--primary);" onclick="calculateChaletInventory()">🧾 احسب جرد الشاليهات</button>
-            <button type="button" class="btn-hdr" style="background:#059669;" onclick="exportInventoryImage()">📸 حفظ صورة</button>
-            <button type="button" class="btn-hdr" style="background:#334155;" onclick="printElementClean('inventoryCaptureArea')">🖨️ طباعة / PDF</button>
-          </div>
-        </div>
-        <div id="inventoryReportArea"></div>
-      </div>
-
-
-      <div id="trSubOwner" style="display:none;">
-        <div class="panel-grid-2">
-          <div class="box-card">
-            <h3 style="margin:0 0 10px; color:var(--primary);">📑 كشف حساب مالك شاليه</h3>
-            <div class="form-group"><label>اختار القرية:</label><select id="ownVillageSel" class="form-control" onchange="onSelectOwnerVillage()"></select></div>
-            <div class="form-group"><label>اختار الشاليه:</label><select id="ownChaletSel" class="form-control"></select></div>
-            <div class="row-2">
-              <div class="form-group"><label>من تاريخ:</label><input type="date" id="ownStartDate" class="form-control"></div>
-              <div class="form-group"><label>لحد تاريخ:</label><input type="date" id="ownEndDate" class="form-control"></div>
-            </div>
-            <div class="row-2">
-              <div class="form-group"><label>نسبة المكتب (%):</label><input type="number" id="ownFeePct" class="form-control" value="15"></div>
-              <div class="form-group"><label>خصم نظافة/صيانة زيادة:</label><input type="number" id="ownExtraDeduct" class="form-control" value="0"></div>
-            </div>
-            <button type="button" class="btn-submit" onclick="generateOwnerStatement()">📊 عرض كشف المالك</button>
-            <div class="row-2" style="margin-top:6px;">
-              <button type="button" class="btn-submit" style="background:#059669;margin-top:0;" onclick="exportOwnerStatementA4()">📸 حفظ صورة</button>
-              <button type="button" class="btn-submit" style="background:#334155;margin-top:0;" onclick="printElementClean('ownerA4Card')">🖨️ طباعة / PDF</button>
-            </div>
-          </div>
-          <div class="box-card" id="ownerStatementPreview"></div>
-        </div>
-      </div>
-
-      <div id="trSubStats" style="display:none;">
-        <div class="grid-toolbar">
-          <div class="toolbar-left">
-            <select id="statsFilterByType" class="ctrl-select" onchange="calculateWorkStats()">
-              <option value="regDate">حسب تاريخ تسجيل الحجز</option>
-              <option value="startDate">حسب تاريخ وصول العميل</option>
-            </select>
-            <label style="font-size:12px;font-weight:800;">من:</label><input type="date" id="statsStartDate" class="ctrl-select">
-            <label style="font-size:12px;font-weight:800;">لحد:</label><input type="date" id="statsEndDate" class="ctrl-select">
-            <button type="button" class="btn-hdr" style="background:var(--primary);" onclick="calculateWorkStats()">📈 احسب الإحصائيات</button>
-            <button type="button" class="btn-hdr" style="background:#059669;" onclick="exportStatsImage()">📸 حفظ صورة</button>
-          </div>
-        </div>
-        <div id="statsReportArea"></div>
-      </div>
-
-    </div>
-
-    <div id="viewAudit" class="panel-container admin-only">
-      <div class="box-card" style="max-width:850px; margin:0 auto;"><div style="display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;flex-wrap:wrap;gap:8px;"><h3 style="margin:0;">🛡️ سجل النشاط المحفوظ</h3><label style="font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:5px;cursor:pointer;margin:0;"><input type="checkbox" id="auditShowLogins" onchange="renderAuditLog()"> عرض تسجيلات الدخول</label></div><div id="auditLogContainer"></div></div>
-    </div>
-
-    <div id="viewSettings" class="panel-container admin-only">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <button type="button" class="tab-btn active" id="setTabChalets" onclick="switchSetSub('chalets')">1️⃣ القرى والشاليهات والأسعار</button>
-          <button type="button" class="tab-btn" id="setTabComm" onclick="switchSetSub('comm')">2️⃣ العمولات (موحدة / لكل موظف / لكل قرية)</button>
-          <button type="button" class="tab-btn" id="setTabUsers" onclick="switchSetSub('users')">3️⃣ الموظفين واللوكيشن</button>
-        </div>
-      </div>
-
-      <div id="setSubChalets" class="box-card">
-        <div class="row-3" style="margin-bottom:12px;">
-          <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
-            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">➕ إضافة شاليه جديد:</div>
-            <div class="row-2" style="margin-bottom:6px;">
-              <select id="existingVillageSelect" class="form-control" onchange="if(this.value!=='__new__') document.getElementById('newVillageInp').value=this.value;"></select>
-              <input type="text" id="newVillageInp" class="form-control" placeholder="أو اكتب اسم قرية جديدة">
-            </div>
-            <div class="row-2">
-              <input type="text" id="newChaletInp" class="form-control" placeholder="اسم الشاليه الجديد">
-              <button type="button" class="btn-submit" style="margin-top:0;" onclick="addChalet()">➕ إضافة</button>
-            </div>
-          </div>
-
-          <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1.5px solid var(--primary);">
-            <div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">💰 تعديل سعر مجموعة شاليهات مع بعض:</div>
-            <div class="row-2" style="margin-bottom:6px;">
-              <input type="number" id="bulkWeekdayInp" class="form-control" placeholder="سعر وسط الأسبوع">
-              <input type="number" id="bulkWeekendInp" class="form-control" placeholder="سعر الويك إند">
-            </div>
-            <div class="row-2">
-              <button type="button" class="btn-submit" style="margin-top:0; background:#334155;" onclick="toggleSelectAllChaletsBulk()">☑️ تحديد الكل</button>
-              <button type="button" class="btn-submit" style="margin-top:0; background:#0d9488;" onclick="applyBulkPricesToSelected()">✅ تطبيق السعر</button>
-            </div>
-          </div>
-
-          <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
-            <div style="font-weight:800; font-size:12px; color:#b45309; margin-bottom:6px;">✏️ تغيير اسم قرية أو حذفها:</div>
-            <div class="row-2" style="margin-bottom:6px;">
-              <select id="renameVillageSelect" class="form-control" onchange="document.getElementById('renameVillageNewInp').value=this.value;"></select>
-              <input type="text" id="renameVillageNewInp" class="form-control" placeholder="الاسم الجديد">
-            </div>
-            <div class="row-2">
-              <button type="button" class="btn-submit" style="margin-top:0; background:#d97706;" onclick="renameEntireVillage()">💾 حفظ الاسم</button>
-              <button type="button" class="btn-submit" style="margin-top:0; background:#dc2626;" onclick="deleteEntireVillage()">🗑️ حذف القرية</button>
-            </div>
-          </div>
-        </div>
-        <div id="chaletsManageList"></div>
-      </div>
-
-      <div id="setSubComm" class="box-card" style="display:none;">
-        <div class="panel-grid-2">
-          <div>
-            <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1.5px solid var(--primary); margin-bottom:12px;">
-              <h4 style="margin:0 0 6px; color:var(--primary);">⚡ توحيد العمولة على كل السيلز بضغطة واحدة</h4>
-              <div class="row-2">
-                <select id="globalCommTypeInp" class="form-control">
-                  <option value="pct">نسبة مئوية (%) من إجمالي الحجز</option>
-                  <option value="per_night">مبلغ ثابت (ج.م) على كل ليلة</option>
-                  <option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
-                </select>
-                <input type="number" id="globalCommValInp" class="form-control" value="3" placeholder="القيمة">
-              </div>
-              <button type="button" class="btn-submit" onclick="applyGlobalCommissionToAllSales()">✅ تطبيق على كل السيلز</button>
-            </div>
-
-            <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
-              <h4 style="margin:0 0 6px; color:var(--text-main);">👤 عمولة خاصة لكل موظف / مدير لوحده</h4>
-              <p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">تقدر تحدد عمولة مختلفة لكل سيلز أو لنفسك (الأدمن) وهتتخصم وتتحسب في الخزينة تلقائياً:</p>
-              <div id="individualUserCommList"></div>
-            </div>
-          </div>
-
-          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
-            <h4 style="margin:0 0 6px; color:#b45309;">🏖️ عمولة مخصصة لكل قرية لوحدها (اختياري)</h4>
-            <p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">لو قرية معينة ليها عمولة مختلفة عن الباقي (بالنسبة % أو بالليلة أو بالحجز)، حددها هنا وهتلغي العمولة العادية في القرية دي بس:</p>
-            <div id="villageCommissionsList"></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="setSubUsers" class="box-card" style="display:none;">
-        <div class="panel-grid-2">
-          <div>
-            <div style="background:var(--bg-subtle); padding:10px; border-radius:10px; margin-bottom:12px;">
-              <div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إضافة موظف / سيلز جديد (لون تلقائي مختلف):</div>
-              <div class="row-2" style="margin-bottom:6px;">
-                <input type="text" id="newUserFullName" class="form-control" placeholder="اسم الموظف">
-                <input type="text" id="newUserLogin" class="form-control" placeholder="اسم الدخول (sara)" dir="ltr">
-              </div>
-              <div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">ده بيضيف بروفايل الموظف (الاسم والعمولة). حساب الدخول والباسورد بيتعملوا من Firebase.</div>
-              <div class="row-2">
-                <div style="display:flex; gap:6px; align-items:center;">
-                  <select id="newUserRole" class="form-control"><option value="sales">سيلز</option><option value="admin">مدير</option></select>
-                  <button type="button" class="btn-submit" style="margin-top:0; white-space:nowrap;" onclick="addSystemUser()">✅ إضافة</button>
-                </div>
-              </div>
-            </div>
-            <div id="usersManageList"></div>
-          </div>
-
-          <div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
-            <h4 style="margin:0 0 8px; color:var(--primary);">📍 لوكيشن وتعليمات الدخول لكل قرية</h4>
-            <div id="villageLocationsList"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer class="dev-footer">
-    <span style="display:inline-flex; align-items:center; gap:6px;">
-      <img class="app-logo-img" src="Elaraby.webp" style="height:22px; background:#000; padding:2px; border-radius:4px;">
-      <b>شركة العربي للاستثمار العقاري</b> • <a href="https://fb.com/Elaraby.estate" target="_blank" dir="ltr">fb.com/Elaraby.estate</a>
-    </span>
-    <span class="developer-credit">© تصميم وتطوير <b>م. عمر إسماعيل</b> • <a href="https://fb.com/Omar9ismail" target="_blank" dir="ltr">fb.com/Omar9ismail</a> • <span dir="ltr">01008743750</span></span>
-  </footer>
-
-  <div class="mobile-bottom-bar">
-    <button type="button" class="mob-nav-btn" onclick="switchView('grid')"><span>📅</span><span>الجدول</span></button>
-    <button type="button" class="mob-nav-btn" onclick="openQuickBookingModal()"><span>➕</span><span>حجز جديد</span></button>
-    <button type="button" class="mob-nav-btn" onclick="switchView('catalog')"><span>🖼️</span><span>الصور</span></button>
-    <button type="button" class="mob-nav-btn" onclick="switchView('mycomm')"><span>💵</span><span>عمولاتي</span></button>
-    <button type="button" class="mob-nav-btn" onclick="switchView('ledger')"><span>📑</span><span>الحجوزات</span></button>
-  </div>
-
-  <div id="changePassModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box" style="max-width:380px;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-        <b style="color:var(--primary);">🔑 تغيير الباسورد بتاعك</b>
-        <button type="button" onclick="document.getElementById('changePassModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;">✖</button>
-      </div>
-      <div class="form-group"><label>الباسورد القديم:</label><input type="password" id="oldMyPassInp" class="form-control" dir="ltr"></div>
-      <div class="form-group"><label>الباسورد الجديد:</label><input type="text" id="newMyPassInp" class="form-control" dir="ltr"></div>
-      <button type="button" class="btn-submit" onclick="submitMyPasswordChange()">✅ حفظ الباسورد الجديد</button>
-    </div>
-  </div>
-
-  <div id="bookingModal" class="modal-overlay" onclick="if(event.target===this) closeBookingModal()">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
-        <b id="bookingModalTitle" style="font-size:15px; color:var(--primary);">➕ تسجيل حجز جديد أو هولد</b>
-        <button type="button" onclick="closeBookingModal()" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;">✖</button>
-      </div>
-      <form id="bookingForm" onsubmit="submitBooking(event)">
-        <input type="hidden" id="editingBookingId" value="">
-        <div class="row-2" style="background:var(--bg-subtle); padding:8px; border-radius:9px; margin-bottom:8px;">
-          <div class="form-group" style="margin-bottom:0;"><label>📌 نوع الحجز *</label><select id="bookingStatusType" class="form-control" onchange="toggleHoldOptions()"><option value="confirmed">🔒 حجز مؤكد</option><option value="hold">⏳ هولد مؤقت</option></select></div>
-          <div class="form-group" id="holdDurationBox" style="margin-bottom:0; display:none;"><label>⏱️ مدة الهولد *</label><select id="holdHours" class="form-control"><option value="1">ساعة</option><option value="2" selected>ساعتين</option><option value="4">4 ساعات</option><option value="6">6 ساعات</option><option value="12">12 ساعة</option></select></div>
-        </div>
-        <div class="row-2">
-          <div class="form-group"><label>🏖️ القرية *</label><select id="bookingVillageSelect" class="form-control" onchange="onSelectBookingVillage()" required></select></div>
-          <div class="form-group"><label>🏡 الشاليه *</label><select id="chaletSelect" class="form-control" onchange="onSelectBookingChalet()" required></select></div>
-        </div>
-        <div class="row-2">
-          <div class="form-group"><label>👤 السيلز المسؤول *</label><select id="agentName" class="form-control" required></select></div>
-          <div class="form-group"><label>📣 العميل جاي منين؟</label><select id="leadSource" class="form-control"><option value="إعلان فيسبوك / إنستجرام">إعلان فيسبوك / إنستجرام</option><option value="جروبات فيسبوك">جروبات فيسبوك</option><option value="عميل قديم / ترشيح">عميل قديم / ترشيح</option><option value="بروكر / وسيط">بروكر / وسيط</option><option value="تليفون / واتساب">تليفون / واتساب</option></select></div>
-        </div>
-        <div class="row-2">
-          <div class="form-group"><label>اسم العميل *</label><input type="text" id="clientName" class="form-control" required></div>
-          <div class="form-group"><label>رقم تليفونه *</label><input type="text" id="clientPhone" class="form-control" dir="ltr" required></div>
-        </div>
-
-        <div class="row-3">
-          <div class="form-group">
-            <label>📆 نظام الإيجار *</label>
-            <select id="rentPeriodType" class="form-control" onchange="onRentPeriodTypeChange()">
-              <option value="daily">يومي (بالليلة)</option>
-              <option value="monthly">شهري (بالشهر)</option>
-            </select>
-          </div>
-          <div class="form-group"><label>📅 تاريخ الوصول *</label><input type="date" id="startDate" class="form-control" onchange="onStartOrMonthsChange()" required></div>
-          <div class="form-group" id="monthsCountBox" style="display:none;"><label>🔢 عدد الشهور *</label><input type="number" id="monthsCount" class="form-control" value="1" min="1" max="24" oninput="onStartOrMonthsChange()"></div>
-          <div class="form-group" id="endDateBox"><label>📅 تاريخ المغادرة *</label><input type="date" id="endDate" class="form-control" onchange="recalculateTotals()" required></div>
-        </div>
-
-        <div class="row-3">
-          <div class="form-group"><label id="unitPriceLabel">💰 سعر الليلة *</label><input type="number" id="unitPrice" class="form-control" min="0" oninput="recalculateTotals()" required></div>
-          <div class="form-group">
-            <label style="display:flex; justify-content:space-between; align-items:center;">
-              <span>💵 المدفوع *</span>
-              <button type="button" onclick="payFullBookingAmount()" style="background:#16a34a; color:#fff; border:none; border-radius:4px; padding:1px 6px; font-size:10px; font-weight:800; cursor:pointer;">✅ دفع المبلغ كله</button>
-            </label>
-            <input type="number" id="deposit" class="form-control" min="0" value="0" oninput="recalculateTotals()" required>
-          </div>
-          <div class="form-group"><label>💳 طريقة الدفع</label><select id="paymentMethod" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
-        </div>
-
-        <div class="row-2" id="commOverrideBox" style="display:none; background:var(--bg-subtle); border-radius:8px; padding:8px 10px;">
-          <div class="form-group" style="margin:0;"><label>🧮 عمولة يدوية للحجز (أدمن)</label><select id="commOverrideType" class="form-control"><option value="">بدون — حسب نظام العمولة</option><option value="pct">نسبة % من قيمة الحجز</option><option value="fixed_booking">مبلغ ثابت (ج.م)</option></select></div>
-          <div class="form-group" style="margin:0;"><label>قيمة العمولة</label><input type="number" id="commOverrideVal" class="form-control" min="0" value="0"></div>
-        </div>
-        <div style="background:var(--bg-subtle); padding:8px 12px; border-radius:8px; display:flex; justify-content:space-between; font-size:12px; font-weight:800;">
-          <span>المدة: <b id="calcDuration">1 ليلة</b></span><span>الإجمالي: <b id="calcTotal">0 ج.م</b></span><span style="color:#dc2626;">الباقي: <b id="calcRemaining">0 ج.م</b></span>
-        </div>
-        <button type="submit" class="btn-submit">✅ تأكيد وحفظ الحجز</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="permitModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
-        <b style="font-size:14.5px; color:var(--primary);">🪪 صور البطايق وتصريح الأمن</b>
-        <button type="button" onclick="document.getElementById('permitModal').style.display='none'" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;">✖</button>
-      </div>
-      <input type="hidden" id="permitBookingId">
-      <div id="permitInfoSummary" style="background:var(--bg-subtle); padding:8px 10px; border-radius:8px; font-size:11.5px; margin-bottom:10px;"></div>
-      <div style="border:1.5px dashed var(--primary); border-radius:10px; padding:10px; margin-bottom:10px; background:var(--bg-subtle);">
-        <div style="font-weight:900; font-size:12px; color:var(--primary); margin-bottom:6px;">1️⃣ ارفع صور البطايق على السيستم:</div>
-        <input type="file" id="permitFileInput" accept="image/*" multiple style="display:none;" onchange="uploadIdPhotosToSystem(event)">
-        <button type="button" class="btn-submit" style="margin-top:0; background:#0284c7;" onclick="document.getElementById('permitFileInput').click()">📤 اختيار صور البطايق ورفعها</button>
-        <div id="permitUploadStatusMsg" style="display:none; margin-top:7px; padding:6px 10px; border-radius:6px; background:#dcfce7; color:#15803d; font-size:11.5px; font-weight:800; text-align:center;"></div>
-      </div>
-      <div id="permitPhotosGallery" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:240px; overflow-y:auto; margin-bottom:10px;"></div>
-      <div id="permitStaffNote" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; font-size:11.5px; color:var(--text-muted); text-align:center;">🔒 إرسال التصريح للأمن متاح من حساب الأدمن بس. ارفع صور البطايق هنا والأدمن هيبعتها للأمن.</div>
-      <div id="permitAdminActions" style="border-top:1px solid var(--border-color); padding-top:10px;">
-        <div style="font-weight:900; font-size:12px; margin-bottom:6px;">2️⃣ ابعت التصريح للأمن:</div>
-        <div class="row-2">
-          <button type="button" class="btn-submit" style="background:#16a34a; margin-top:0;" onclick="sendSecurityPermitWhatsApp()">🛡️ إرسال للأمن واتساب</button>
-          <button type="button" class="btn-submit" style="background:#334155; margin-top:0;" onclick="markPermitAsSentOnly()">✅ اتبعت خلاص (خليه 🟢)</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="settleModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box" style="max-width:400px;">
-      <b style="font-size:15px; color:var(--primary);">💰 تحصيل باقي الحساب</b>
-      <input type="hidden" id="settleBookingId">
-      <div id="settleInfoBox" style="margin:10px 0; font-size:12px;"></div>
-      <div class="form-group"><label>المبلغ اللي ادفع دلوقتي:</label><input type="number" id="settleAmountInp" class="form-control"></div>
-      <div class="form-group"><label>طريقة الدفع:</label><select id="settleMethodInp" class="form-control"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
-      <div class="row-2">
-        <button type="button" class="btn-submit" style="background:#16a34a;" onclick="confirmSettleRemaining()">✅ تأكيد</button>
-        <button type="button" class="btn-submit" style="background:#64748b;" onclick="document.getElementById('settleModal').style.display='none'">إلغاء</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="catEditorModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><b>🖼️ إضافة / تعديل صور ومواصفات شاليه (تُختم باللوجو تلقائياً)</b><button type="button" onclick="document.getElementById('catEditorModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;">✖</button></div>
-      <div class="row-2">
-        <div class="form-group"><label>القرية:</label><select id="catVillageSelect" class="form-control" onchange="onSelectCatVillage()"></select></div>
-        <div class="form-group"><label>الشاليه:</label><select id="catChaletSelect" class="form-control" onchange="loadSelectedChaletCatalog()"></select></div>
-      </div>
-      <div id="catGuidePrices" style="line-height:1.8;margin:8px 0;color:var(--primary)"></div><div class="form-group"><label>المواصفات:</label><textarea id="catDescInp" class="form-control" rows="3"></textarea></div>
-      <div class="form-group"><label>اختار صور الشاليه (سيتم وضع اللوجو والفوتر عليها تلقائياً):</label><input type="file" accept="image/*" multiple class="form-control" onchange="handleCatPhotosUpload(event)"></div>
-      <div id="catPendingThumbs" style="display:flex; gap:5px; flex-wrap:wrap; margin:6px 0;"></div>
-      <button type="button" class="btn-submit" onclick="saveChaletCatalogData()">💾 حفظ الصور المختومة والبيانات</button>
-    </div>
-  </div>
-
-  <div id="galleryModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box" style="max-width:780px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
-        <b id="modalChaletTitle" style="font-size:15px; color:var(--primary);"></b>
-        <button type="button" onclick="document.getElementById('galleryModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:4px 9px;cursor:pointer;">✖</button>
-      </div>
-      <div class="row-3" style="margin-bottom:10px;">
-        <button type="button" class="btn-submit" style="margin-top:0; background:#0284c7;" onclick="downloadAllCurrentChaletPhotos()">📥 تحميل كل الصور باللوجو</button>
-        <button type="button" class="btn-submit" style="margin-top:0; background:#16a34a;" onclick="shareCurrentChaletPhotos('whatsapp')">💬 مشاركة على واتساب</button>
-        <button type="button" class="btn-submit" style="margin-top:0; background:#2563eb;" onclick="shareCurrentChaletPhotos('messenger')">💙 مشاركة على ماسنجر</button>
-      </div>
-      <div id="modalImagesList" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"></div>
-    </div>
-  </div>
-
-  <div id="offscreenExportWrapper"></div>
-
-  <script src="3-elaraby-runtime-v12.js"></script>
+</div>
+<div class="collapsible-top-zone" id="collapsibleTopZone">
+<header class="top-header">
+<div class="brand-box">
+<div class="brand-logo"><img alt="Logo" class="app-logo-img" src="Elaraby.webp"/></div>
+<div>
+<div class="brand-title">Elaraby Pro • شركة العربي للاستثمار العقاري</div>
+<div class="brand-sub" id="dbSyncStatus">متصل أونلاين ✓</div>
+<div class="brand-sub" id="headerClock" style="color:#fef08a;font-weight:800;"></div>
+</div>
+</div>
+<div class="online-pill admin-only" id="onlineRadarPill" style="display:none;">🟢 فاتحين دلوقتي: <span id="onlineUsersListText">...</span></div>
+<div class="header-actions">
+<button aria-controls="notificationsPanel" aria-expanded="false" aria-label="التنبيهات" class="btn-hdr notifications-bell" id="notificationsBell" onclick="toggleNotifications()" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg><span>التنبيهات</span><span class="notification-count" id="notificationsCount">0</span></button>
+<div class="global-search-wrap" id="globalSearchWrap">
+<input aria-label="بحث سريع" class="global-search-inp" id="globalQuickSearch" oninput="document.getElementById('globalSearchWrap').classList.toggle('has-text', !!this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();handleGlobalQuickSearch(this.value);}" placeholder="دور بالاسم أو رقم التليفون" type="text"/>
+<button aria-label="مسح البحث" class="global-search-btn gsq-clear" onclick="var i=document.getElementById('globalQuickSearch');i.value='';document.getElementById('globalSearchWrap').classList.remove('has-text');i.focus();" type="button">✕</button>
+<button aria-label="بحث" class="global-search-btn" onclick="handleGlobalQuickSearch(document.getElementById('globalQuickSearch').value)" type="button">🔎</button>
+</div>
+<button class="btn-hdr" id="btnThemeToggle" onclick="toggleDarkMode()" style="background:#334155;" type="button">🌙</button>
+<span id="currentUserBadge" style="background:rgba(212,175,55,0.2); border:1px solid var(--gold); padding:4px 9px; border-radius:7px; font-size:11px; font-weight:800; color:#fef08a;">👤 ...</span>
+<button class="btn-hdr" onclick="openChangeMyPasswordModal()" style="background:#475569;" type="button">🔑 تغيير الباسورد</button>
+<button class="btn-hdr admin-only" onclick="exportToExcelCSV()" style="background:#059669;" type="button">📊 شيت Excel</button>
+<button class="btn-hdr admin-only" onclick="downloadEncryptedBackup()" style="background:#2563eb;" type="button">💾 حفظ نسخة JSON</button>
+<button class="btn-hdr admin-only" onclick="restoreEncryptedBackup()" style="background:#7c3aed;" type="button">📂 استرجاع حجوزات ناقصة</button>
+<button class="btn-hdr" onclick="handleLogout()" style="background:#dc2626;" type="button">🚪 خروج</button>
+</div>
+</header>
+<nav class="top-nav-bar">
+<div class="nav-group">
+<button class="tab-btn active" id="tabGrid" onclick="switchView('grid')" type="button">📅 جدول الحجوزات</button><button class="tab-btn" id="tabMaint" onclick="switchView('maint')" type="button">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button><button class="tab-btn" id="tabExpenses" onclick="switchView('expenses')" type="button">💸 المصاريف</button>
+<button class="tab-btn gold-tab" id="tabNewBook" onclick="openQuickBookingModal()" type="button">➕ حجز جديد</button>
+<button class="tab-btn" id="tabCatalog" onclick="switchView('catalog')" type="button">🖼️ صور الشاليهات</button>
+<button class="tab-btn" id="tabAvail" onclick="switchView('avail')" type="button">🔍 إيه المتاح؟</button>
+<button class="tab-btn" id="tabLedger" onclick="switchView('ledger')" type="button">📑 الحجوزات</button>
+<button class="tab-btn" id="tabIdphotos" onclick="switchView('idphotos')" type="button">🪪 صور البطايق</button>
+<button class="tab-btn admin-only" id="tabPermits" onclick="switchView('permits')" type="button">🛡️ تصاريح الأمن <span id="permitNavCount"></span></button>
+<button class="tab-btn" id="tabMyComm" onclick="switchView('mycomm')" type="button">💵 عمولاتي</button>
+<button class="tab-btn admin-only" id="tabTreasury" onclick="switchView('treasury')" type="button">💰 الخزينة والملاك</button>
+<button class="tab-btn admin-only" id="tabAudit" onclick="switchView('audit')" type="button">🛡️ سجل الحركات</button>
+<button class="tab-btn admin-only" id="tabSettings" onclick="switchView('settings')" type="button">⚙️ الإعدادات</button>
+</div>
+</nav>
+<div class="kpi-strip" id="scheduleKpis">
+<div class="kpi-card" onclick="openKpiDetail('occupancy')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('occupancy');}" role="button" style="cursor:pointer;" tabindex="0"><div><div class="kpi-lbl">📊 نسبة الشغل الشهر ده</div><div class="kpi-val" id="kpiOccupancy">0%</div></div><span>🏖️</span></div>
+<div class="kpi-card" onclick="openKpiDetail('holds')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('holds');}" role="button" style="cursor:pointer;" tabindex="0"><div><div class="kpi-lbl">⏳ حجوزات هولد مؤقتة</div><div class="kpi-val" id="kpiHolds" style="color:#d97706;">0</div></div><span>⏱️</span></div>
+<div class="kpi-card" onclick="openKpiDetail('missing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('missing');}" role="button" style="cursor:pointer;" tabindex="0"><div><div class="kpi-lbl">🪪 دخول قريب من غير بطاقة</div><div class="kpi-val" id="kpiMissingIds" style="color:#dc2626;">0</div></div><span>🛡️</span></div>
+<div class="kpi-card" onclick="openKpiDetail('money')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openKpiDetail('money');}" role="button" style="cursor:pointer;" tabindex="0"><div><div class="kpi-lbl">💰 فلوس هتتحصل النهاردة</div><div class="kpi-val" id="kpiTodayRem" style="color:#0d9488;">0 ج.م</div></div><span>💵</span></div>
+</div>
+<section aria-label="قائمة التنبيهات" class="notifications-panel" hidden="" id="notificationsPanel"><div style="display:flex;justify-content:space-between;align-items:center;gap:6px;"><b>التنبيهات</b><span style="display:flex;gap:6px;"><button class="btn-hdr" onclick="markAllActionNotificationsSeen()" style="background:#0f766e;" type="button">✓ تعليم الكل كمقروء</button><button class="btn-hdr" onclick="toggleNotifications(false)" style="background:#475569;" type="button">إغلاق ×</button></span></div><div id="notificationsList"></div></section>
+</div>
+<main class="main-stage">
+<div id="viewGrid">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="gridYear" onchange="renderCalendarGrid()"><option selected="" value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
+<select class="ctrl-select" id="gridMonth" onchange="renderCalendarGrid()">
+<option value="all">كل شهور السنة</option>
+<option value="1">1 - يناير</option><option value="2">2 - فبراير</option><option value="3">3 - مارس</option>
+<option value="4">4 - أبريل</option><option value="5">5 - مايو</option><option value="6">6 - يونيو</option>
+<option value="7">7 - يوليو</option><option value="8">8 - أغسطس</option><option value="9">9 - سبتمبر</option>
+<option value="10">10 - أكتوبر</option><option selected="" value="11">11 - نوفمبر</option><option value="12">12 - ديسمبر</option>
+</select>
+<select class="ctrl-select" id="gridVillageFilter" onchange="renderCalendarGrid()"></select>
+<button class="btn-hdr" onclick="scrollToTodayRow()" style="background:#f59e0b; color:#0f172a; font-weight:900;" type="button">📍 النهاردة</button>
+<button class="btn-hdr" id="btnExportGridImg" onclick="exportCurrentGridAsA4Image()" style="background:#0d9488;" type="button">📸 حفظ الجدول صورة ملونة</button>
+</div>
+<div class="toolbar-right" id="agentFilterPills"></div>
+</div>
+<div class="grid-workspace">
+<div class="sheet-box" id="calendarScrollBox">
+<div class="grid-live-watermark"><img class="app-logo-img" src="Elaraby.webp"/></div>
+<table class="cal-table" id="mainCalendarTable"></table>
+</div>
+<aside class="side-drawer" id="quickSideDrawer">
+<div class="drawer-hdr">
+<div><div id="qsdTitle" style="font-size:13px; font-weight:900; color:#fef08a;">تفاصيل الحجز</div><div id="qsdSubId" style="font-size:10px; color:#cbd5e1;">#INV-000</div></div>
+<button onclick="closeQuickDrawer()" style="background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:6px;padding:3px 8px;cursor:pointer;" type="button">✖</button>
+</div>
+<div class="drawer-body" id="qsdContent"></div>
+</aside>
+</div>
+</div>
+<div class="panel-container" id="viewCatalog">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="catViewVillageFilter" onchange="renderCatalogCards()"></select>
+<input class="form-control" id="catViewSearch" oninput="renderCatalogCards()" placeholder="🔎 دور باسم الشاليه أو مواصفاته..." style="width:220px;" type="text"/>
+</div>
+<button class="btn-hdr admin-only" onclick="openCatEditorForChalet()" style="background:#0284c7;" type="button">➕ إضافة / تعديل صور شاليه</button>
+</div>
+<div id="catalogCardsContainer"></div>
+</div>
+<div class="panel-container" id="viewAvail">
+<div class="panel-grid-2">
+<div class="box-card">
+<h3 style="margin:0 0 10px; font-size:15px; color:var(--primary);">🔍 شوف الشاليهات الفاضية</h3>
+<div class="form-group"><label>القرية:</label><select class="form-control" id="checkVillage"></select></div>
+<div class="row-2">
+<div class="form-group"><label>تاريخ الدخول:</label><input class="form-control" id="checkStart" type="date"/></div>
+<div class="form-group"><label>تاريخ الخروج الصبح:</label><input class="form-control" id="checkEnd" type="date"/></div>
+</div>
+<button class="btn-submit" onclick="checkAllAvailableChalets()" type="button">🔍 عرض الفاضي وتجهيز رسالة واتساب</button>
+<div id="waAvailCopyBox" style="display:none; margin-top:10px;">
+<textarea class="form-control" id="waAvailText" rows="6" style="font-size:11px;"></textarea>
+<button class="btn-submit" onclick="navigator.clipboard.writeText(document.getElementById('waAvailText').value); showToast('✅ تم نسخ الرسالة!');" style="background:#16a34a;" type="button">📋 نسخ الرسالة للواتساب</button>
+</div>
+</div>
+<div class="box-card" id="availResult"></div>
+</div>
+</div>
+<div class="panel-container" id="viewLedger">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="ledgerVillageFilter" onchange="renderLedgerList()"></select>
+<select aria-hidden="true" id="ledgerPermitFilter" onchange="renderLedgerList()" style="display:none;" tabindex="-1">
+<option value="all">كل الحجوزات</option>
+<option value="missing">🔴 لسه من غير بطايق</option>
+<option value="ready">🟡 البطايق اترفعت وجاهزة</option>
+<option value="sent">🟢 اتبعتت للأمن خلاص</option>
+</select>
+<input class="form-control" id="ledgerSearchInput" oninput="renderLedgerList()" placeholder="🔎 العميل، التليفون، رقم الإيصال..." style="width:210px;" type="text"/>
+</div>
+</div>
+<div class="grid-workspace">
+<div class="box-card" id="ledgerListContainer" style="flex:1;"></div>
+<aside class="side-drawer" id="ledgerDetailCard" style="display:none;">
+<div class="drawer-hdr">
+<div><div id="ldcTitle" style="font-size:13px; font-weight:900; color:#fef08a;">بطاقة الحجز</div><div id="ldcSubId" style="font-size:10px; color:#cbd5e1;">#INV-000</div></div>
+<button onclick="document.getElementById('ledgerDetailCard').style.display='none'" style="background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:6px;padding:3px 8px;cursor:pointer;" type="button">✖</button>
+</div>
+<div class="drawer-body" id="ldcContent"></div>
+</aside>
+</div>
+</div>
+<div class="panel-container" id="viewKpidetail" style="display:none;"><h2 id="kpiDetailTitle"></h2><p id="kpiDetailSummary"></p><div class="permit-cards" id="kpiDetailCards"></div></div>
+<div class="panel-container" id="viewIdphotos" style="display:none;"><h2>🪪 صور البطايق</h2><p style="color:var(--text-muted);">ارفع صور بطايق حجوزاتك قبل التسكين بيوم أو يومين. إرسال التصريح للأمن من حساب الأدمن بس.</p><div class="permit-cards" id="idPhotoCards"></div></div>
+<div class="panel-container admin-only" id="viewPermits" style="display:none;">
+<div class="permit-page-head"><div><h2 style="margin:0 0 6px;">🛡️ تصاريح الأمن</h2><p id="permitDayLabel" style="margin:0;color:var(--text-muted);"></p></div><button class="btn-hdr" onclick="showPermitToday()" style="background:#0f766e;" type="button">قائمة النهاردة</button></div>
+<div class="permit-banner" id="permitDailyBanner"></div>
+<div class="permit-summary" id="permitSummary"></div>
+<div class="permit-day-bar"><label class="permit-day-search">اختار اليوم <input class="form-control" id="permitDayPicker" onchange="permitPickDate(this.value)" type="date"/></label><button class="permit-today-btn" onclick="permitPickDay('today')" type="button">النهاردة</button></div><div class="permit-toolbar"><label style="display:none">عرض القائمة <select class="form-control" id="permitDaySelect" onchange="renderDailyPermits()"><option value="today">النهاردة: تسكين بكرة</option></select></label><label>الحالة <select class="form-control" id="permitStateFilter" onchange="renderDailyPermits()"><option value="all">كل الحالات</option><option value="pending">لسه متبعتش</option><option value="sent">اتبعت للأمن</option></select></label></div>
+<div class="permit-cards" id="permitCards"></div>
+<div id="permitOverdue"></div>
+<p style="color:var(--text-muted);font-size:12px;line-height:1.8;">القائمة بتتجدد تلقائيًا مع بداية اليوم بتوقيت مصر، والأيام السابقة في الأرشيف حسب تاريخ تجهيز التصريح. التنبيه بيظهر جوه الموقع وهو مفتوح أو أول ما تفتحه. حالة «اتبعت للأمن» معناها إتمام المشاركة أو تأكيد الأدمن، مش تأكيد استلام من واتساب أو موافقة الأمن.</p>
+</div>
+<div class="panel-container" id="viewMaint">
+<div class="panel-grid-2">
+<div class="box-card">
+<h3>🔧 الصيانة والأعطال</h3><p style="color:var(--text-muted);line-height:1.8">سجّل الأعطال والصيانة وتكلفتها، وكل سيلز يشوف ويعدل تسجيلاته بس.</p>
+<div class="form-group"><label>نوع التسجيل</label><select class="form-control" id="maintEntryType" onchange="switchMaintAddType(this.value)"><option value="fault">🔴 عطل</option><option value="maintenance">🛠️ صيانة</option></select></div>
+<div class="" id="maintPaneTicket">
+<div class="form-group"><label>التاريخ:</label><input class="form-control" id="maintDate" type="date"/></div>
+<div class="form-group"><label>الشاليه *</label><select class="form-control" id="maintChaletSel"></select></div>
+<div class="form-group"><label>البيان / المشكلة *</label><input class="form-control" id="maintDescInp"/></div>
+<div class="form-group"><label>التكلفة المتوقعة (ج.م)</label><input class="form-control" id="maintCostInp" min="0" type="number" value="0"/></div>
+<div class="form-group"><label>الأهمية</label><select class="form-control" id="maintPriorityInp"><option value="مستعجل">🔴 مستعجل (فيه نزيل)</option><option value="عادي">🟡 عادي</option></select></div>
+<input id="editingMaintenanceId" type="hidden"/>
+<button class="btn-submit" id="btnSaveMaintenance" onclick="addMaintenanceTicket()" style="background:#d97706" type="button">💾 حفظ التسجيل</button>
+<button class="btn-submit" id="btnCancelMaintEdit" onclick="cancelMaintenanceEdit()" style="display:none" type="button">إلغاء التعديل</button>
+</div>
+</div>
+<div class="box-card">
+<div class="exp-filter-bar">
+<div class="form-group"><label>النوع:</label><select class="form-control" id="opsFilterType" onchange="renderOperations()"><option value="">كل الأنواع</option><option value="fault">عطل</option><option value="maintenance">صيانة</option></select></div>
+<div class="form-group"><label>الجهة:</label><select class="form-control" id="maintFilterChalet" onchange="renderOperations()"></select></div>
+<div class="form-group"><label>من يوم:</label><input class="form-control" id="maintFilterFrom" onchange="renderOperations()" type="date"/></div>
+<div class="form-group"><label>لحد يوم:</label><input class="form-control" id="maintFilterTo" onchange="renderOperations()" type="date"/></div>
+<div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="maintFilterText" oninput="renderOperations()"/></div>
+<button class="btn-hdr exp-filter-clear" onclick="resetMaintenanceFilters()" type="button">✖ مسح الفلتر</button>
+<button class="btn-hdr" onclick="filterCostsToday('maint')" type="button">📅 النهاردة</button></div>
+<div id="operationsList"></div><div id="maintTicketsContainer" style="display:none"></div>
+</div>
+</div>
+</div><div class="panel-container" id="viewExpenses"><div class="panel-grid-2"><div class="box-card"><h3>💸 المصاريف</h3><p style="color:var(--text-muted);line-height:1.8">سجّل مصروفك الشخصي أو مصروف الشاليه. الأدمن يشوف الكل، والسيلز يشوف تسجيلاته بس.</p><div class="" id="maintPaneExp">
+<div class="form-group"><label>التاريخ:</label><input class="form-control" id="expDate" type="date"/></div>
+<div class="form-group"><label>تبع شاليه إيه؟:</label><select class="form-control" id="expChaletSel"></select></div>
+<div class="form-group"><label>اتصرف في إيه؟:</label><input class="form-control" id="expDesc"/></div>
+<div class="form-group"><label>المبلغ (ج.م):</label><input class="form-control" id="expAmount" min="0" type="number"/></div>
+<input id="editingExpenseId" type="hidden"/>
+<button class="btn-submit" id="btnSaveExpense" onclick="addExpense()" style="background:#dc2626" type="button">💾 حفظ المصروف</button>
+<button class="btn-submit" id="btnCancelExpEdit" onclick="cancelExpenseEdit()" style="display:none" type="button">إلغاء التعديل</button>
+</div></div><div class="box-card"><div class="exp-filter-bar">
+<div class="form-group"><label>الجهة:</label><select class="form-control" id="expFilterChalet" onchange="renderExpenses()"></select></div>
+<div class="form-group"><label>من يوم:</label><input class="form-control" id="expFilterFrom" onchange="renderExpenses()" type="date"/></div>
+<div class="form-group"><label>لحد يوم:</label><input class="form-control" id="expFilterTo" onchange="renderExpenses()" type="date"/></div>
+<div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="expFilterText" oninput="renderExpenses()"/></div>
+<button class="btn-hdr exp-filter-clear" onclick="resetExpenseFilters()" type="button">✖ مسح الفلتر</button>
+<button class="btn-hdr" onclick="filterCostsToday('exp')" type="button">📅 النهاردة</button></div><div id="expensesListContainer" style="overflow-x:auto;max-width:100%"></div></div></div><div class="box-card admin-only" id="costSummary" style="margin-top:14px"></div></div>
+<div class="modal-overlay" id="maintHistoryModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box" style="max-width:520px;max-height:80vh;overflow:auto;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+<b style="font-size:14px;">🕓 سجل التعديلات</b>
+<button onclick="document.getElementById('maintHistoryModal').style.display='none'" style="background:#475569;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;" type="button">✖</button>
+</div>
+<div id="maintHistoryBody"></div>
+</div>
+</div>
+<div class="panel-container" id="viewMycomm">
+<div class="box-card" style="max-width:850px; margin:0 auto;">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap;">
+<h3 style="margin:0; color:var(--primary);">💵 شغلي وعمولاتي المستحقة</h3>
+<button class="btn-hdr" onclick="exportMyCommissionsImage()" style="background:#059669;" type="button">📸 حفظ كشف العمولات صورة</button>
+</div>
+<div id="myCommContent"></div>
+</div>
+</div>
+<div class="panel-container admin-only" id="viewTreasury">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<button class="tab-btn active" id="trTabMain" onclick="switchTreasurySub('main')" type="button">💰 الجرد المفصّل والعمولات وإيراد القرى</button>
+<button class="tab-btn" id="trTabInv" onclick="switchTreasurySub('inv')" type="button">🧾 جرد الشاليهات المالي</button>
+<button class="tab-btn" id="trTabOwner" onclick="switchTreasurySub('owner')" type="button">📑 كشف حساب مالك شاليه</button>
+<button class="tab-btn" id="trTabStats" onclick="switchTreasurySub('stats')" type="button">📈 إحصائيات الشغل</button>
+</div>
+</div>
+<div id="trSubMain">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="tFilterByType" onchange="calculateTreasury()">
+<option value="regDate">حسب تاريخ تسجيل الحجز</option>
+<option value="startDate">حسب تاريخ وصول العميل</option>
+</select>
+<label style="font-size:12px;font-weight:800;">من:</label><input class="ctrl-select" id="tStartDate" type="date"/>
+<label style="font-size:12px;font-weight:800;">لحد:</label><input class="ctrl-select" id="tEndDate" type="date"/>
+<button class="btn-hdr" onclick="calculateTreasury()" style="background:var(--primary);" type="button">💰 احسب الجرد</button>
+<button class="btn-hdr" onclick="exportTreasuryAsA4Image()" style="background:#059669;" type="button">📸 حفظ صورة</button>
+<button class="btn-hdr" onclick="printElementClean('treasuryCaptureArea')" style="background:#334155;" type="button">🖨️ طباعة / PDF</button>
+</div>
+</div>
+<div id="treasuryReportArea"></div>
+</div>
+<div id="trSubInv" style="display:none;">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="invFilterByType" onchange="calculateChaletInventory()">
+<option value="regDate">حسب تاريخ تسجيل الحجز</option>
+<option value="startDate">حسب تاريخ وصول العميل</option>
+</select>
+<label style="font-size:12px;font-weight:800;">من:</label><input class="ctrl-select" id="invStartDate" type="date"/>
+<label style="font-size:12px;font-weight:800;">لحد:</label><input class="ctrl-select" id="invEndDate" type="date"/>
+<button class="btn-hdr" onclick="calculateChaletInventory()" style="background:var(--primary);" type="button">🧾 احسب جرد الشاليهات</button>
+<button class="btn-hdr" onclick="exportInventoryImage()" style="background:#059669;" type="button">📸 حفظ صورة</button>
+<button class="btn-hdr" onclick="printElementClean('inventoryCaptureArea')" style="background:#334155;" type="button">🖨️ طباعة / PDF</button>
+</div>
+</div>
+<div id="inventoryReportArea"></div>
+</div>
+<div id="trSubOwner" style="display:none;">
+<div class="panel-grid-2">
+<div class="box-card">
+<h3 style="margin:0 0 10px; color:var(--primary);">📑 كشف حساب مالك شاليه</h3>
+<div class="form-group"><label>اختار القرية:</label><select class="form-control" id="ownVillageSel" onchange="onSelectOwnerVillage()"></select></div>
+<div class="form-group"><label>اختار الشاليه:</label><select class="form-control" id="ownChaletSel"></select></div>
+<div class="row-2">
+<div class="form-group"><label>من تاريخ:</label><input class="form-control" id="ownStartDate" type="date"/></div>
+<div class="form-group"><label>لحد تاريخ:</label><input class="form-control" id="ownEndDate" type="date"/></div>
+</div>
+<div class="row-2">
+<div class="form-group"><label>نسبة المكتب (%):</label><input class="form-control" id="ownFeePct" type="number" value="15"/></div>
+<div class="form-group"><label>خصم نظافة/صيانة زيادة:</label><input class="form-control" id="ownExtraDeduct" type="number" value="0"/></div>
+</div>
+<button class="btn-submit" onclick="generateOwnerStatement()" type="button">📊 عرض كشف المالك</button>
+<div class="row-2" style="margin-top:6px;">
+<button class="btn-submit" onclick="exportOwnerStatementA4()" style="background:#059669;margin-top:0;" type="button">📸 حفظ صورة</button>
+<button class="btn-submit" onclick="printElementClean('ownerA4Card')" style="background:#334155;margin-top:0;" type="button">🖨️ طباعة / PDF</button>
+</div>
+</div>
+<div class="box-card" id="ownerStatementPreview"></div>
+</div>
+</div>
+<div id="trSubStats" style="display:none;">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<select class="ctrl-select" id="statsFilterByType" onchange="calculateWorkStats()">
+<option value="regDate">حسب تاريخ تسجيل الحجز</option>
+<option value="startDate">حسب تاريخ وصول العميل</option>
+</select>
+<label style="font-size:12px;font-weight:800;">من:</label><input class="ctrl-select" id="statsStartDate" type="date"/>
+<label style="font-size:12px;font-weight:800;">لحد:</label><input class="ctrl-select" id="statsEndDate" type="date"/>
+<button class="btn-hdr" onclick="calculateWorkStats()" style="background:var(--primary);" type="button">📈 احسب الإحصائيات</button>
+<button class="btn-hdr" onclick="exportStatsImage()" style="background:#059669;" type="button">📸 حفظ صورة</button>
+</div>
+</div>
+<div id="statsReportArea"></div>
+</div>
+</div>
+<div class="panel-container admin-only" id="viewAudit">
+<div class="box-card" style="max-width:850px; margin:0 auto;"><div style="display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;flex-wrap:wrap;gap:8px;"><h3 style="margin:0;">🛡️ سجل النشاط المحفوظ</h3><label style="font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:5px;cursor:pointer;margin:0;"><input id="auditShowLogins" onchange="renderAuditLog()" type="checkbox"/> عرض تسجيلات الدخول</label></div><div id="auditLogContainer"></div></div>
+</div>
+<div class="panel-container admin-only" id="viewSettings">
+<div class="grid-toolbar">
+<div class="toolbar-left">
+<button class="tab-btn active" id="setTabChalets" onclick="switchSetSub('chalets')" type="button">1️⃣ القرى والشاليهات والأسعار</button>
+<button class="tab-btn" id="setTabComm" onclick="switchSetSub('comm')" type="button">2️⃣ العمولات (موحدة / لكل موظف / لكل قرية)</button>
+<button class="tab-btn" id="setTabUsers" onclick="switchSetSub('users')" type="button">3️⃣ الموظفين واللوكيشن</button>
+</div>
+</div>
+<div class="box-card" id="setSubChalets">
+<div class="row-3" style="margin-bottom:12px;">
+<div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
+<div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">➕ إضافة شاليه جديد:</div>
+<div class="row-2" style="margin-bottom:6px;">
+<select class="form-control" id="existingVillageSelect" onchange="if(this.value!=='__new__') document.getElementById('newVillageInp').value=this.value;"></select>
+<input class="form-control" id="newVillageInp" placeholder="أو اكتب اسم قرية جديدة" type="text"/>
+</div>
+<div class="row-2">
+<input class="form-control" id="newChaletInp" placeholder="اسم الشاليه الجديد" type="text"/>
+<button class="btn-submit" onclick="addChalet()" style="margin-top:0;" type="button">➕ إضافة</button>
+</div>
+</div>
+<div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1.5px solid var(--primary);">
+<div style="font-weight:800; font-size:12px; color:var(--primary); margin-bottom:6px;">💰 تعديل سعر مجموعة شاليهات مع بعض:</div>
+<div class="row-2" style="margin-bottom:6px;">
+<input class="form-control" id="bulkWeekdayInp" placeholder="سعر وسط الأسبوع" type="number"/>
+<input class="form-control" id="bulkWeekendInp" placeholder="سعر الويك إند" type="number"/>
+</div>
+<div class="row-2">
+<button class="btn-submit" onclick="toggleSelectAllChaletsBulk()" style="margin-top:0; background:#334155;" type="button">☑️ تحديد الكل</button>
+<button class="btn-submit" onclick="applyBulkPricesToSelected()" style="margin-top:0; background:#0d9488;" type="button">✅ تطبيق السعر</button>
+</div>
+</div>
+<div style="background:var(--bg-subtle); padding:10px; border-radius:10px; border:1px solid var(--border-color);">
+<div style="font-weight:800; font-size:12px; color:#b45309; margin-bottom:6px;">✏️ تغيير اسم قرية أو حذفها:</div>
+<div class="row-2" style="margin-bottom:6px;">
+<select class="form-control" id="renameVillageSelect" onchange="document.getElementById('renameVillageNewInp').value=this.value;"></select>
+<input class="form-control" id="renameVillageNewInp" placeholder="الاسم الجديد" type="text"/>
+</div>
+<div class="row-2">
+<button class="btn-submit" onclick="renameEntireVillage()" style="margin-top:0; background:#d97706;" type="button">💾 حفظ الاسم</button>
+<button class="btn-submit" onclick="deleteEntireVillage()" style="margin-top:0; background:#dc2626;" type="button">🗑️ حذف القرية</button>
+</div>
+</div>
+</div>
+<div id="chaletsManageList"></div>
+</div>
+<div class="box-card" id="setSubComm" style="display:none;">
+<div class="panel-grid-2">
+<div>
+<div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1.5px solid var(--primary); margin-bottom:12px;">
+<h4 style="margin:0 0 6px; color:var(--primary);">⚡ توحيد العمولة على كل السيلز بضغطة واحدة</h4>
+<div class="row-2">
+<select class="form-control" id="globalCommTypeInp">
+<option value="pct">نسبة مئوية (%) من إجمالي الحجز</option>
+<option value="per_night">مبلغ ثابت (ج.م) على كل ليلة</option>
+<option value="fixed_booking">مبلغ ثابت (ج.م) على الحجز بالكامل</option>
+</select>
+<input class="form-control" id="globalCommValInp" placeholder="القيمة" type="number" value="3"/>
+</div>
+<button class="btn-submit" onclick="applyGlobalCommissionToAllSales()" type="button">✅ تطبيق على كل السيلز</button>
+</div>
+<div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+<h4 style="margin:0 0 6px; color:var(--text-main);">👤 عمولة خاصة لكل موظف / مدير لوحده</h4>
+<p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">تقدر تحدد عمولة مختلفة لكل سيلز أو لنفسك (الأدمن) وهتتخصم وتتحسب في الخزينة تلقائياً:</p>
+<div id="individualUserCommList"></div>
+</div>
+</div>
+<div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+<h4 style="margin:0 0 6px; color:#b45309;">🏖️ عمولة مخصصة لكل قرية لوحدها (اختياري)</h4>
+<p style="font-size:11px; color:var(--text-muted); margin:0 0 8px;">لو قرية معينة ليها عمولة مختلفة عن الباقي (بالنسبة % أو بالليلة أو بالحجز)، حددها هنا وهتلغي العمولة العادية في القرية دي بس:</p>
+<div id="villageCommissionsList"></div>
+</div>
+</div>
+</div>
+<div class="box-card" id="setSubUsers" style="display:none;">
+<div class="panel-grid-2">
+<div>
+<div style="background:var(--bg-subtle); padding:10px; border-radius:10px; margin-bottom:12px;">
+<div style="font-weight:800; font-size:12px; margin-bottom:6px;">➕ إضافة موظف / سيلز جديد (لون تلقائي مختلف):</div>
+<div class="row-2" style="margin-bottom:6px;">
+<input class="form-control" id="newUserFullName" placeholder="اسم الموظف" type="text"/>
+<input class="form-control" dir="ltr" id="newUserLogin" placeholder="اسم الدخول (sara)" type="text"/>
+</div>
+<div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">ده بيضيف بروفايل الموظف (الاسم والعمولة). حساب الدخول والباسورد بيتعملوا من Firebase.</div>
+<div class="row-2">
+<div style="display:flex; gap:6px; align-items:center;">
+<select class="form-control" id="newUserRole"><option value="sales">سيلز</option><option value="admin">مدير</option></select>
+<button class="btn-submit" onclick="addSystemUser()" style="margin-top:0; white-space:nowrap;" type="button">✅ إضافة</button>
+</div>
+</div>
+</div>
+<div id="usersManageList"></div>
+</div>
+<div style="background:var(--bg-subtle); padding:12px; border-radius:10px; border:1px solid var(--border-color);">
+<h4 style="margin:0 0 8px; color:var(--primary);">📍 لوكيشن وتعليمات الدخول لكل قرية</h4>
+<div id="villageLocationsList"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="dev-footer">
+<span style="display:inline-flex; align-items:center; gap:6px;">
+<img class="app-logo-img" src="Elaraby.webp" style="height:22px; background:#000; padding:2px; border-radius:4px;"/>
+<b>شركة العربي للاستثمار العقاري</b> • <a dir="ltr" href="https://fb.com/Elaraby.estate" target="_blank">fb.com/Elaraby.estate</a>
+</span>
+<span class="developer-credit">© تصميم وتطوير <b>م. عمر إسماعيل</b> • <a dir="ltr" href="https://fb.com/Omar9ismail" target="_blank">fb.com/Omar9ismail</a> • <span dir="ltr">01008743750</span></span>
+</footer>
+<div class="mobile-bottom-bar">
+<button class="mob-nav-btn" onclick="switchView('grid')" type="button"><span>📅</span><span>الجدول</span></button>
+<button class="mob-nav-btn" onclick="openQuickBookingModal()" type="button"><span>➕</span><span>حجز جديد</span></button>
+<button class="mob-nav-btn" onclick="switchView('catalog')" type="button"><span>🖼️</span><span>الصور</span></button>
+<button class="mob-nav-btn" onclick="switchView('mycomm')" type="button"><span>💵</span><span>عمولاتي</span></button>
+<button class="mob-nav-btn" onclick="switchView('ledger')" type="button"><span>📑</span><span>الحجوزات</span></button>
+</div>
+<div class="modal-overlay" id="changePassModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box" style="max-width:380px;">
+<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+<b style="color:var(--primary);">🔑 تغيير الباسورد بتاعك</b>
+<button onclick="document.getElementById('changePassModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;" type="button">✖</button>
+</div>
+<div class="form-group"><label>الباسورد القديم:</label><input class="form-control" dir="ltr" id="oldMyPassInp" type="password"/></div>
+<div class="form-group"><label>الباسورد الجديد:</label><input class="form-control" dir="ltr" id="newMyPassInp" type="text"/></div>
+<button class="btn-submit" onclick="submitMyPasswordChange()" type="button">✅ حفظ الباسورد الجديد</button>
+</div>
+</div>
+<div class="modal-overlay" id="bookingModal" onclick="if(event.target===this) closeBookingModal()">
+<div class="modal-box">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
+<b id="bookingModalTitle" style="font-size:15px; color:var(--primary);">➕ تسجيل حجز جديد أو هولد</b>
+<button onclick="closeBookingModal()" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;" type="button">✖</button>
+</div>
+<form id="bookingForm" onsubmit="submitBooking(event)">
+<input id="editingBookingId" type="hidden" value=""/>
+<div class="row-2" style="background:var(--bg-subtle); padding:8px; border-radius:9px; margin-bottom:8px;">
+<div class="form-group" style="margin-bottom:0;"><label>📌 نوع الحجز *</label><select class="form-control" id="bookingStatusType" onchange="toggleHoldOptions()"><option value="confirmed">🔒 حجز مؤكد</option><option value="hold">⏳ هولد مؤقت</option></select></div>
+<div class="form-group" id="holdDurationBox" style="margin-bottom:0; display:none;"><label>⏱️ مدة الهولد *</label><select class="form-control" id="holdHours"><option value="1">ساعة</option><option selected="" value="2">ساعتين</option><option value="4">4 ساعات</option><option value="6">6 ساعات</option><option value="12">12 ساعة</option></select></div>
+</div>
+<div class="row-2">
+<div class="form-group"><label>🏖️ القرية *</label><select class="form-control" id="bookingVillageSelect" onchange="onSelectBookingVillage()" required=""></select></div>
+<div class="form-group"><label>🏡 الشاليه *</label><select class="form-control" id="chaletSelect" onchange="onSelectBookingChalet()" required=""></select></div>
+</div>
+<div class="row-2">
+<div class="form-group"><label>👤 السيلز المسؤول *</label><select class="form-control" id="agentName" required=""></select></div>
+<div class="form-group"><label>📣 العميل جاي منين؟</label><select class="form-control" id="leadSource"><option value="إعلان فيسبوك / إنستجرام">إعلان فيسبوك / إنستجرام</option><option value="جروبات فيسبوك">جروبات فيسبوك</option><option value="عميل قديم / ترشيح">عميل قديم / ترشيح</option><option value="بروكر / وسيط">بروكر / وسيط</option><option value="تليفون / واتساب">تليفون / واتساب</option></select></div>
+</div>
+<div class="row-2">
+<div class="form-group"><label>اسم العميل *</label><input class="form-control" id="clientName" required="" type="text"/></div>
+<div class="form-group"><label>رقم تليفونه *</label><input class="form-control" dir="ltr" id="clientPhone" required="" type="text"/></div>
+</div>
+<div class="row-3">
+<div class="form-group">
+<label>📆 نظام الإيجار *</label>
+<select class="form-control" id="rentPeriodType" onchange="onRentPeriodTypeChange()">
+<option value="daily">يومي (بالليلة)</option>
+<option value="monthly">شهري (بالشهر)</option>
+</select>
+</div>
+<div class="form-group"><label>📅 تاريخ الوصول *</label><input class="form-control" id="startDate" onchange="onStartOrMonthsChange()" required="" type="date"/></div>
+<div class="form-group" id="monthsCountBox" style="display:none;"><label>🔢 عدد الشهور *</label><input class="form-control" id="monthsCount" max="24" min="1" oninput="onStartOrMonthsChange()" type="number" value="1"/></div>
+<div class="form-group" id="endDateBox"><label>📅 تاريخ المغادرة *</label><input class="form-control" id="endDate" onchange="recalculateTotals()" required="" type="date"/></div>
+</div>
+<div class="row-3">
+<div class="form-group"><label id="unitPriceLabel">💰 سعر الليلة *</label><input class="form-control" id="unitPrice" min="0" oninput="recalculateTotals()" required="" type="number"/></div>
+<div class="form-group">
+<label style="display:flex; justify-content:space-between; align-items:center;">
+<span>💵 المدفوع *</span>
+<button onclick="payFullBookingAmount()" style="background:#16a34a; color:#fff; border:none; border-radius:4px; padding:1px 6px; font-size:10px; font-weight:800; cursor:pointer;" type="button">✅ دفع المبلغ كله</button>
+</label>
+<input class="form-control" id="deposit" min="0" oninput="recalculateTotals()" required="" type="number" value="0"/>
+</div>
+<div class="form-group"><label>💳 طريقة الدفع</label><select class="form-control" id="paymentMethod"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
+</div>
+<div class="row-2" id="commOverrideBox" style="display:none; background:var(--bg-subtle); border-radius:8px; padding:8px 10px;">
+<div class="form-group" style="margin:0;"><label>🧮 عمولة يدوية للحجز (أدمن)</label><select class="form-control" id="commOverrideType"><option value="">بدون — حسب نظام العمولة</option><option value="pct">نسبة % من قيمة الحجز</option><option value="fixed_booking">مبلغ ثابت (ج.م)</option></select></div>
+<div class="form-group" style="margin:0;"><label>قيمة العمولة</label><input class="form-control" id="commOverrideVal" min="0" type="number" value="0"/></div>
+</div>
+<div style="background:var(--bg-subtle); padding:8px 12px; border-radius:8px; display:flex; justify-content:space-between; font-size:12px; font-weight:800;">
+<span>المدة: <b id="calcDuration">1 ليلة</b></span><span>الإجمالي: <b id="calcTotal">0 ج.م</b></span><span style="color:#dc2626;">الباقي: <b id="calcRemaining">0 ج.م</b></span>
+</div>
+<button class="btn-submit" type="submit">✅ تأكيد وحفظ الحجز</button>
+</form>
+</div>
+</div>
+<div class="modal-overlay" id="permitModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid var(--border-color); padding-bottom:8px; margin-bottom:10px;">
+<b style="font-size:14.5px; color:var(--primary);">🪪 صور البطايق وتصريح الأمن</b>
+<button onclick="document.getElementById('permitModal').style.display='none'" style="background:#dc2626; color:#fff; border:none; border-radius:6px; padding:4px 9px; cursor:pointer;" type="button">✖</button>
+</div>
+<input id="permitBookingId" type="hidden"/>
+<div id="permitInfoSummary" style="background:var(--bg-subtle); padding:8px 10px; border-radius:8px; font-size:11.5px; margin-bottom:10px;"></div>
+<div style="border:1.5px dashed var(--primary); border-radius:10px; padding:10px; margin-bottom:10px; background:var(--bg-subtle);">
+<div style="font-weight:900; font-size:12px; color:var(--primary); margin-bottom:6px;">1️⃣ ارفع صور البطايق على السيستم:</div>
+<input accept="image/*" id="permitFileInput" multiple="" onchange="uploadIdPhotosToSystem(event)" style="display:none;" type="file"/>
+<button class="btn-submit" onclick="document.getElementById('permitFileInput').click()" style="margin-top:0; background:#0284c7;" type="button">📤 اختيار صور البطايق ورفعها</button>
+<div id="permitUploadStatusMsg" style="display:none; margin-top:7px; padding:6px 10px; border-radius:6px; background:#dcfce7; color:#15803d; font-size:11.5px; font-weight:800; text-align:center;"></div>
+</div>
+<div id="permitPhotosGallery" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:240px; overflow-y:auto; margin-bottom:10px;"></div>
+<div id="permitStaffNote" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; font-size:11.5px; color:var(--text-muted); text-align:center;">🔒 إرسال التصريح للأمن متاح من حساب الأدمن بس. ارفع صور البطايق هنا والأدمن هيبعتها للأمن.</div>
+<div id="permitAdminActions" style="border-top:1px solid var(--border-color); padding-top:10px;">
+<div style="font-weight:900; font-size:12px; margin-bottom:6px;">2️⃣ ابعت التصريح للأمن:</div>
+<div class="row-2">
+<button class="btn-submit" onclick="sendSecurityPermitWhatsApp()" style="background:#16a34a; margin-top:0;" type="button">🛡️ إرسال للأمن واتساب</button>
+<button class="btn-submit" onclick="markPermitAsSentOnly()" style="background:#334155; margin-top:0;" type="button">✅ اتبعت خلاص (خليه 🟢)</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="settleModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box" style="max-width:400px;">
+<b style="font-size:15px; color:var(--primary);">💰 تحصيل باقي الحساب</b>
+<input id="settleBookingId" type="hidden"/>
+<div id="settleInfoBox" style="margin:10px 0; font-size:12px;"></div>
+<div class="form-group"><label>المبلغ اللي ادفع دلوقتي:</label><input class="form-control" id="settleAmountInp" type="number"/></div>
+<div class="form-group"><label>طريقة الدفع:</label><select class="form-control" id="settleMethodInp"><option value="إنستاباي">إنستاباي</option><option value="فودافون كاش">فودافون كاش</option><option value="كاش">كاش</option></select></div>
+<div class="row-2">
+<button class="btn-submit" onclick="confirmSettleRemaining()" style="background:#16a34a;" type="button">✅ تأكيد</button>
+<button class="btn-submit" onclick="document.getElementById('settleModal').style.display='none'" style="background:#64748b;" type="button">إلغاء</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="catEditorModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box">
+<div style="display:flex; justify-content:space-between; margin-bottom:8px;"><b>🖼️ إضافة / تعديل صور ومواصفات شاليه (تُختم باللوجو تلقائياً)</b><button onclick="document.getElementById('catEditorModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:3px 8px;" type="button">✖</button></div>
+<div class="row-2">
+<div class="form-group"><label>القرية:</label><select class="form-control" id="catVillageSelect" onchange="onSelectCatVillage()"></select></div>
+<div class="form-group"><label>الشاليه:</label><select class="form-control" id="catChaletSelect" onchange="loadSelectedChaletCatalog()"></select></div>
+</div>
+<div id="catGuidePrices" style="line-height:1.8;margin:8px 0;color:var(--primary)"></div><div class="form-group"><label>المواصفات:</label><textarea class="form-control" id="catDescInp" rows="3"></textarea></div>
+<div class="form-group"><label>اختار صور الشاليه (سيتم وضع اللوجو والفوتر عليها تلقائياً):</label><input accept="image/*" class="form-control" multiple="" onchange="handleCatPhotosUpload(event)" type="file"/></div>
+<div id="catPendingThumbs" style="display:flex; gap:5px; flex-wrap:wrap; margin:6px 0;"></div>
+<button class="btn-submit" onclick="saveChaletCatalogData()" type="button">💾 حفظ الصور المختومة والبيانات</button>
+</div>
+</div>
+<div class="modal-overlay" id="galleryModal" onclick="if(event.target===this) this.style.display='none'">
+<div class="modal-box" style="max-width:780px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1.5px solid var(--border-color); padding-bottom:8px;">
+<b id="modalChaletTitle" style="font-size:15px; color:var(--primary);"></b>
+<button onclick="document.getElementById('galleryModal').style.display='none'" style="background:#dc2626;color:#fff;border:none;border-radius:5px;padding:4px 9px;cursor:pointer;" type="button">✖</button>
+</div>
+<div class="row-3" style="margin-bottom:10px;">
+<button class="btn-submit" onclick="downloadAllCurrentChaletPhotos()" style="margin-top:0; background:#0284c7;" type="button">📥 تحميل كل الصور باللوجو</button>
+<button class="btn-submit" onclick="shareCurrentChaletPhotos('whatsapp')" style="margin-top:0; background:#16a34a;" type="button">💬 مشاركة على واتساب</button>
+<button class="btn-submit" onclick="shareCurrentChaletPhotos('messenger')" style="margin-top:0; background:#2563eb;" type="button">💙 مشاركة على ماسنجر</button>
+</div>
+<div id="modalImagesList" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"></div>
+</div>
+</div>
+<div id="offscreenExportWrapper"></div>
+<script src="3-elaraby-runtime-v13.js"></script>
 </body>
 </html>
