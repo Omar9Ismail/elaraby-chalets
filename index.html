@@ -379,6 +379,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <button class="tab-btn" id="tabIdphotos" onclick="switchView('idphotos')" type="button">🪪 صور البطايق</button>
 <button class="tab-btn admin-only" id="tabPermits" onclick="switchView('permits')" type="button">🛡️ تصاريح الأمن <span id="permitNavCount"></span></button>
 <button class="tab-btn" id="tabMaint" onclick="switchView('maint')" type="button">🔧 الصيانة والأعطال <span id="maintBadgeCount" style="background:#d97706;color:#fff;padding:0 5px;border-radius:10px;font-size:10px;">0</span></button>
+<button class="tab-btn" id="tabExpenses" onclick="switchView('expenses')" type="button">💸 المصاريف</button>
 <button class="tab-btn" id="tabMyComm" onclick="switchView('mycomm')" type="button">💵 عمولاتي</button>
 <button class="tab-btn admin-only" id="tabTreasury" onclick="switchView('treasury')" type="button">💰 الخزينة والملاك</button>
 <button class="tab-btn admin-only" id="tabAudit" onclick="switchView('audit')" type="button">🛡️ سجل الحركات</button>
@@ -488,16 +489,15 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <div id="permitOverdue"></div>
 <p style="color:var(--text-muted);font-size:12px;line-height:1.8;">القائمة بتتجدد تلقائيًا مع بداية اليوم بتوقيت مصر، والأيام السابقة في الأرشيف حسب تاريخ تجهيز التصريح. التنبيه بيظهر جوه الموقع وهو مفتوح أو أول ما تفتحه. حالة «اتبعت للأمن» معناها إتمام المشاركة أو تأكيد الأدمن، مش تأكيد استلام من واتساب أو موافقة الأمن.</p>
 </div>
-<div class="panel-container" id="viewMaint"><div style="display:flex;gap:8px;margin-bottom:14px"><button class="tab-btn" id="maintSubTickets" onclick="switchMaintSub('tickets')" type="button">🔧 الصيانة والأعطال</button><button class="tab-btn" id="maintSubExpenses" onclick="switchMaintSub('expenses')" type="button">💸 المصاريف</button></div><div id="maintTicketsSection">
-<div class="panel-grid-2">
+<div class="panel-container" id="viewMaint"><div class="panel-grid-2">
 <div class="box-card">
-<h3>🔧 الصيانة والأعطال</h3><p style="color:var(--text-muted);line-height:1.8">سجّل الأعطال والصيانة وتكلفتها، وكل سيلز يشوف ويعدل تسجيلاته بس.</p>
+<h3>🔧 الصيانة والأعطال</h3><p style="color:var(--text-muted);line-height:1.8">سجّل العطل ومكانه وأهميته. لما يتحل علّم عليه وسجّل تكلفة الحل.</p>
 
 <div class="" id="maintPaneTicket">
 <div class="form-group"><label>التاريخ:</label><input class="form-control" id="maintDate" type="date"/></div>
-<div class="form-group"><label>الشاليه *</label><select class="form-control" id="maintChaletSel"></select></div>
+<div class="form-group"><label>المكان *</label><select class="form-control" id="maintChaletSel"></select></div>
 <div class="form-group"><label>البيان / المشكلة *</label><input class="form-control" id="maintDescInp"/></div>
-<div class="form-group"><label>التكلفة المتوقعة (ج.م)</label><input class="form-control" id="maintCostInp" min="0" type="number" value="0"/></div>
+
 <div class="form-group"><label>الأهمية</label><select class="form-control" id="maintPriorityInp"><option value="مستعجل">🔴 مستعجل (فيه نزيل)</option><option value="عادي">🟡 عادي</option></select></div>
 <input id="editingMaintenanceId" type="hidden"/>
 <button class="btn-submit" id="btnSaveMaintenance" onclick="addMaintenanceTicket()" style="background:#d97706" type="button">💾 حفظ التسجيل</button>
@@ -513,10 +513,10 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="maintFilterText" oninput="renderOperations()"/></div>
 <button class="btn-hdr exp-filter-clear" onclick="resetMaintenanceFilters()" type="button">✖ مسح الفلتر</button>
 <button class="btn-hdr" onclick="filterCostsToday('maint')" style="background:#0f766e" type="button">📅 النهاردة</button></div>
-<div id="operationsList"></div><div id="maintTicketsContainer" style="display:none"></div>
+<div style="display:flex;gap:8px;margin:12px 0"><button class="tab-btn active" id="faultOpenBtn" onclick="setFaultArchive(false)">الأعطال المفتوحة</button><button class="tab-btn" id="faultArchiveBtn" onclick="setFaultArchive(true)">أرشيف الأعطال</button></div><div id="faultArchiveFilters" style="display:none"><label>شهر تسجيل العطل<input type="month" id="faultArchiveMonth" class="form-control" onchange="renderOperations()"/></label><div id="faultMonthlyCount"></div></div><div id="operationsList"></div><div id="maintTicketsContainer" style="display:none"></div>
 </div>
 </div>
-</div><div class="" id="viewExpenses" style="display:none"><div class="panel-grid-2"><div class="box-card"><h3>💸 المصاريف</h3><p style="color:var(--text-muted);line-height:1.8">سجّل مصروفك الشخصي أو مصروف الشاليه. الأدمن يشوف الكل، والسيلز يشوف تسجيلاته بس.</p><div class="" id="maintPaneExp">
+</div><div class="panel-container" id="viewExpenses" style="display:none"><div class="panel-grid-2"><div class="box-card"><h3>💸 المصاريف</h3><p style="color:var(--text-muted);line-height:1.8">سجّل مصروفك الشخصي أو مصروف الشاليه. الأدمن يشوف الكل، والسيلز يشوف تسجيلاته بس.</p><div class="" id="maintPaneExp">
 <div class="form-group"><label>التاريخ:</label><input class="form-control" id="expDate" type="date"/></div>
 <div class="form-group"><label>تبع شاليه إيه؟:</label><select class="form-control" id="expChaletSel"></select></div>
 <div class="form-group"><label>اتصرف في إيه؟:</label><input class="form-control" id="expDesc"/></div>
@@ -530,7 +530,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 <div class="form-group"><label>لحد يوم:</label><input class="form-control" id="expFilterTo" onchange="renderExpenses()" type="date"/></div>
 <div class="form-group"><label>بحث في البيان:</label><input class="form-control" id="expFilterText" oninput="renderExpenses()"/></div>
 <button class="btn-hdr exp-filter-clear" onclick="resetExpenseFilters()" type="button">✖ مسح الفلتر</button>
-<button class="btn-hdr" onclick="filterCostsToday('exp')" style="background:#0f766e" type="button">📅 النهاردة</button></div><div id="expensesListContainer" style="overflow-x:auto;max-width:100%"></div></div></div><div class="box-card admin-only" id="costSummary" style="margin-top:14px"></div></div></div>
+<button class="btn-hdr" onclick="filterCostsToday('exp')" style="background:#0f766e" type="button">📅 النهاردة</button></div><div id="expensesListContainer" style="overflow-x:auto;max-width:100%"></div></div></div><div class="box-card admin-only" id="costSummary" style="margin-top:14px"></div></div>
 <div class="modal-overlay" id="maintHistoryModal" onclick="if(event.target===this) this.style.display='none'">
 <div class="modal-box" style="max-width:520px;max-height:80vh;overflow:auto;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -882,6 +882,6 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 </div>
 </div>
 <div id="offscreenExportWrapper"></div>
-<script src="6-elaraby-runtime-v14.js"></script>
+<script src="1-elaraby-runtime-v14.js"></script>
 <script>function switchMaintAddType(t){document.getElementById('maintPaneExp').classList.remove('maint-type-hidden');document.getElementById('maintPaneTicket').classList.remove('maint-type-hidden');if(!document.getElementById('maintDate').value)document.getElementById('maintDate').value=cairoDateStr();}</script></body>
 </html>
