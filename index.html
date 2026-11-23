@@ -183,6 +183,12 @@
     .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 3px; }
     .form-control { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 600; background: var(--bg-surface); color: var(--text-main); }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .exp-filter-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; align-items: end; margin-bottom: 10px; }
+    .exp-filter-bar .form-group { margin: 0; min-width: 0; }
+    .exp-filter-bar .form-control { width: 100%; min-width: 0; box-sizing: border-box; min-height: 38px; }
+    .exp-filter-bar input[type="date"].form-control { -webkit-appearance: none; appearance: none; display: block; }
+    .exp-filter-bar .exp-filter-clear { background: #64748b; min-height: 38px; justify-content: center; width: 100%; }
+    @media (max-width:640px){ .exp-filter-bar { grid-template-columns: 1fr 1fr; } .exp-filter-bar .exp-filter-clear { grid-column: 1 / -1; } }
     .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
     @media (max-width:900px){
       #bookingModal .row-3 { grid-template-columns: minmax(0,1fr); gap: 10px; }
@@ -599,12 +605,12 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
             <button type="button" class="btn-submit" id="btnCancelExpEdit" style="background:#64748b;margin-top:6px;display:none;" onclick="cancelExpenseEdit()">❌ إلغاء التعديل</button>
           </div>
           <div class="box-card">
-            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:flex-end; margin-bottom:10px;">
-              <div class="form-group" style="margin:0; flex:1 1 150px;"><label style="font-size:11.5px;">الجهة:</label><select id="expFilterChalet" class="form-control" onchange="renderExpenses()"></select></div>
-              <div class="form-group" style="margin:0;"><label style="font-size:11.5px;">من يوم:</label><input type="date" id="expFilterFrom" class="form-control" onchange="renderExpenses()"></div>
-              <div class="form-group" style="margin:0;"><label style="font-size:11.5px;">لحد يوم:</label><input type="date" id="expFilterTo" class="form-control" onchange="renderExpenses()"></div>
-              <div class="form-group" style="margin:0; flex:1 1 140px;"><label style="font-size:11.5px;">بحث في البيان:</label><input type="text" id="expFilterText" class="form-control" oninput="renderExpenses()"></div>
-              <button type="button" class="btn-hdr" style="background:#64748b;" onclick="resetExpenseFilters()">✖ مسح الفلتر</button>
+            <div class="exp-filter-bar">
+              <div class="form-group"><label>الجهة:</label><select id="expFilterChalet" class="form-control" onchange="renderExpenses()"></select></div>
+              <div class="form-group"><label>من يوم:</label><input type="date" id="expFilterFrom" class="form-control" onchange="renderExpenses()"></div>
+              <div class="form-group"><label>لحد يوم:</label><input type="date" id="expFilterTo" class="form-control" onchange="renderExpenses()"></div>
+              <div class="form-group"><label>بحث في البيان:</label><input type="text" id="expFilterText" class="form-control" oninput="renderExpenses()"></div>
+              <button type="button" class="btn-hdr exp-filter-clear" onclick="resetExpenseFilters()">✖ مسح الفلتر</button>
             </div>
             <div id="expensesListContainer"></div>
           </div>
@@ -847,7 +853,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         <div id="permitUploadStatusMsg" style="display:none; margin-top:7px; padding:6px 10px; border-radius:6px; background:#dcfce7; color:#15803d; font-size:11.5px; font-weight:800; text-align:center;"></div>
       </div>
       <div id="permitPhotosGallery" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:240px; overflow-y:auto; margin-bottom:10px;"></div>
-      <div style="border-top:1px solid var(--border-color); padding-top:10px;">
+      <div id="permitStaffNote" style="display:none; border-top:1px solid var(--border-color); padding-top:10px; font-size:11.5px; color:var(--text-muted); text-align:center;">🔒 إرسال التصريح للأمن متاح من حساب الأدمن بس. ارفع صور البطايق هنا والأدمن هيبعتها للأمن.</div>
+      <div id="permitAdminActions" style="border-top:1px solid var(--border-color); padding-top:10px;">
         <div style="font-weight:900; font-size:12px; margin-bottom:6px;">2️⃣ ابعت التصريح للأمن:</div>
         <div class="row-2">
           <button type="button" class="btn-submit" style="background:#16a34a; margin-top:0;" onclick="sendSecurityPermitWhatsApp()">🛡️ إرسال للأمن واتساب</button>
@@ -1040,6 +1047,8 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function updateHeaderClock() { var el = document.getElementById('headerClock'); if (el) { var now = new Date(); el.textContent = '🕐 ' + fmtCairoDate(now) + ' — ' + new Intl.DateTimeFormat('ar-EG', { timeZone: CAIRO_TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(now); } }
     function formatLocalDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
     function parseLocalDate(s) { var p = s.split('-'); return new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10)); }
+    function cairoDateStr(d) { try { var p = new Intl.DateTimeFormat('en-GB', { timeZone: CAIRO_TZ, year:'numeric', month:'2-digit', day:'2-digit' }).format(d || new Date()).split('/'); return p[2] + '-' + p[1] + '-' + p[0]; } catch (e) { return formatLocalDate(d || new Date()); } }
+    function cairoOffsetDateStr(days) { var base = parseLocalDate(cairoDateStr()); base.setDate(base.getDate() + (days || 0)); return formatLocalDate(base); }
 
     function getStayNights(sDate, eDate) {
       var list = [], curr = parseLocalDate(sDate), end = parseLocalDate(eDate);
@@ -1271,7 +1280,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       // No shared customer/profile cache: each session reads its authorized data.
       sortAndGroupChaletsByVillage();
     }
-    function receiptMonth(date){return String(date||formatLocalDate(new Date())).slice(2,7).replace('-','');}
+    function receiptMonth(date){return String(date||cairoDateStr()).slice(2,7).replace('-','');}
     function newReceiptNumber(date){var n=crypto.getRandomValues(new Uint32Array(1))[0]%(36**6);return receiptMonth(date)+'-'+n.toString(36).toUpperCase().padStart(6,'0');}
     var receiptMigrationBusy=false;
     async function migrateLegacyReceiptNumbers(){
@@ -1438,9 +1447,9 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       arrangeSettingsLayout();installSafeIcons();
       updateHeaderClock(); setInterval(updateHeaderClock, 1000);
       if (localStorage.getItem('ELARABY_THEME') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); syncThemeControl(); }
-      var today = formatLocalDate(new Date());
+      var today = cairoDateStr();
       ['startDate','endDate','checkStart','checkEnd','tStartDate','tEndDate','ownStartDate','ownEndDate','expDate','invEndDate','statsEndDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = today; });
-      var firstOfMonth = formatLocalDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
+      var firstOfMonth = cairoDateStr().slice(0, 8) + '01';
       ['invStartDate','statsStartDate'].forEach(id => { var el = document.getElementById(id); if (el) el.value = firstOfMonth; });
       cloudPollInterval = setInterval(() => { if (currentUser) syncFromCloud(true).catch(function(){if(sessionRole!=='admin'&&sessionRole!=='sales')handleLogout();else{var st=document.getElementById('dbSyncStatus');if(st)st.innerText='الاتصال متوقف مؤقتًا، هنعيد المحاولة';}}); }, 15000);
       if (authReady()) { firebase.auth().onAuthStateChanged(function(user) { if (user && !currentUser) resolveProfileAndEnter(); }); }
@@ -1485,7 +1494,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     document.addEventListener('click',event=>{if(!event.target.closest('#notificationsPanel,#notificationsBell'))toggleNotifications(false);});
 
     function updateKPIsAndAlerts() {
-      var today = formatLocalDate(new Date()), tmr = new Date(); tmr.setDate(tmr.getDate()+1); var tomorrow = formatLocalDate(tmr), now = Date.now();
+      var today = cairoDateStr(), tomorrow = cairoOffsetDateStr(1), now = Date.now();
       var activeHolds = appDB.bookings.filter(b => b.status === 'hold'), expiredHolds = activeHolds.filter(b => b.holdExpiresAt && now > b.holdExpiresAt);
       var checkInsToday = appDB.bookings.filter(b => b.startDate === today);
       var missingIdsSoon = appDB.bookings.filter(b => (b.startDate === today || b.startDate === tomorrow) && (!b.idPhotoCount || b.idPhotoCount === 0));
@@ -1499,7 +1508,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       appDB.bookings.forEach(b=>{var reasons=[];
         if(b.status==='hold'&&b.holdExpiresAt&&now>b.holdExpiresAt)reasons.push('وقت الهولد خلص');
         if(b.status!=='hold'&&b.startDate===today)reasons.push('دخول النهاردة');
-        if(b.status!=='hold'&&(b.startDate===today||b.startDate===tomorrow)&&!b.idPhotoCount)reasons.push('لسه من غير بطايق');
+        if(isAdminSession()&&b.status!=='hold'&&b.startDate<=tomorrow&&b.endDate>today){var noIds=(!b.idPhotoCount||b.idPhotoCount===0),notSent=b.permitStatus!=='sent';if(noIds||notSent){var whenTxt=b.startDate===today?'التسكين النهاردة':(b.startDate===tomorrow?'التسكين بكرة':'العميل ساكن دلوقتي');reasons.push('🪪 '+whenTxt+' و'+(noIds?'لسة البطايق مترفعتش':'البطايق جاهزة بس التصريح لسه متبعتش للأمن'));}}
         if(reasons.length)notificationBookings.push({id:b.id,title:reasons.join('، '),booking:b});
       });
       if(openMaint.length&&isAdminSession())notificationBookings.push({maintenance:true,title:openMaint.length+' أعطال مفتوحة'});
@@ -1535,7 +1544,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
       var start = monthVal==='all' ? new Date(year,0,1) : new Date(year,parseInt(monthVal,10)-1,1);
       var end = monthVal==='all' ? new Date(year,11,31) : new Date(year,parseInt(monthVal,10),0);
-      var arDays = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"], todayStr = formatLocalDate(new Date());
+      var arDays = ["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"], todayStr = cairoDateStr();
 
       var bookingMap = {}, morningCheckoutMap = {};
       appDB.bookings.forEach(b => {
@@ -1743,7 +1752,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var nightPriceNow = rentPeriodType === 'monthly' ? (reqNights.length ? total / reqNights.length : 0) : price;
       if(needsDepositWarning(total,dep,statusType,depositRule,nightPriceNow)){var choice=await chooseDepositWarning(total,dep,depositRule,nightPriceNow);if(choice==='cancel')return;if(choice==='hold'){statusType='hold';document.getElementById('bookingStatusType').value='hold';toggleHoldOptions();depositAuditNote='، اختار مؤقت بسبب انخفاض العربون';}else{depositAuditNote='، أكد رغم انخفاض العربون عن '+depositThreshold(total,depositRule,nightPriceNow).toLocaleString()+' ج.م';}}
       var rem = Math.max(0, total - dep), method = document.getElementById('paymentMethod').value;
-      var regDate = formatLocalDate(new Date()), actor = currentUser ? currentUser.fullName : agentName;
+      var regDate = cairoDateStr(), actor = currentUser ? currentUser.fullName : agentName;
       var commOverride = null;
       if (isAdminSession()) { var cot = document.getElementById('commOverrideType').value, cov = parseFloat(document.getElementById('commOverrideVal').value) || 0; if ((cot === 'pct' || cot === 'fixed_booking') && cov > 0) commOverride = { type: cot, val: cov }; }
       var holdExpiresAt = statusType === 'hold' ? (Date.now() + holdHours * 3600000) : null;
@@ -1793,6 +1802,9 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var b = appDB.bookings.find(x => x.id === bId); if (!b || !canManageBooking(b)) { alert("⛔ متاح لصاحب الحجز أو المدير فقط!"); return; }
       document.getElementById('permitBookingId').value = b.id;
       document.getElementById('permitInfoSummary').innerHTML = `<b>الشاليه:</b> ${esc(b.village)} - ${esc(b.chaletName)} | <b>العميل:</b> ${esc(b.clientName)} (${esc(b.clientPhone)})`;
+      var isAdmPermit = isAdminSession();
+      document.getElementById('permitAdminActions').style.display = isAdmPermit ? '' : 'none';
+      document.getElementById('permitStaffNote').style.display = isAdmPermit ? 'none' : 'block';
       var stMsg = document.getElementById('permitUploadStatusMsg'); stMsg.style.display = 'block'; stMsg.style.background = '#fef3c7'; stMsg.innerText = "⏳ جاري تحميل الصور...";
       document.getElementById('permitModal').style.display = 'flex';
       currentOpenedPermitPhotos = await fetchBookingPhotosCloud(b.id);
@@ -1810,18 +1822,27 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       await saveSingleBookingCloud(b); stMsg.style.background = '#dcfce7'; stMsg.style.color = '#15803d'; stMsg.innerText = `✅ تم الرفع (${currentOpenedPermitPhotos.length} صورة)!`;
       e.target.value = ""; renderPermitGallery(bId); refreshAllUI();
     }
-    function renderPermitGallery(bId) { document.getElementById('permitPhotosGallery').innerHTML = currentOpenedPermitPhotos.length ? currentOpenedPermitPhotos.map((src, idx) => `<div style="position:relative;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;"><img src="${src}" style="width:100%;display:block;"><button type="button" onclick="removeIdPhoto('${bId}',${idx})" style="position:absolute;top:4px;left:4px;background:#dc2626;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;">×</button></div>`).join('') : '<div style="grid-column:1/-1;text-align:center;padding:16px;">لسه مفيش صور مرفوعة.</div>'; }
-    async function removeIdPhoto(bId, idx) { var b = appDB.bookings.find(x => x.id === bId); if (!b) return; currentOpenedPermitPhotos.splice(idx, 1); await saveBookingPhotosCloud(bId, currentOpenedPermitPhotos); b.idPhotoCount = currentOpenedPermitPhotos.length; if (!currentOpenedPermitPhotos.length) b.permitStatus = 'missing'; await saveSingleBookingCloud(b); renderPermitGallery(bId); refreshAllUI(); }
-    function sendSecurityPermitWhatsApp() {
+    function renderPermitGallery(bId) { var canDel = isAdminSession(); document.getElementById('permitPhotosGallery').innerHTML = currentOpenedPermitPhotos.length ? currentOpenedPermitPhotos.map((src, idx) => `<div style="position:relative;border:1px solid var(--border-color);border-radius:8px;overflow:hidden;"><img src="${src}" style="width:100%;display:block;">${canDel ? `<button type="button" onclick="removeIdPhoto('${bId}',${idx})" style="position:absolute;top:4px;left:4px;background:#dc2626;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;">×</button>` : ''}</div>`).join('') : '<div style="grid-column:1/-1;text-align:center;padding:16px;">لسه مفيش صور مرفوعة.</div>'; }
+    async function removeIdPhoto(bId, idx) { if (!isAdminSession()) { showToast('⛔ حذف صور البطايق متاح للأدمن بس'); return; } var b = appDB.bookings.find(x => x.id === bId); if (!b) return; currentOpenedPermitPhotos.splice(idx, 1); await saveBookingPhotosCloud(bId, currentOpenedPermitPhotos); b.idPhotoCount = currentOpenedPermitPhotos.length; if (!currentOpenedPermitPhotos.length) b.permitStatus = 'missing'; await saveSingleBookingCloud(b); renderPermitGallery(bId); refreshAllUI(); }
+    async function sendSecurityPermitWhatsApp() {
+      if (!isAdminSession()) { showToast('⛔ الإرسال للأمن متاح من حساب الأدمن بس'); return; }
       var bId = document.getElementById('permitBookingId').value, b = appDB.bookings.find(x => x.id === bId); if (!b || !currentOpenedPermitPhotos.length) { alert("⚠️ ارفع صور البطايق الأول!"); return; }
       var cObj = appDB.chalets.find(c => c.id === b.chaletId) || {}, secPhone = (cObj.securityPhone || '').replace(/\D/g, '');
       if (secPhone.startsWith('01') && secPhone.length === 11) secPhone = '2' + secPhone;
-      var txt = `🛡️ *طلب تصريح دخول - شركة العربي للاستثمار العقاري*\n🏖️ *القرية:* ${b.village} (${b.chaletName})\n👤 *الاسم:* ${b.clientName} (${b.clientPhone})\n📅 *من:* ${b.startDate} *لحد:* ${b.endDate}`;
-      b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI();
-      if (isDesktopBridge() && typeof window.pywebview.api.copy_images_to_clipboard_and_whatsapp === 'function') window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentOpenedPermitPhotos, txt, cObj.securityPhone || "").then(() => showToast("✅ تم نسخ البطايق وفتح واتساب الأمن!"));
-      else window.open(`https://api.whatsapp.com/send?phone=${secPhone}&text=${encodeURIComponent(txt)}`, '_blank');
+      var txt = `🛡️ *طلب تصريح دخول - شركة العربي للاستثمار العقاري*\n🏖️ *القرية:* ${b.village} (${b.chaletName})\n👤 *المفوض:* أحمد العربي\n📅 *من:* ${b.startDate} *لحد:* ${b.endDate}`;
+      function markPermitSent() { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); }
+      if (isDesktopBridge() && typeof window.pywebview.api.copy_images_to_clipboard_and_whatsapp === 'function') { markPermitSent(); window.pywebview.api.copy_images_to_clipboard_and_whatsapp(currentOpenedPermitPhotos, txt, cObj.securityPhone || "").then(() => showToast("✅ تم نسخ البطايق وفتح واتساب الأمن!")); return; }
+      var files = [];
+      try { for (var i = 0; i < currentOpenedPermitPhotos.length; i++) { var blob = await (await fetch(currentOpenedPermitPhotos[i])).blob(); files.push(new File([blob], 'ID-' + (i + 1) + '.jpg', { type: blob.type || 'image/jpeg' })); } } catch (e) { files = []; }
+      if (files.length && navigator.canShare && navigator.canShare({ files: files })) {
+        try { await navigator.share({ files: files, text: txt, title: 'تصريح أمن' }); markPermitSent(); showToast('✅ اختار واتساب من القائمة وابعت للأمن'); return; }
+        catch (e) { if (e && e.name === 'AbortError') { showToast('⚠️ اتلغت المشاركة — الحجز لسه متعلمش كمُرسل'); return; } }
+      }
+      markPermitSent();
+      window.open(`https://api.whatsapp.com/send?phone=${secPhone}&text=${encodeURIComponent(txt)}`, '_blank');
+      showToast('⚠️ المتصفح ده مش بيدعم إرفاق الصور في المشاركة — النص اتبعت، نزّل الصور وابعتها يدوي');
     }
-    function markPermitAsSentOnly() { var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (b) { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); document.getElementById('permitModal').style.display = 'none'; } }
+    function markPermitAsSentOnly() { if (!isAdminSession()) { showToast('⛔ التأكيد متاح للأدمن بس'); return; } var b = appDB.bookings.find(x => x.id === document.getElementById('permitBookingId').value); if (b) { b.permitStatus = 'sent'; saveSingleBookingCloud(b); refreshAllUI(); document.getElementById('permitModal').style.display = 'none'; } }
 
     function sendWelcomeLocationWhatsApp(bId) {
       var b = appDB.bookings.find(x => x.id === bId); if (!b) return;
@@ -1893,7 +1914,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
     function renderLedgerList(){
       var v=document.getElementById('ledgerVillageFilter').value,p=document.getElementById('ledgerPermitFilter').value,q=(document.getElementById('ledgerSearchInput').value||'').trim().toLowerCase();
       var list=appDB.bookings.filter(b=>(!v||b.village===v)&&(p==='all'||(b.permitStatus||((b.idPhotoCount&&b.idPhotoCount>0)?'ready':'missing'))===p)&&(!q||String(b.clientName).toLowerCase().includes(q)||String(b.clientPhone).includes(q)||String(b.id).toLowerCase().includes(q)||String(b.receiptNumber||'').toLowerCase().includes(q)));
-      var groups=sortedLedgerGroups(list,formatLocalDate(new Date())),container=document.getElementById('ledgerListContainer');var prev=container.querySelector('details');var wasOpen=prev&&prev.open;
+      var groups=sortedLedgerGroups(list,cairoDateStr()),container=document.getElementById('ledgerListContainer');var prev=container.querySelector('details');var wasOpen=prev&&prev.open;
       var row=(b,group)=>{var status=group==='staying'?'ساكن':group==='finished'?(b.status==='hold'?'هولد منتهي':'انتهت الإقامة'):(b.status==='hold'?'هولد، لم يتأكد':'قادم');var color=group==='staying'?'#15803d':group==='finished'?'#64748b':'#b45309';return `<div class="ledger-row-card" onmouseenter="showLedgerCard('${b.id}',false)" onclick="showLedgerCard('${b.id}',true)"><div><span style="display:inline-block;color:${color};background:var(--bg-subtle);border:1px solid ${color};padding:3px 9px;font-size:11px;font-weight:900;margin-bottom:6px;">${status}</span> <span dir="ltr" style="font-weight:900;font-size:12px;">${esc(b.receiptNumber||b.id)}</span><br><b>${esc(b.village)} (${esc(b.chaletName)}) - ${esc(b.clientName)}</b> <span dir="ltr" style="font-size:11px;">[${maskPhoneForViewer(b)}]</span><br><span style="font-size:11px;color:var(--text-muted);">من ${esc(fmtStayDate(b.startDate))} لحد ${esc(fmtStayDate(b.endDate))} | المسؤول: ${esc(b.agentName)} | الإجمالي: ${Number(b.total||0).toLocaleString()} ج.م</span></div>${canManageBooking(b)?`<button type="button" class="btn-hdr" style="background:#0284c7;" onclick="event.stopPropagation();openPermitModal('${b.id}')">🪪 البطايق (${b.idPhotoCount||0})</button>`:`<span style="font-size:10px;">🔒 خاص بـ ${esc(b.agentName)}</span>`}</div>`;};
       var section=(title,key,empty)=>`<section style="margin-bottom:18px;"><h3 style="font-size:14px;margin:12px 0;">${title} (${groups[key].length})</h3>${groups[key].map(b=>row(b,key)).join('')||`<div style="padding:12px;color:var(--text-muted);font-size:12px;">${empty}</div>`}</section>`;
       container.innerHTML=`<div style="padding:10px 0;font-size:12px;color:var(--text-muted);">الترتيب: ساكن حاليًا، ثم الأقرب وصولًا. الإقامات المنتهية في القسم المقفول تحت.</div>`+section('🏠 ساكن حاليًا','staying','مفيش إقامة جارية مطابقة.')+section('📅 القادم، الأقرب وصولًا أولًا','upcoming','مفيش حجوزات قادمة مطابقة.')+`<details ${wasOpen||q?'open':''} style="border-top:1px solid var(--border-color);padding-top:12px;"><summary style="cursor:pointer;font-weight:800;padding:10px;background:var(--bg-subtle);">الإقامات والهولد المنتهي (${groups.finished.length})، عرض / إخفاء</summary><div style="padding-top:10px;font-size:11px;color:var(--text-muted);">الأحدث انتهاءً أولًا</div>${groups.finished.map(b=>row(b,'finished')).join('')||'<p>مفيش حجوزات منتهية مطابقة.</p>'}</details>`;
@@ -2186,7 +2207,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         } catch(e) { Object.keys(before).forEach(k => { t[k] = before[k]; }); showToast('❌ ' + e.message); }
         cancelMaintenanceEdit(); refreshAllUI(); return;
       }
-      var nt = { id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: formatLocalDate(new Date()), chaletId: chaletId, village: cObj.village, chaletName: cObj.name, desc: desc, priority: priority, cost: cost, status: 'open', createdByUid: au.uid, createdBy: currentUser.fullName };
+      var nt = { id: 'MNT-' + Math.floor(1000 + Math.random() * 9000), date: cairoDateStr(), chaletId: chaletId, village: cObj.village, chaletName: cObj.name, desc: desc, priority: priority, cost: cost, status: 'open', createdByUid: au.uid, createdBy: currentUser.fullName };
       appDB.maintenanceTickets.unshift(nt);
       try {
         await saveMaintenanceTicketCloud(nt, 'إضافة', null);
@@ -2232,7 +2253,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var before = Object.assign({}, t);
       t.status = 'closed'; t.cost = costNum;
       var mExp = null;
-      if (costNum > 0) { if (!appDB.expenses) appDB.expenses = []; mExp = { id: newExpenseId(), date: formatLocalDate(new Date()), chaletId: t.chaletId, desc: `صيانة: ${t.desc}`, amount: costNum, createdBy: currentUser ? currentUser.fullName : '', createdAt: Date.now() }; appDB.expenses.push(mExp); }
+      if (costNum > 0) { if (!appDB.expenses) appDB.expenses = []; mExp = { id: newExpenseId(), date: cairoDateStr(), chaletId: t.chaletId, desc: `صيانة: ${t.desc}`, amount: costNum, createdBy: currentUser ? currentUser.fullName : '', createdAt: Date.now() }; appDB.expenses.push(mExp); }
       try {
         await saveMaintenanceTicketCloud(t, 'قفل', before);
         if (mExp) await saveExpenseCloud(mExp, 'إضافة مصروف صيانة (' + t.desc + ') بمبلغ ' + costNum + ' ج.م');
@@ -2496,7 +2517,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
       var chExps = (appDB.expenses||[]).filter(x => x.chaletId === cObj.id && x.date >= s && x.date <= e).sort((a,b) => (a.date||'').localeCompare(b.date||''));
       var chExpSum = chExps.reduce((sum,x) => sum + (parseFloat(x.amount)||0), 0), expSum = chExpSum + extra;
       var gross = books.reduce((sum,b) => sum + b.total, 0), collected = books.reduce((sum,b) => sum + (b.total - (b.remaining||0)), 0), remainSum = books.reduce((sum,b) => sum + (b.remaining||0), 0), fee = Math.round(gross*(feePct/100)), net = gross - fee - expSum;
-      var issueDate = formatLocalDate(new Date());
+      var issueDate = cairoDateStr();
       var bookRows = books.map((b,i) => `<tr><td style="border:1px solid #cbd5e1;padding:6px;">${i+1}</td><td style="border:1px solid #cbd5e1;padding:6px;">#${esc(b.receiptNumber||b.id)}</td><td style="border:1px solid #cbd5e1;padding:6px;">${esc(b.startDate)}</td><td style="border:1px solid #cbd5e1;padding:6px;">${esc(b.endDate)}</td><td style="border:1px solid #cbd5e1;padding:6px;">${esc(b.rentType||'')}</td><td style="border:1px solid #cbd5e1;padding:6px;font-weight:800;">${b.total.toLocaleString()} ج.م</td><td style="border:1px solid #cbd5e1;padding:6px;color:#16a34a;">${(b.total-(b.remaining||0)).toLocaleString()} ج.م</td><td style="border:1px solid #cbd5e1;padding:6px;color:${(b.remaining||0)>0?'#dc2626':'#94a3b8'};">${(b.remaining||0).toLocaleString()} ج.م</td></tr>`).join('') || '<tr><td colspan="8" style="padding:12px;border:1px solid #cbd5e1;">مفيش حجوزات في الفترة دي</td></tr>';
       var expRows = chExps.map(x => `<tr><td style="border:1px solid #cbd5e1;padding:6px;">${esc(x.date)}</td><td style="border:1px solid #cbd5e1;padding:6px;">${esc(x.desc)}</td><td style="border:1px solid #cbd5e1;padding:6px;font-weight:800;color:#dc2626;">${(parseFloat(x.amount)||0).toLocaleString()} ج.م</td></tr>`).join('') || '<tr><td colspan="3" style="padding:10px;border:1px solid #cbd5e1;">مفيش مصاريف على الشاليه في الفترة دي</td></tr>';
       document.getElementById('ownerStatementPreview').innerHTML = `<div id="ownerA4Card" style="background:#fff; color:#0f172a; border:2.5px solid #0f766e; border-radius:12px; overflow:hidden; position:relative;">${getMultiWatermarkHTML()}<div style="padding:18px; position:relative; z-index:2;">
