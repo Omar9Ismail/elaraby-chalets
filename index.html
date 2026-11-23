@@ -1465,7 +1465,7 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
         if(splashPhase===0){splashPhase=1;var credit=document.getElementById('creditStage'),load=document.getElementById('loadingStage');if(credit)credit.style.display='none';if(load)load.style.display='flex';setTimeout(dismissSplash,1800);return;}
         splashPhase=2;sp.style.opacity='0';setTimeout(function(){sp.style.display='none';},500);}
       var splashEl=document.getElementById('splashScreen');
-      if(splashEl)splashEl.addEventListener('click',function(e){if(e.target.closest('a'))return;dismissSplash();});
+      if(splashEl)splashEl.addEventListener('click',function(e){if(e.target.closest('a')||e.target.closest('button'))return;dismissSplash();});
       var enterBtn=document.getElementById('startupEnter');
       if(enterBtn)enterBtn.addEventListener('click',dismissSplash);
       arrangeSettingsLayout();installSafeIcons();
