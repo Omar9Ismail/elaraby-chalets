@@ -304,7 +304,38 @@ html,body{height:auto!important;}body{min-height:100vh;display:flex;flex-directi
 
 .startup-phone,.startup-phone:visited,.startup-phone:hover,.startup-phone:active{display:block!important;color:#ffe49b!important;-webkit-text-fill-color:#ffe49b!important;font-size:21px!important;font-weight:800!important;font-family:Arial,sans-serif!important;letter-spacing:1px;text-decoration:none!important;margin:14px 0 12px!important;line-height:1.4}.startup-contact-actions{display:flex;gap:10px;justify-content:center;margin:0 0 14px}.startup-contact-actions a,.startup-contact-actions a:visited{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;min-width:86px;padding:6px 12px;border:1px solid #d4af37;border-radius:10px;background:#203447;color:#fff!important;-webkit-text-fill-color:#fff!important;text-decoration:none;font-size:13px;font-weight:800}.startup-enter{display:inline-block;margin-top:26px;min-height:46px;padding:10px 54px;border:0;border-radius:12px;background:linear-gradient(135deg,#e2c577,#c9a227);color:#1a1207;font-family:'Cairo','IBM Plex Sans Arabic',Tahoma,sans-serif;font-size:17px;font-weight:900;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 24px rgba(212,175,55,.28);transition:transform .15s ease}.startup-enter:active{transform:scale(.96)}.startup-social{display:flex;gap:14px;justify-content:center;margin-top:0}.startup-social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(212,175,55,.6);border-radius:50%;color:#e2c577;background:rgba(212,175,55,.08);text-decoration:none}.startup-social a svg{width:20px;height:20px}.startup-contact-actions .startup-whatsapp{background:#075e54;border-color:#34d399}.startup-credit-card a.startup-contact{color:#e2e8f0!important;-webkit-text-fill-color:#e2e8f0!important}
 </style>
-<style>.cost-item{border:1.5px solid var(--border-color);border-radius:12px;padding:14px;margin:12px 0;overflow-wrap:anywhere}.cost-item small{display:block;color:var(--text-muted);margin-top:7px}.cost-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.cost-actions button{background:#2563eb;min-height:40px;white-space:nowrap}.cost-item p{line-height:1.7}</style></head>
+<style>.cost-item{border:1.5px solid var(--border-color);border-radius:12px;padding:14px;margin:12px 0;overflow-wrap:anywhere}.cost-item small{display:block;color:var(--text-muted);margin-top:7px}.cost-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.cost-actions button{background:#2563eb;min-height:40px;white-space:nowrap}.cost-item p{line-height:1.7}</style><style id="laptop-fit">
+/* Laptop fit: compact header, wrapped tabs, only tabs stay pinned */
+@media (min-width:901px){
+.collapsible-top-zone{display:contents!important}
+.top-header{padding:4px 12px;gap:6px 10px;flex-wrap:wrap}
+.top-header .brand-box{gap:8px;min-width:0}
+.top-header .brand-logo{width:62px;height:30px}
+.top-header .brand-box>div:last-child{display:flex;flex-wrap:wrap;align-items:center;gap:0 10px}
+.top-header .brand-title{flex:1 0 100%;font-size:13px;line-height:1.5}
+.top-header .brand-sub{font-size:10px;line-height:1.4}
+.header-actions{gap:5px;flex-wrap:wrap;min-width:0}
+.header-actions .btn-hdr{padding:4px 8px;font-size:10.5px;white-space:nowrap}
+.global-search-inp{width:150px;padding:5px 8px;font-size:12px}
+#currentUserBadge{padding:3px 7px!important;font-size:10.5px!important}
+.top-nav-bar{position:sticky;top:0;z-index:96;overflow:visible;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.top-nav-bar .nav-group{flex-wrap:wrap;gap:4px;justify-content:flex-start;width:100%}
+.tab-btn{padding:5px 9px;font-size:11px}
+.kpi-strip{padding:5px 12px 2px;gap:6px}
+.kpi-card{padding:3px 10px}
+.main-stage{padding:6px 12px 38px;min-width:0;overflow-x:clip}
+.panel-grid-2{grid-template-columns:minmax(300px,380px) minmax(0,1fr)}
+}
+@media (min-width:901px) and (max-width:1180px){
+.header-actions .btn-hdr{padding:4px 6px;font-size:10px}
+.global-search-inp{width:120px}
+.tab-btn{padding:5px 7px;font-size:10.5px}
+.panel-grid-2{grid-template-columns:minmax(280px,340px) minmax(0,1fr)}
+.row-3{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
 <body>
 <div class="toast-banner" id="toastBanner">✅ تم الحجز والتخزين بنجاح!</div>
 <div aria-label="بدء التشغيل" class="splash-overlay" id="splashScreen">
